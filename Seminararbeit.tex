@@ -7,9 +7,20 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{kpfonts}
+\usepackage[style=authortitle-icomp,backend=biber]{biblatex}
+\usepackage[babel,german=guillemets]{csquotes}
+\bibliography{Seminararbeit.bib} 
 \author{Markus Österle}
 \title{Seminararbeit}
-\tableofcontents
 \begin{document}
-•
+\maketitle
+\tableofcontents
+Test \cite{ta1}
+Test2 \cite{ta2}
+test123
+\printbibliography 
+
+
+
 \end{document}
+
