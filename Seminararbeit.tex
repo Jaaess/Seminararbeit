@@ -3,6 +3,7 @@
 \usepackage[german]{babel}
 \renewcommand*\sfdefault{ugq}
 \fontfamily{uaq}\selectfont
+\renewcommand*\footnotesize{10}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -11,14 +12,18 @@
 \usepackage{kpfonts}
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
+\usepackage{footmisc}
+\usepackage[a4paper, left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+\usepackage[onehalfspacing]{setspace}
 \bibliography{Seminararbeit.bib} 
 \author{Markus Österle}
 \title{Seminararbeit}
 \begin{document}
 \maketitle
 \tableofcontents
-Test \cite{ta1}
-Test2 \cite{ta2}
+Test \cite{ta1} \footnote{\cite{ta1}}
+\newpage
+Test2 \citep{ta1,2} \footcite{ta1}
 test123
 
 
@@ -27,6 +32,7 @@ Standard
 
 \textsf{Standard}
 
+\listoffootnotes 
 \printbibliography 
 
 
