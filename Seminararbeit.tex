@@ -1,7 +1,7 @@
 \documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
-%Verwendete Schriftarten
+% Verwendete Schriftarten
 \renewcommand*\sfdefault{ugq}
 \fontfamily{uaq}\selectfont
 \usepackage[T1]{fontenc}
@@ -10,16 +10,16 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{kpfonts}
-%Bibliothek & Zitierstil
+% Bibliothek & Zitierstil
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
-%Formatierung
+% Formatierung
 \usepackage[a4paper, left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm, headheight=0pt, headsep=0pt]{geometry}
-%\usepackage{showframe} % blendet Seitenränder ein
+% \usepackage{showframe} % blendet Seitenränder ein
 
 % Setzt den Zeilenabstand auf echte 1.5 Zeilen
 \usepackage[onehalfspacing]{setspace}
-%Paket um das Layout grafisch darstellen zu können
+% Paket um das Layout grafisch darstellen zu können
 \usepackage{layout}
 \bibliography{Seminararbeit.bib} 
 \author{Markus Österle \\
@@ -43,9 +43,10 @@ Standard
 
 \textsf{Standard}
 
-%Erzeugt eine Seite die das Layout bildlich darstellt
+% Erzeugt eine Seite die das Layout bildlich darstellt,\newpage erzeugt vorher einen Seitenumbruch
 \newpage
 \layout
+% Literaturverzeichnis ausgeben
 \printbibliography 
 \end{document}
 
