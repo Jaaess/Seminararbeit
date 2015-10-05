@@ -19,8 +19,26 @@
 
 % Setzt den Zeilenabstand auf echte 1.5 Zeilen
 \usepackage[onehalfspacing]{setspace}
+
 % Paket um das Layout grafisch darstellen zu können
 \usepackage{layout}
+
+% Abkürzungsverzeichnis mit Nomencl
+% siehe http://texwelt.de/wissen/fragen/4942/wie-kann-ich-die-erstellung-eines-abkurzungsverzeichnisses-mit-dem-paket-nomencl-automatisieren
+% und http://golatex.de/abkuerzungsverzeichnis-mit-texmaker-t8301.html
+% Zum aktualisieren muss "Makeindex" aufgerufen werden, Konfiguration siehe letzter Link
+\usepackage[intoc]{nomencl}
+% Befehl umbenennen in abk
+\let\abk\nomenclature
+% Überschrift
+\renewcommand{\nomname}{Abkürzungsverzeichnis}
+% Punkte zw. Abkürzung und Erklärung
+\setlength{\nomlabelwidth}{.20\hsize}
+\renewcommand{\nomlabel}[1]{#1 \dotfill}
+% Zeilenabstände verkleinern
+\setlength{\nomitemsep}{-\parsep}
+\makenomenclature
+% Ende Abkürzungsverzeichnis
 \bibliography{Seminararbeit.bib} 
 \author{Markus Österle \\
 Matrikelnummer: 20131041}
@@ -42,11 +60,25 @@ Standard
 
 
 \textsf{Standard}
+\abk{z.B.}{zum Beispiel}
+\abk{etc.}{etcetera}
+\abk{z.B.}{zum Beispiel}
+
 
 % Erzeugt eine Seite die das Layout bildlich darstellt,\newpage erzeugt vorher einen Seitenumbruch
 \newpage
 \layout
-% Literaturverzeichnis ausgeben
+\newpage
+% Abkürzungsverzeichnis ausgeben
+\printnomenclature
+
+
+
+% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
+\begingroup
 \printbibliography 
+\addcontentsline{toc}{chapter}{Literatur}
+\endgroup
+
 \end{document}
 
