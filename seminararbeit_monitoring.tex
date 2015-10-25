@@ -6,6 +6,8 @@
 \usepackage{makeidx}
 \usepackage{graphicx}
 \usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+%Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
+\setcounter{secnumdepth}{3}
 \author{Markus Österle}
 \title{Servermonitoring in Rechenzentren}
 \begin{document}
@@ -13,10 +15,18 @@
 	\maketitle
 	\tableofcontents
 	\chapter{Einleitung}
-	\chapter[Praxis]{Praktische Vorstellung eines Monitoring Systems}
-	\chapter[Vergleich]{Vergleich mehrerer Monitoring Systeme}
-	\section[SCOM]{Microsoft SCOM}
-	\section[Nagios]{Nagios und Nagios Derivate}
-	\section[CA Monitoring]{Computer Associates Monitoring Systeme}
+	\section[Warum?]{Warum Monitoring?}
 	
+	\chapter[Vergleich]{Vergleich mehrerer Monitoring Systeme}
+	\section[Performance]{Performance Monitoring}
+	\subsection[SCOM]{Microsoft SCOM}
+	\subsection[Nagios]{Nagios und Nagios Derivate}
+	\subsubsection[OMD]{Open Monitoring Distribution und Check\_MK}
+	\subsubsection[Nagios]{Nagios}
+	\subsubsection[Shinken]{Shinken}
+	\subsection[CA Monitoring]{Computer Associates Monitoring Systeme}
+	\section[Logfile]{Logfile Monitoring}
+	\subsection[Splunk]{Splunk Monitoring}
+	\subsection[ELK]{Elasticsearch - Logstash - Kibana}
+	\chapter[Praxis]{Praktische Vorstellung eines Monitoring Systems}
 \end{document}
