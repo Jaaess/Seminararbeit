@@ -1,39 +1,112 @@
 \documentclass[12pt,a4paper]{report}
-\usepackage[latin1]{inputenc}
+\usepackage[german,ngerman]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{graphicx}
 \usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
-%Tiefe der Nummerierung �ndern, Subsubsection ist Ebene 3
+%Glossar anschalten und in TOC aufnehmen und erzeugen
+%https://en.wikibooks.org/wiki/LaTeX/Glossary
+%\usepackage{hyperref} %Klickbare Einträge im Glossar
+%\usepackage[toc,acronym]{glossaries}
+%\makeglossaries
+\usepackage[nomain,acronym,toc]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+%http://tex.stackexchange.com/questions/111192/problems-with-xindy-and-glossaries
+\GlsSetXdyCodePage{duden-utf8}
+\makeglossaries
+\usepackage[xindy]{imakeidx}
+\makeindex
+
+\input{seminararbeit_monitoring_glossar}
+%Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
 \setcounter{secnumdepth}{3}
-\author{Markus �sterle}
-\title{Servermonitoring in Rechenzentren am Beispiel von Linux Systemen}
+% Bibliothek & Zitierstil
+\usepackage[style=authortitle-icomp,backend=biber]{biblatex}
+\usepackage[babel,german=guillemets]{csquotes}
+\bibliography{seminararbeit_monitoring}
+% Abkürzungsverzeichnis mit Nomencl
+% siehe http://texwelt.de/wissen/fragen/4942/wie-kann-ich-die-erstellung-eines-abkurzungsverzeichnisses-mit-dem-paket-nomencl-automatisieren
+% und http://golatex.de/abkuerzungsverzeichnis-mit-texmaker-t8301.html
+% Zum aktualisieren muss "Makeindex" aufgerufen werden, Konfiguration siehe letzter Link
+%\usepackage[intoc]{nomencl}
+% Befehl umbenennen in abk
+%\let\abk\nomenclature
+% Überschrift
+%\renewcommand{\nomname}{Abkürzungsverzeichnis}
+% Punkte zw. Abkürzung und Erklärung
+%\setlength{\nomlabelwidth}{.20\hsize}
+%\renewcommand{\nomlabel}[1]{#1 \dotfill}
+% Zeilenabstnde verkleinern
+%\setlength{\nomitemsep}{-\parsep}
+%\makenomenclature
+% Ende Abkürzungsverzeichnis
+\author{Markus Österle}
+\title{Monitoring in Rechenzentren am Beispiel von Linux Systemen}
+\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
 \begin{document}
-	\bibliography{seminararbeit_monitoring}
+
+
 	\maketitle
+	\setcounter{tocdepth}{3}
 	\tableofcontents
+	% Gibt das Latex Logo aus...Stelle? 
+	%\LaTeXe{}
 	\chapter{Einleitung}
-	Das Thema des Servermonitorings hat sich im professionellen RZ Umfeld in den letzten Jahren zu einem gro�en Thema entwickelt. Durch die steigende KOmplexit�t der Systeme steigen auch die Anforderungen an die �berwachung der selbigen, reichte es in den 90er Jahren noch aus per Ping zu �berwachen ob Rechner verf�gbar sind, so wird heute ein sehr viel feineres Monitoring erwartet, nicht nur die Erreichbarkeit der Rechner soll �berwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. Netzteile, RAM Bausteine).
-	\section[Warum?]{Warum Monitoring?}
-		�berwachung der Serverauslastung
+	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die berwachung der selbigen, reichte es in den 90er Jahren noch aus per Ping zu berwachen ob Rechner verfgbar sind, so wird heute ein sehr viel feineres Monitoring erwartet, nicht nur die Erreichbarkeit der Rechner soll berwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit *nix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
+	\section{Warum Monitoring im Rechenzentrum?}
+		Überwachung der Serverauslastung
 		
 		Proaktive Erkennung von (Hardware)Defekten
 		
-		SLA �berwachung
-		
-		
-	\chapter[Vergleich]{Vergleich mehrerer Monitoring Systeme}
-	\section[Performance]{Performance Monitoring}
-	\subsection[SCOM]{Microsoft SCOM}
-	\subsection[Nagios]{Nagios und Nagios Derivate}
-	\subsubsection[OMD]{Open Monitoring Distribution und Check\_MK}
-	\subsubsection[Nagios]{Nagios}
-	\subsubsection[Shinken]{Shinken}
-	\subsection[CA Monitoring]{Computer Associates Monitoring Systeme}
-	\section[Logfile]{Logfile Monitoring}
-	\subsection[Splunk]{Splunk Monitoring}
-	\subsection[ELK]{Elasticsearch - Logstash - Kibana}
-	\chapter[Praxis]{Praktische Vorstellung eines Monitoring Systems}
+		SLA Überwachung
+		\subsection{Warum Linux?}
+	
+	\chapter{Vom Ping zum proaktiven Monitoring}
+	\chapter{Vergleich mehrerer Monitoring Systeme für Linux Server}
+	In diesem Kapitel geht es um die 
+	\section{Performance \& SLA Monitoring}
+	\subsection{Check\_MK}
+	\subsubsection{Historie}
+	OMD -> check\_mk Änderung im Subskriptionsmodell
+	
+	\subsubsection{Lizenzmodell}
+	Erläuterung GPLv2
+	
+	\gls{GPLv2}
+	\subsubsection{Funktionsumfang}
+	
+	\subsection{Computer Associates Monitoring Systeme}
+	
+	\gls{ca}
+	
+	\subsubsection{Historie}
+	\subsubsection{Lizenzmodell}
+	\subsubsection{Funktionsumfang}
+	\section{Logfile Monitoring}
+	\subsection{Splunk Monitoring}
+	\subsection{Elasticsearch - Logstash - Kibana}
+	\subsection{Syslog-ng und Rsyslog}
+	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am Beispiel einer OMD Instanz}
+	\section{Performancemonitoring}
+	\subsection{Überwachung eines entfernten Servers}
+	\subsection{Überwachung einer Datenbank}
+	\section{Service Level Agreement Monitoring}
+	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
+	\subsection{Überwachung der Verfügbarkeit einer Webseite}
+	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
+	\newpage
+	%\printnomenclature
+	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
+	\begingroup
+	\printbibliography 
+	\addcontentsline{toc}{chapter}{Literatur}
+	\endgroup
+	%\printglossary[title= Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
+	%\printglossary[title=Glossar]
+	\printglossaries
+	
+	
+	
 \end{document}
