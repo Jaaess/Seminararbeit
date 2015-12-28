@@ -1,31 +1,39 @@
-\documentclass[12pt,a4paper]{report}
-\usepackage[german,ngerman]{babel}
+\documentclass[12pt,a4paper]{scrreprt}
+\usepackage[english,german,ngerman]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
+\makeindex
 \usepackage{graphicx}
-\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+%Für Quellcodeschnippsel
+\usepackage{listings}
+%Überflüssig, dank Dokumentenklasse scrreprt
+%\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
 %\usepackage{hyperref} %Klickbare Einträge im Glossar
 %\usepackage[toc,acronym]{glossaries}
 %\makeglossaries
-\usepackage[nomain,acronym,toc]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
+%\usepackage[nomain,acronym,xindy,toc]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
 %http://tex.stackexchange.com/questions/111192/problems-with-xindy-and-glossaries
-\GlsSetXdyCodePage{duden-utf8}
-\makeglossaries
-\usepackage[xindy]{imakeidx}
-\makeindex
-
+%\usepackage[nonumberlist,nomain,acronym,toc]{glossaries}
+% Acronym muss an erster Stelle stehen, sonst funktioniert die Trennung von Abkürzungsverzeichnis und Glossar nicht
+\usepackage[acronym,nonumberlist,toc]{glossaries}
 \input{seminararbeit_monitoring_glossar}
+\input{seminararbeit_monitoring_acronyme}
+\makeglossaries
+%\usepackage{imakeidx}
 %Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
-\setcounter{secnumdepth}{3}
+%\setcounter{secnumdepth}{3}
 % Bibliothek & Zitierstil
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
-\bibliography{seminararbeit_monitoring}
+%\bibliography{seminararbeit_monitoring.bib} %U.u. deprecated
+\addbibresource{seminararbeit_monitoring.bib}
+\setuptoc{toc}{bibliography=totoc}
 % Abkürzungsverzeichnis mit Nomencl
 % siehe http://texwelt.de/wissen/fragen/4942/wie-kann-ich-die-erstellung-eines-abkurzungsverzeichnisses-mit-dem-paket-nomencl-automatisieren
 % und http://golatex.de/abkuerzungsverzeichnis-mit-texmaker-t8301.html
@@ -46,8 +54,6 @@
 \title{Monitoring in Rechenzentren am Beispiel von Linux Systemen}
 \date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
 \begin{document}
-
-
 	\maketitle
 	\setcounter{tocdepth}{3}
 	\tableofcontents
@@ -60,16 +66,21 @@
 		
 		Proaktive Erkennung von (Hardware)Defekten
 		
-		SLA Überwachung
+		\gls{sla} Überwachung
 		\subsection{Warum Linux?}
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
+	\section{Historie}
+	\section{Definition Monitoring}
+	\subsection{Allgemein}
+	\subsection{proaktives Monitoring}
 	\chapter{Vergleich mehrerer Monitoring Systeme für Linux Server}
 	In diesem Kapitel geht es um die 
 	\section{Performance \& SLA Monitoring}
-	\subsection{Check\_MK}
+	\subsection{CheckMK}
+	
 	\subsubsection{Historie}
-	OMD -> check\_mk Änderung im Subskriptionsmodell
+	OMD -> checkmk Änderung im Subskriptionsmodell
 	
 	\subsubsection{Lizenzmodell}
 	Erläuterung GPLv2
@@ -89,6 +100,9 @@
 	\subsection{Elasticsearch - Logstash - Kibana}
 	\subsection{Syslog-ng und Rsyslog}
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am Beispiel einer OMD Instanz}
+	\section{Versuchsaufbau}
+	\subsection{verwendete Software}
+	\subsection{Konfiguration}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
 	\subsection{Überwachung einer Datenbank}
@@ -96,17 +110,16 @@
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
-	\newpage
 	%\printnomenclature
 	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
 	\begingroup
+	\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
 	\printbibliography 
-	\addcontentsline{toc}{chapter}{Literatur}
+	\addchaptertocentry{}{Literatur}
+	%\addcontentsline{toc}{chapter}{Literatur}
+	
 	\endgroup
-	%\printglossary[title= Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
-	%\printglossary[title=Glossar]
-	\printglossaries
-	
-	
-	
+	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
+	\printglossary[title=Glossar]
+	%\printglossaries	
 \end{document}
