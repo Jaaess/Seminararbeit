@@ -60,7 +60,9 @@
 	% Gibt das Latex Logo aus...Stelle? 
 	%\LaTeXe{}
 	\chapter{Einleitung}
-	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die berwachung der selbigen, reichte es in den 90er Jahren noch aus per Ping zu berwachen ob Rechner verfgbar sind, so wird heute ein sehr viel feineres Monitoring erwartet, nicht nur die Erreichbarkeit der Rechner soll berwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit *nix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
+	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). \\
+	
+In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
 		Überwachung der Serverauslastung
 		
@@ -70,15 +72,21 @@
 		\subsection{Warum Linux?}
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
+	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definiton von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
+	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
+	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring
+	\subsection{ITIL die Quelle allen Übels?}
 	\section{Definition Monitoring}
-	
 	\subsection{Allgemein}
 	\subsection{proaktives Monitoring}
 	\subsection{reaktives Monitoring}
 	\subsection{Verfügbarkeitsmonitoring}
+	\subsection{SLA Monitoring}
+	\subsection{Fazit}
+	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Vergleich mehrerer Monitoring Systeme für Linux Server}
-	In diesem Kapitel geht es um die 
+	In diesem Kapitel geht es darum, einen kleinen Überblick über die am Markt verfügbaren Monitoringsysteme zu geben.
 	\section{Performance \& SLA Monitoring}
 	\subsection{CheckMK}
 	
