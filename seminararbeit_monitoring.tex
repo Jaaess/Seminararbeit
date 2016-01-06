@@ -1,10 +1,12 @@
-\documentclass[12pt,a4paper]{scrreprt}
+\documentclass[12pt,a4paper,parskip]{scrreprt}
 \usepackage[english,german,ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+%http://www.namsu.de/Extra/pakete/Setspace.html
+\usepackage{setspace}
 \usepackage{makeidx}
 \makeindex
 \usepackage{graphicx}
@@ -14,7 +16,7 @@
 %\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
-%\usepackage{hyperref} %Klickbare Einträge im Glossar
+\usepackage{hyperref} %Klickbare Einträge im Glossar
 %\usepackage[toc,acronym]{glossaries}
 %\makeglossaries
 %\usepackage[nomain,acronym,xindy,toc]{glossaries} % nomain, if you define glossaries in a file, and you use \include{INP-00-glossary}
@@ -59,9 +61,11 @@
 	\tableofcontents
 	% Gibt das Latex Logo aus...Stelle? 
 	%\LaTeXe{}
+%Ab hier 1.5facher Zeilenabstand 
+	\onehalfspacing
 	\chapter{Einleitung}
-	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). \\
-	
+Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). \\
+
 In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
 		Überwachung der Serverauslastung
