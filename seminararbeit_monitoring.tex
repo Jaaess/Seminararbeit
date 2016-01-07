@@ -80,8 +80,10 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definiton von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
-	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring
+	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
+	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen.
 	\subsection{ITIL die Quelle allen Übels?}
+	Definition ITIL - ITIL \& Monitoring?
 	\section{Definition Monitoring}
 	\subsection{Allgemein}
 	\subsection{proaktives Monitoring}
@@ -95,11 +97,11 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\section{Performance \& SLA Monitoring}
 	\subsection{Nagios}
 	\subsubsection{Historie}
-	Nagios -> Kritik Weiterentwicklung
+	Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
 	Icinga
 	Fertige Lösung im Bundle mit mehr Tools
 	OMD -> checkmk Änderung im Subskriptionsmodell
-	check_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
+	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
 	Erläuterung GPLv2
@@ -110,26 +112,29 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Computer Associates Monitoring Systeme}
 	
 	\gls{ca}
-	
+	Bietet eine breite Palette an Tools
 	\subsubsection{Historie}
 	\subsubsection{Lizenzmodell}
 	\subsubsection{Funktionsumfang}
 	\section{Logfile Monitoring}
-	\subsection{Splunk Monitoring}
-	\subsection{Elasticsearch - Logstash - Kibana}
 	\subsection{Syslog-ng und Rsyslog}
+	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
-	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am Beispiel einer OMD Instanz}
+	\subsection{Splunk Monitoring}
+	\subsection{Elasticsearch - Logstash - Kibana}
+	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}. 
+	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am von Check\_MK \& ELK}
 	\section{Versuchsaufbau}
 	\subsection{verwendete Software}
-	
+	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check_by_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins & Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden.
 	\subsection{Konfiguration}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
 	\subsection{Überwachung einer Datenbank}
 	\section{Service Level Agreement Monitoring}
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
+	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
 	%\printnomenclature
