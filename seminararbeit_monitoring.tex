@@ -90,13 +90,16 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{SLA Monitoring}
 	\subsection{Fazit}
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
-	\chapter{Vergleich mehrerer Monitoring Systeme für Linux Server}
-	In diesem Kapitel geht es darum, einen kleinen Überblick über die am Markt verfügbaren Monitoringsysteme zu geben.
+	\chapter{Monitoring Systeme für Linux Server}
+	In diesem Kapitel geht es darum, einen kleinen Überblick über die am Markt verfügbaren Monitoringsysteme zu geben,der Einfachheit halber, wird an dieser Stelle jeweils ein kostenpflichtiges Tool und ein kostenfreies Tool vorgestellt. Dieser Überblick erhebt keinen Anspruch in irgendeiner Art und Weise vollständig zu sein.
 	\section{Performance \& SLA Monitoring}
-	\subsection{CheckMK}
-	
+	\subsection{Nagios}
 	\subsubsection{Historie}
+	Nagios -> Kritik Weiterentwicklung
+	Icinga
+	Fertige Lösung im Bundle mit mehr Tools
 	OMD -> checkmk Änderung im Subskriptionsmodell
+	check_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
 	Erläuterung GPLv2
@@ -115,10 +118,12 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
 	\subsection{Syslog-ng und Rsyslog}
+	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am Beispiel einer OMD Instanz}
 	\section{Versuchsaufbau}
 	\subsection{verwendete Software}
+	
 	\subsection{Konfiguration}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
