@@ -143,9 +143,16 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Fazit}
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
-	In diesem Kapitel geht es darum, einen kleinen Überblick über die am Markt verfügbaren Monitoringsysteme zu geben,der Einfachheit halber, wird an dieser Stelle jeweils ein kostenpflichtiges Tool und ein kostenfreies Tool vorgestellt. Dieser Überblick erhebt keinen Anspruch in irgendeiner Art und Weise vollständig zu sein.
+	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleich t auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. \\
+	
+	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym.
 	\section{Performance \& SLA Monitoring}
 	\subsection{Nagios}
+	\begin{figure}
+	\centering
+	\includegraphics[scale=.5]{pics/NagiosMonitoring.eps}
+    \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: „Monitoring“ von Diglinks in der Wikipedia auf Englisch - Übertragen aus en.wikipedia nach Commons durch Esquilo.. Lizenziert unter Gemeinfrei über Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Monitoring.png\#/media/File:Monitoring.png)}
+	\end{figure}
 	\begin{figure}
 	\centering
 	\includegraphics[]{pics/OMD_Schema.eps}
@@ -168,10 +175,10 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
-	\subsection{Splunk Monitoring}
+	%\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
 	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}. 
-	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am von Check\_MK \& ELK}
+	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Versuchsaufbau}
 	\subsection{verwendete Software}
 	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
