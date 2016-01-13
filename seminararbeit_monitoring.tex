@@ -114,19 +114,20 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 		
 		\gls{sla} Überwachung
 		\subsection{Warum Linux?}
+		Wie in der Einleitung schon beschrieben ist die Systemüberwachung von Linux Systemen eine der am einfachsten umzusetzenden, die Ergebnisse dieser Arbeit könnten von jedem Studenten der Informatik umgesetzt und bspw. für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, etc. genutzt werden. Darüberhinaus fallen bei Linux für das Betriebssystem keine Lizenzkosten.
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
 	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definiton von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
 	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
-	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Auch eine zunehmende Standardiisierung der IT Prozesse wie beispielsweise \gls{itil}\ (\glsdesc{itil}) tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
+	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \gls{itil}\ (\glsdesc{itil}) tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
 	\subsection{ITIL die Quelle allen Übels?}
 	Definition ITIL - ITIL \& Monitoring?
 	Definition SLA
 	Definition Servicelevel
-	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und die benötigten Tools für den zweiten Teil der Arbeit herauszuarbeiten.
-	\section{Definition Monitoring}
+	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
+	\section{Definition (Server-/System-)Monitoring}
 	\subsection{Allgemein}
 	Definition Monitoring
 	\subsection{proaktives Monitoring}
@@ -182,7 +183,23 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems am von Check\_MK \& ELK}
 	\section{Versuchsaufbau}
 	\subsection{verwendete Software}
-	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden.
+	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
+	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
+	\begin{center}
+	\begin{tabular}{|c|c|c|}
+	\hline 
+	eingesetzte Software & Version & Client oder Server \\ 
+	\hline 
+	Opensuse & 13.2 & Server\\ 
+	\hline 
+	Opensuse & Leap 42.1 & Client\\
+	\hline
+	Apache & 2.4 & Server\\
+	\hline
+	\end{tabular} 
+	\caption[Eingesetzte Softwareversionen]{Für den praktischen Teil der Arbeit eingesetzte Softwareversionen mit ihrem Einsatzort}
+	\end{center}
+	\end{table}
 	\subsection{Konfiguration}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
