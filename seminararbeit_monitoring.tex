@@ -70,7 +70,9 @@
 %\bibliography{seminararbeit_monitoring.bib} %U.u. deprecated
 % Anleitung zu BibLaTEX: http://biblatex.dominik-wassenhoven.de/download/DTK-2_2008-biblatex-Teil1.pdf
 \addbibresource{seminararbeit_monitoring.bib}
-\DeclareFieldFormat{url}{\newline\url{#1}}%
+%URLs im Literaturverzeichnis in eine neue Zeile schreiben
+%Quelle: http://www.golatex.de/biblatex-literaturverzeichnis-zeilenumbruch-vor-url-t8406.html
+\DeclareFieldFormat{url}{\newline URL: \url{#1} }
 \setuptoc{toc}{bibliography=totoc}
 % Abkürzungsverzeichnis mit Nomencl
 % siehe http://texwelt.de/wissen/fragen/4942/wie-kann-ich-die-erstellung-eines-abkurzungsverzeichnisses-mit-dem-paket-nomencl-automatisieren
@@ -195,9 +197,10 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\printbibliography 
 	\addchaptertocentry{}{Literatur}
 	%\addcontentsline{toc}{chapter}{Literatur}
-	
 	\endgroup
 	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
 	\printglossary[title=Glossar]
 	%\printglossaries	
+	\listoffigures % Abbildungsverzeichnis
+	\listoftables % Verzeichnis der Tabellen
 \end{document}
