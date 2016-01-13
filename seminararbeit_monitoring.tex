@@ -68,7 +68,9 @@
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
 %\bibliography{seminararbeit_monitoring.bib} %U.u. deprecated
+% Anleitung zu BibLaTEX: http://biblatex.dominik-wassenhoven.de/download/DTK-2_2008-biblatex-Teil1.pdf
 \addbibresource{seminararbeit_monitoring.bib}
+\DeclareFieldFormat{url}{\newline\url{#1}}%
 \setuptoc{toc}{bibliography=totoc}
 % Abkürzungsverzeichnis mit Nomencl
 % siehe http://texwelt.de/wissen/fragen/4942/wie-kann-ich-die-erstellung-eines-abkurzungsverzeichnisses-mit-dem-paket-nomencl-automatisieren
@@ -134,7 +136,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Verfügbarkeitsmonitoring}
 	Historie
 	\subsection{SLA Monitoring}
-	Einhaltung vereinbarter Servicelevel \footcite{iso20000sla}
+	Einhaltung vereinbarter Servicelevel \footcite[40]{iso20000sla}
 	\subsection{Fazit}
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
