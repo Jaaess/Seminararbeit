@@ -7,6 +7,9 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+\usepackage[style=authortitle-icomp,backend=biber]{biblatex}
+\usepackage[babel,german=guillemets]{csquotes}
+\addbibresource{seminararbeit_monitoring.bib}
 \author{Markus Österle}
 \title{Servermonitoring im Rechenzentrum}
 %\setbeamercovered{transparent} 
@@ -41,9 +44,13 @@
 \end{itemize}
 \end{frame}
 \begin{frame}{Monitoring}
-	Laut Duden: \\
+	%TODO: Hier lt. Duden oder korrektes Zitat?
+	Laut \cite[S. 701; Stichwort Monitoring]{duden}: \\
 	
-	\glqq [Dauer]beobachtung (eines bestehenden Systems)\grqq
+	\begin{center}
+		\glqq [Dauer]beobachtung (eines bestehenden Systems)\grqq
+	\end{center}
+	
 \end{frame}
 \begin{frame}{Proaktives Monitoring}
 	content...
