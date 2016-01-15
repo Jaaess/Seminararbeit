@@ -11,6 +11,8 @@
 \makeindex
 \usepackage{graphicx}
 %Für Quellcodeschnippsel
+%Für Bash Code Highlighting
+\usepackage{minted}
 %Anleitung: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 \usepackage{listings}
 \usepackage{color}
@@ -41,7 +43,7 @@
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
   stringstyle=\color{mymauve},     % string literal style
   tabsize=2,	                   % sets default tabsize to 2 spaces
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
@@ -205,9 +207,9 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\begin{center}
 	\begin{tabular}{|c|c|c|}
 	\hline 
-	eingesetzte Software & Version & Client oder Server \\ 
+	Eingesetzte Software & Version & Client oder Server \\ 
 	\hline 
-	VirtualBox & 5.0.10 & Virtualisierungslösung
+	VirtualBox & 5.0.10 & Virtualisierungslösung\\
 	\hline
 	Opensuse & 13.2 & Server\\ 
 	\hline 
@@ -215,17 +217,18 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\hline
 	Apache & 2.4 & Server\\
 	\hline
+	\acrshort{omd} & 2.11.20160108-labs-edition & Server\\
+	\hline
 	\end{tabular} 
 	\caption[Eingesetzte Softwareversionen]{Für den praktischen Teil der Arbeit eingesetzte Softwareversionen mit ihrem Einsatzort}
 	\end{center}
 	\end{table}
 	\subsection{Installation}
-	Um die Software und evtl. Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das mit folgendem Befehl:
-	\begin{lstlisting}[language=bash]
-	linux-l53r:~ # zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
+	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing 4.1 Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing 4.1, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit.
+	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]
+	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
+	zypper in omd
 	\end{lstlisting}
-	
-	
 	
 	\subsection{Konfiguration}
 	\section{Performancemonitoring}
