@@ -70,7 +70,7 @@
 %\bibliography{seminararbeit_monitoring.bib} %U.u. deprecated
 % Anleitung zu BibLaTEX: http://biblatex.dominik-wassenhoven.de/download/DTK-2_2008-biblatex-Teil1.pdf
 \addbibresource{seminararbeit_monitoring.bib}
-%URLs im Literaturverzeichnis in eine neue Zeile schreiben
+%So werden URLs im Literaturverzeichnis in eine neue Zeile geschrieben
 %Quelle: http://www.golatex.de/biblatex-literaturverzeichnis-zeilenumbruch-vor-url-t8406.html
 \DeclareFieldFormat{url}{\newline URL: \url{#1} }
 \setuptoc{toc}{bibliography=totoc}
@@ -90,10 +90,20 @@
 %\setlength{\nomitemsep}{-\parsep}
 %\makenomenclature
 % Ende Abkürzungsverzeichnis
-\author{Markus Österle}
-\title{Monitoring in Rechenzentren am Beispiel von Linux Systemen}
-\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
+
+
+
+
+
 \begin{document}
+	%TODO: Titelseite an die Erfordernisse anpassen
+	%http://golatex.de/wiki/Widmung
+	\subject{Seminararbeit im Studiengang \glqq Verwaltungsinformatik\grqq}
+	\author{Markus Österle}
+	\title{Servermonitoring in Rechenzentren}
+	\subtitle{am Beispiel von Linux Systemen}
+	\publishers{Betreut von Dipl. Inf. Stefan Müller}
+	\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
 
 	\maketitle
 	\setcounter{tocdepth}{3}
