@@ -167,12 +167,17 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Nagios}
 	\begin{figure}
 	\centering
-	\includegraphics[scale=.5]{pics/NagiosMonitoring.eps}
+	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
     \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: „Monitoring“ von Diglinks in der Wikipedia auf Englisch - Übertragen aus en.wikipedia nach Commons durch Esquilo.. Lizenziert unter Gemeinfrei über Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Monitoring.png\#/media/File:Monitoring.png)}
 	\end{figure}
 	\begin{figure}
+		\centering
+		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
+		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite[http://mathias-kettner.de/checkmk\_monitoring\_system.html]{checkmk})}
+	\end{figure}
+	\begin{figure}
 	\centering
-	\includegraphics[]{pics/OMD_Schema.eps}
+	\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
     \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
 	\end{figure}
 	\subsubsection{Historie}
@@ -190,6 +195,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	Erläuterung GPLv2
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
+	
 	\section{Logfile Monitoring}
 	\subsection{Syslog-ng und Rsyslog}
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
@@ -229,8 +235,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
 	zypper in omd
 	\end{lstlisting}
-	
 	\subsection{Konfiguration}
+	
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
 	\begin{lstlisting}[language=bash]
