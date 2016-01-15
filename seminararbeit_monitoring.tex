@@ -47,7 +47,7 @@
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 %Überflüssig, dank Dokumentenklasse scrreprt
-%\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
 \usepackage{hyperref} %Klickbare Einträge im Glossar
@@ -103,7 +103,7 @@
 %Ab hier 1.5facher Zeilenabstand 
 	\onehalfspacing
 	\chapter{Einleitung}
-Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). \\
+Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). 
 
 In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
@@ -130,6 +130,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\section{Definition (Server-/System-)Monitoring}
 	\subsection{Allgemein}
 	Definition Monitoring
+	Laut dem Duden handelt sich beim Monitoring um [Dauer]beobachtung (eines bestehenden Systems)\footcite[701; Stichwort Monitoring]{duden} 
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
 	Unter \glqq proaktiv\grqq\ versteht man 
@@ -143,9 +144,9 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Fazit}
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
-	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleich t auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. \\
+	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind.
 	
-	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym.
+	
 	\section{Performance \& SLA Monitoring}
 	\subsection{Nagios}
 	\begin{figure}
@@ -159,6 +160,9 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
     \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
 	\end{figure}
 	\subsubsection{Historie}
+	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint \grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
+	\footcite{nagioshistory} \footcite{nagiosnamefaq}
+	
 	Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
 	Icinga, Shinken
 	check\_mk als Bundle Lösung die verschiedene Backends bereithält, inkl. mittlerweilen eigenem Backend (Microkernel)
@@ -198,6 +202,14 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\caption[Eingesetzte Softwareversionen]{Für den praktischen Teil der Arbeit eingesetzte Softwareversionen mit ihrem Einsatzort}
 	\end{center}
 	\end{table}
+	\subsection{Installation}
+	Um die Software und evtl. Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das mit folgendem Befehl:
+	\begin{lstlisting}[language=bash]
+	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo.
+	\end{lstlisting}
+	
+	
+	
 	\subsection{Konfiguration}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
