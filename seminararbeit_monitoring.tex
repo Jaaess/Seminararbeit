@@ -7,6 +7,10 @@
 \usepackage{amssymb}
 %http://www.namsu.de/Extra/pakete/Setspace.html
 \usepackage{setspace}
+%Fußnoten werden das ganze Dokument über durchgezählt
+%Quelle: http://golatex.de/nummerierung-der-fussnoten-durchgehend-im-gesamten-dokument-t2042.html
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
 \usepackage{makeidx}
 \makeindex
 \usepackage{graphicx}
@@ -119,17 +123,21 @@ Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld
 
 In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
+	%TODO kritische Betriebszustände definieren?
+	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über seine Systeme zu haben, dies macht es zum einen möglich schnell auf kritische Betriebszustände zu erkennen und zu beheben. Zum anderen um gegenüber der Führungsebene Material für eventuelle Rechtfertigungen zu haben am besten grafisch aufbereitet und selbsterklärend.
 	
 		Überwachung der Serverauslastung
 		
 		Proaktive Erkennung von (Hardware)Defekten
 		
 		\gls{sla} Überwachung
-		\subsection{Warum Linux?}
-		Wie in der Einleitung schon beschrieben ist die Systemüberwachung von Linux Systemen eine der am einfachsten umzusetzenden, die Ergebnisse dieser Arbeit könnten von jedem Studenten der Informatik umgesetzt und bspw. für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, etc. genutzt werden. Darüberhinaus fallen bei Linux für das Betriebssystem keine Lizenzkosten.
+	\section{Warum Linux?}
+	Systemüberwachung ist natürlich für alle Komponenten im Rechenzentrum wichtig, begonnen bei der Basisversorgung (Strom, Kühlung) über die grundlegende Infrastruktur (Netzwerkinfrastruktur, evtl. Storageinfrastruktur)bis zu den einzelnen Systemen (natürlich quer über die Betriebssystemgrenzen hinweg). Mit den später in dieser Arbeit vorgestellten Lösungen können viele dieser Felder abgedeckt werden, eine genaue Beschreibung des wie würde allerdings den (sowohl den zeitlichen als auch den mengenmäßigen) Rahmen der Arbeit sprengen. Deshalb werden wir uns in der Folge auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand und geistige Eigenleistung (Anleitungen und Code für vieles gibt es bereits im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
+	%TODO Verbreitung von Linux im Serverbereich Grafik und Quelle
+		
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
-	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definiton von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
+	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definition von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
 	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
@@ -166,6 +174,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\section{Performance \& SLA Monitoring}
 	%TODO: Warum Check_MK, warum nicht OMD, Vielfalt der Systeme OMD, Check_MK, OMD Lab Edition, bei ursprünglicher OMD auf der Seite nichts passiert, hinter den Kulissen aber schon, warum empfiehlt es sich trotzdem über eine Subskription nachzudenken (Förderung OS Gedanken, Professionieller Support und Schulung, mehr Features die erst später irgendwann in der freien Version ankommen)
 	\subsection{Nagios}
+	%TODO: Nagios als Kern, mit wenigen zusätzlichen Funktionen, die Funktionsumfänge die wir in der großen Version sehen werden mit externen Programmen realisiert.
 	\begin{figure}
 	\centering
 	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
@@ -193,7 +202,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
-	Erläuterung GPLv2
+	Erläuterung GPLv2 \footcite{gplv2de}\footcite{gplv2en}
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
 	
@@ -204,7 +213,10 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\footcite{systemd2015}
 	%\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
-	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}. 
+	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}.
+	\subsubsection{Elasticsearch}
+	\subsubsection{Logstash}
+	\subsubsection{Kibana}
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Versuchsaufbau}
 	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
@@ -235,6 +247,10 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]
 	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
 	zypper in omd
+	
+	wget https://mathias-kettner.de/support/1.2.6p15/check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
+	zypper in check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
+	omd setup
 	\end{lstlisting}
 	\subsection{Konfiguration}
 	
@@ -249,6 +265,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
 	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
+	\section{Logfile Monitoring}
+	
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
 	%\printnomenclature
 	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
