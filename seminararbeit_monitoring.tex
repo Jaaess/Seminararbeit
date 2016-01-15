@@ -139,8 +139,12 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
 	\section{Definition (Server-/System-)Monitoring}
 	\subsection{Allgemein}
-	Definition Monitoring
-	Laut dem Duden handelt sich beim Monitoring um [Dauer]beobachtung (eines bestehenden Systems)\footcite[S. 701; Stichwort Monitoring]{duden} 
+	%TODO Definition Monitoring
+	Laut dem Duden handelt sich beim Monitoring um
+	\begin{center}
+		\glqq[Dauer]beobachtung (eines bestehenden Systems)\grqq\footcite[S. 701; Stichwort Monitoring]{duden}
+	\end{center}
+	Dieser Definition ist auch aus Informatikersicht nicht mehr allzuviel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt.
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
 	Unter \glqq proaktiv\grqq\ versteht man 
@@ -194,6 +198,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}. 
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Versuchsaufbau}
+	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
 	\subsection{verwendete Software}
 	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
 	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
@@ -202,6 +207,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\hline 
 	eingesetzte Software & Version & Client oder Server \\ 
 	\hline 
+	VirtualBox & 5.0.10 & Virtualisierungslösung
+	\hline
 	Opensuse & 13.2 & Server\\ 
 	\hline 
 	Opensuse & Leap 42.1 & Client\\
@@ -215,7 +222,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\subsection{Installation}
 	Um die Software und evtl. Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das mit folgendem Befehl:
 	\begin{lstlisting}[language=bash]
-	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo.
+	linux-l53r:~ # zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
 	\end{lstlisting}
 	
 	
@@ -228,6 +235,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\end{lstlisting} \footcite{checkmkCheckBySSH2015}
 	\subsection{Überwachung einer Datenbank}
 	\section{Service Level Agreement Monitoring}
+	%TODO Beschreibung anhand der Verfügbarkeit einer Webseite
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
 	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
