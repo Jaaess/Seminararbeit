@@ -34,14 +34,6 @@
 	\item Wie wird es gemacht? - verwendete Software
 \end{itemize}
 \end{frame}
-\begin{frame}{Definitionen}
-\begin{itemize}
-	\item Monitoring
-	\item proaktives Monitoring
-	\item reaktives Monitoring
-	\item SLA Monitoring
-\end{itemize}
-\end{frame}
 \begin{frame}{Monitoring}
 	%TODO: Hier lt. Duden oder korrektes Zitat?
 	Laut \cite[S. 701; Stichwort Monitoring]{duden}: \\
@@ -51,18 +43,30 @@
 	\end{center}
 	
 \end{frame}
+\begin{frame}{Arten des Monitorings}
+	\begin{itemize}
+		\item proaktives Monitoring
+		\item reaktives Monitoring
+		\item SLA Monitoring
+	\end{itemize}
+\end{frame}
 %TODO Warum Monitoring hier oder unten?
 \begin{frame}{Proaktives Monitoring}
-	content...
+	\begin{center}
+		Monitoring, bei dem versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.
+	\end{center}
+	 
 \end{frame}
 \begin{frame}{Reaktives Monitoring}
-	content...
+	\begin{center}
+		Monitoring, das als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen einleitet. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incident, wenn ein Fehler auftritt. 
+	\end{center}
 \end{frame}
 \begin{frame}{SLA Monitoring}
 	Definition SLA \\
 	Definition SLA Monitoring
 \end{frame}
-\begin{frame}{Warum Monitoring}
+\begin{frame}{Warum Monitoring?}
 	content...
 \end{frame}
 \begin{frame}{Nagios Historie}
@@ -75,8 +79,15 @@
 	content...
 \end{frame}
 \begin{frame}{Check\_MK - die Lösung}
-	content...
+	%TODO Check_MK Screenshot
 \end{frame}
+\begin{frame}{Check\_MK - Aufbau}
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
+		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
+	\end{figure}
+\end{frame}{Check\_MK - Aufbau}
 \begin{frame}{Fürs Protokoll: Ein Elch - Elasticsearch - Logstash - Kibana}
 
 \end{frame}
