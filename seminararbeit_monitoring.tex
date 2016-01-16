@@ -124,7 +124,7 @@ Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld
 In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
 	%TODO kritische Betriebszustände definieren?
-	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über seine Systeme zu haben, dies macht es zum einen möglich schnell auf kritische Betriebszustände zu erkennen und zu beheben. Zum anderen um gegenüber der Führungsebene Material für eventuelle Rechtfertigungen zu haben am besten grafisch aufbereitet und selbsterklärend.
+	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über seine Systeme zu haben, dies macht es zum einen möglich schnell auf kritische Betriebszustände zu reagieren und diese zu beheben. Zum anderen um gegenüber der Führungsebene Material für eventuelle Rechtfertigungen zu haben am besten grafisch aufbereitet und selbsterklärend.
 	
 		Überwachung der Serverauslastung
 		
@@ -140,12 +140,14 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definition von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
-	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
-	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \gls{itil}\ (\glsdesc{itil}) tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
+	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusätzlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
+	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \acrfull{itil} tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
 	\subsection{ITIL die Quelle allen Übels?}
 	Definition ITIL - ITIL \& Monitoring?
-	Definition SLA
-	Definition Servicelevel
+	\acrfull{itil}
+	%TODO Definition SLA
+	Unter \acrfull{sla} versteht man bei ITIL 
+	%TODO Definition Servicelevel
 	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
 	\section{Definition (Server-/System-)Monitoring}
 	\subsection{Allgemein}
@@ -154,7 +156,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\begin{center}
 		\glqq[Dauer]beobachtung (eines bestehenden Systems)\grqq\footcite[S. 701; Stichwort Monitoring]{duden}
 	\end{center}
-	Dieser Definition ist auch aus Informatikersicht nicht mehr allzuviel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt.
+	Dieser Definition ist auch aus Informatikersicht nicht mehr allzu viel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt.
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
 	Unter \glqq proaktiv\grqq\ versteht man 
@@ -250,6 +252,9 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	
 	wget https://mathias-kettner.de/support/1.2.6p15/check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
 	zypper in check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
+	
+	dpkg -i check-mk-raw-1.2.6p15-sles12-34.x86_64.deb
+	apt-get -f install
 	omd setup
 	\end{lstlisting}
 	\subsection{Konfiguration}
