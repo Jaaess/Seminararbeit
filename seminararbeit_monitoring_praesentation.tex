@@ -1,4 +1,4 @@
-\documentclass[11pt]{beamer}
+\documentclass[12pt]{beamer}
 \usetheme{Madrid}
 \usepackage[utf8]{inputenc}
 \usepackage[english,german]{babel}
@@ -10,6 +10,7 @@
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
 \addbibresource{seminararbeit_monitoring.bib}
+\makeindex
 \author{Markus Österle}
 \title{Servermonitoring im Rechenzentrum}
 %\setbeamercovered{transparent} 
@@ -64,22 +65,58 @@
 	\end{center}
 \end{frame}
 \begin{frame}{SLA Monitoring}
-	Definition SLA \\
-	Definition SLA Monitoring
+	Service Level Agreement (SLA):\\
+	
+	Vereinbarung zwischen IT-Dienstleister und Kunde\\
+	
+	%Grundsatz: 
+	%Niemals ein SLA vereinbaren, dass man nicht messen kann
+	%Niemals ein SLA vereinbaren, dessen Leistungserbringung nicht im eigenen Verantwortungsbereich liegt
+	SLA Monitoring:\\
+	
+	Überwacht die Einhaltung der im SLA festgelegten Kennzahlen (Verfügbarkeit, Zuverlässigkeit, Durchsatz, Antwortzeiten) nach den vereinbarten Messkriterien innerhalb der vereinbarten Zeiten.
 \end{frame}
 \begin{frame}{Warum Monitoring?}
-	content...
+	\begin{itemize}
+		\item ITIL
+		
+	\end{itemize}
 \end{frame}
 \begin{frame}{Was wird überwacht?}
+	\begin{center}
+		\begin{itemize}
+			\item Netzwerkkomponenten
+			\item 
+		\end{itemize}
+	\end{center}
+	
 	
 \end{frame}
 \begin{frame}{Wie wird überwacht?}
-	Linux hat große Mengen Tools dabei um viele sinnvolle Werte aus dem System zu bekommen. Das Sysstat - Paket mit der Möglichkeit Performancedaten über SAR sogar historisch schreiben zu lassen oder TOP mit seinen Derivaten (atop, htop, iotop)
+	\begin{itemize}
+		%TODO Was heißt SAR
+		%iotop -> Festplatten, htop -> grafisch schickeres top, volle Ausgabe der laufenden Prozesse mit allen Optionen, atop -> Advanced top, ntop -> top fürs Netzwerk
+		\item Bordmitteln (sysstat-Paket, top und seine Derivate)
+		\item zentrale Monitoring-Lösung
+		\begin{itemize}
+			\item Nagios
+			\item 
+		\end{itemize}
+	\end{itemize}
+	%Linux hat große Mengen Tools dabei um viele sinnvolle Werte aus dem System zu bekommen. Das Sysstat - Paket mit der Möglichkeit Performancedaten über SAR sogar historisch schreiben zu lassen oder TOP mit seinen Derivaten (atop, htop, iotop)
 \end{frame}
 \begin{frame}{Warum Nagios?}
-	content...
+	\begin{itemize}
+		\item Mächtiges und modular erweiterbares Tool
+		\item OpenSource
+		\item Lizenz: GPLv2
+	\end{itemize}
 \end{frame}
 \begin{frame}{Nagios Historie}
+	seit auf dem Markt, zuerst als Netsaint
+	%TODO rekursives Acronym erklären -> Zettel
+	rekursives Acronym
+	
 
 \end{frame}
 \begin{frame}{Nagios - Aufbau}
@@ -98,6 +135,7 @@
 \end{frame}
 \begin{frame}{Check\_MK - die Lösung}
 	%TODO Check_MK Screenshot
+	
 \end{frame}
 \begin{frame}{Check\_MK - Aufbau}
 	\begin{figure}
@@ -115,5 +153,11 @@
 \end{frame}
 \begin{frame}{Quellen}
 	\printbibliography
+\end{frame}
+\begin{frame}{Ende}
+	\begin{center}
+	Danke für die Aufmerksamkeit!
+	\end{center}
+	
 \end{frame}
 \end{document}
