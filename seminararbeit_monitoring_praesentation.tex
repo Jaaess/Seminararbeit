@@ -1,4 +1,6 @@
-\documentclass[12pt]{beamer}
+%\documentclass[12pt,notes]{beamer}       % print frame + notes
+%\documentclass[12pt,notes=only]{beamer}   % only notes
+\documentclass[12pt]{beamer}              % only frames
 \usetheme{Madrid}
 \usepackage[utf8]{inputenc}
 \usepackage[english,german]{babel}
@@ -13,6 +15,7 @@
 \makeindex
 \author{Markus Österle}
 \title{Servermonitoring im Rechenzentrum}
+%\subtitle{am Beispiel von Linux Servern}
 %\setbeamercovered{transparent} 
 %\setbeamertemplate{navigation symbols}{} 
 %\logo{} 
@@ -36,6 +39,10 @@
 	\item Wie wird es gemacht? - verwendete Software
 \end{itemize}
 \end{frame}
+\note[itemize]{
+	\item point 1
+	\item point 2
+}
 \begin{frame}{Monitoring}
 	%TODO: Hier lt. Duden oder korrektes Zitat?
 	Laut \cite[S. 701; Stichwort Monitoring]{duden}: \\
@@ -78,9 +85,11 @@
 \end{frame}
 \begin{frame}{Warum Monitoring?}
 	\begin{itemize}
-		\item ITIL
+		\item standardisierte Prozesse/Abläufe
 		\item Schutz vor Systemausfällen
-		
+		\item Überblick über den Systemstatus
+		\item Nachweis von Verfügbarkeit
+		\item Reporting
 	\end{itemize}
 \end{frame}
 \begin{frame}{Was wird überwacht?}
@@ -117,6 +126,7 @@
 		\begin{itemize}
 			\item proprietäre Lösung
 			%CA Unified Infrastructure Management
+			\item Cacti
 			\item Nagios \& Derivate
 		\end{itemize}
 	\end{itemize}
@@ -132,14 +142,12 @@
 		\item keine Lizenzkosten
 	\end{itemize}
 \end{frame}
-\begin{frame}{Nagios Historie}
-	1996 als simple Ping Check Lösung 
-	seit 1999 auf dem Markt, zuerst als Netsaint
-	%TODO rekursives Acronym erklären -> Zettel
-	rekursives Acronym
-	
-
-\end{frame}
+%\begin{frame}{Nagios Historie}
+%	1996 als simple Ping Check Lösung 
+%	seit 1999 auf dem Markt, zuerst als Netsaint
+%	%TODO rekursives Acronym erklären -> Zettel
+%	rekursives Acronym
+%\end{frame}
 \begin{frame}{Nagios - Aufbau}
 	%TODO Aktive/Passive Checks was ist das...
 	%Aktiv: in regelmäßigen definierten Abständen werden Programme ("checks") aufgerufen, die ein Überprüfung durchführen, Rückgabewerte werden ausgewertet, besteht ein Fehler über eine bestimmte Zeit wechselt der Status und es wird eine Benachrichtigung verschickt
@@ -172,11 +180,11 @@
 	\end{figure}
 \end{frame}
 \begin{frame}{Fürs Protokoll: Ein Elch - Elasticsearch - Logstash - Kibana}
-\begin{itemize}
-	\item Elasticsearch
-	\item Logstash
-	\item Kibana
-\end{itemize}
+\begin{figure}
+		\centering
+		\includegraphics[width=1\textwidth]{pics/elk-stack.eps}
+		\caption[Aufbau eines Elasticsearch - Logstash - Kibana Stacks]{Aufbau eines Elasticsearch - Logstash - Kibana Stacks (Quelle: \textcite{elkstackpic})}
+	\end{figure}
 \end{frame}
 \begin{frame}{Quellen}
 	\printbibliography
