@@ -86,8 +86,22 @@
 \begin{frame}{Was wird überwacht?}
 	\begin{center}
 		\begin{itemize}
-			\item Netzwerkkomponenten
-			\item 
+			\item Grundlegende Überwachung
+			\begin{itemize}
+				\item Erreichbarkeit
+				%Alle Serverdienste erreichbar, Server erreichbar, Netzwerk soweit ok
+			\end{itemize}
+			\item Erweiterte Überwachung
+			\begin{itemize}
+				\item Auslastung
+				\item Freier Platz
+			\end{itemize}
+			\item Spezialisierte Überwachung
+			\begin{itemize}
+				\item Temperatur im Serverraum
+				\item Stromversorgung
+				%Hierfür wird individuell Hard- und Software nötig
+			\end{itemize}
 		\end{itemize}
 	\end{center}
 	
@@ -97,25 +111,30 @@
 	\begin{itemize}
 		%TODO Was heißt SAR
 		%iotop -> Festplatten, htop -> grafisch schickeres top, volle Ausgabe der laufenden Prozesse mit allen Optionen, atop -> Advanced top, ntop -> top fürs Netzwerk
-		\item Bordmitteln (sysstat-Paket, top und seine Derivate)
+		\item Bordmitteln (sysstat-Paket (sar, iostat), top und seine Derivate)
+		%Linux hat große Mengen Tools dabei um viele sinnvolle Werte aus dem System zu bekommen. Das Sysstat - Paket mit der Möglichkeit Performancedaten über SAR sogar historisch schreiben zu lassen oder TOP mit seinen Derivaten (atop, htop, iotop)
 		\item zentrale Monitoring-Lösung
 		\begin{itemize}
-			\item Nagios
-			\item 
+			\item proprietäre Lösung
+			%CA Unified Infrastructure Management
+			\item Nagios \& Derivate
 		\end{itemize}
 	\end{itemize}
-	%Linux hat große Mengen Tools dabei um viele sinnvolle Werte aus dem System zu bekommen. Das Sysstat - Paket mit der Möglichkeit Performancedaten über SAR sogar historisch schreiben zu lassen oder TOP mit seinen Derivaten (atop, htop, iotop)
+	
 \end{frame}
 \begin{frame}{Warum Nagios?}
 	\begin{itemize}
 		\item Mächtiges und modular erweiterbares Tool
 		\item Kann nahezu alle verfügbaren IT-System überwachen
 		%inkl. Android...
-		\item Lizenz: GPLv2
+		\item freie Software unter der GPL Lizenz
+		%GPLv2
+		\item keine Lizenzkosten
 	\end{itemize}
 \end{frame}
 \begin{frame}{Nagios Historie}
-	seit auf dem Markt, zuerst als Netsaint
+	1996 als simple Ping Check Lösung 
+	seit 1999 auf dem Markt, zuerst als Netsaint
 	%TODO rekursives Acronym erklären -> Zettel
 	rekursives Acronym
 	
@@ -123,6 +142,8 @@
 \end{frame}
 \begin{frame}{Nagios - Aufbau}
 	%TODO Aktive/Passive Checks was ist das...
+	%Aktiv: in regelmäßigen definierten Abständen werden Programme ("checks") aufgerufen, die ein Überprüfung durchführen, Rückgabewerte werden ausgewertet, besteht ein Fehler über eine bestimmte Zeit wechselt der Status und es wird eine Benachrichtigung verschickt
+	%Passiv: Ein Dienst meldet einen Fehler, die Meldung wird ausgewertet, die zuständige Person wird informiert.
 	\begin{figure}
 		\centering
 		\includegraphics[width=0.9\textwidth]{pics/NagiosMonitoring.eps}
@@ -132,12 +153,16 @@
 \begin{frame}{Nagios - Probleme}
 	\begin{itemize}
 		\item Mächtiges modular erweiterbares Tool
-		\item 
+		\item Für eine Grundkonfiguration ist schon einiges an Wissen notwendig
 	\end{itemize}
 \end{frame}
 \begin{frame}{Check\_MK - die Lösung}
-	%TODO Check_MK Screenshot
-	
+	%Brot & Butter Monitoring
+	\begin{figure}
+		\centering
+		\includegraphics[width=1\textwidth]{pics/Check_MK_Screen.eps}
+		\caption[Check\_MK]{Check\_MK}
+	\end{figure}
 \end{frame}
 \begin{frame}{Check\_MK - Aufbau}
 	\begin{figure}
