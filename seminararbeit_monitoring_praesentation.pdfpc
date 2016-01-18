@@ -5,7 +5,7 @@ seminararbeit_monitoring_praesentation.pdf
 [notes]
 ### 1
 ### 2
-### 4 
+### 4
 ITIL beschriebt was, nicht wie
 ### 5
 Bspw. bestimmte Logeinträge vor einem Ausfall von Platten, SAN Infrastruktur
@@ -25,9 +25,7 @@ Spezialisierte Überwachung: Hierfür wird individuell Hard- und Software nötig
 proprietär: bedeutet in Eigentum befindlich, im Bezug auf Software wird der Begriff immer verwendet wenn Programme unter einer nicht "freien" Lizenz stehen, selbst dann wenn ihr Quellcode offen gelegt ist.
 proprietäre Lösung: bspw. CA Monitoring
 Cacti: im Endeffekt ein Performancemonitor, der Performancedaten die vorher mittels Skript oder per SNMP eingesammelt wurden mittels Tobias Oetikers RRDtool visualisiert (RRD Round Robin Database -> Ringpuffer)
-Nagios Derivate:
-Seit 1996 zuerst als Ping Tool
-Seit 1999 als NetSaint als Überwachungstool
+Seit 1996 zuerst als Ping Tool, seit 1999 als NetSaint als Überwachungstool
 Seit 2002 N.A.G.I.O.S wegen Urheberrechten amm Namen NetSaint
 Nagios rekursives Acronym: Nagios Ain’t Gonna Insist On Sainthood
 Ethan Galsted kein einfacher Mensch
