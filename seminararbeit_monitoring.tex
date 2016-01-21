@@ -150,8 +150,10 @@
 	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definition von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
 	%TODO Ausformulieren und deutsche Sätze draus machen
+	Zu Beginn der IT Zeit, als die 
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
 	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusätzlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
+	Es 
 	Top und seine Derivate, iostat \& SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen.
 	Cacti und RRDTool
 	Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Verschiedene Logserver (Syslog-ng, rsyslog, systemd).
@@ -183,6 +185,10 @@
 	\subsection{Verfügbarkeitsmonitoring}
 	Historie
 	\subsection{SLA Monitoring}
+	Unter einem \acrfull{sla} versteht man in ITIL eine \glqq Vereinbarung zwischen einem \acrshort{it} Service Provider und einem Kunden, der einen zu erbringenden Service und dessen Service Level inklusive Service Level-Zielen, Verantwortlichkeiten von \acrshort{it} Service Provider und Kunde genau definiert. Ein \acrshort{sla} kann mehrere IT Services oder Kunden abdecken.\grqq \footcite[S. 732; Stichwort: Service Level Agreement]{ebelitilv3} Die im \acrshort{sla} vereinbarten Service Level-Ziele sollten SMART sein und auf KPIs basieren, d.h. mess- und überprüfbar sein.\footcite[S. 733; Stichwort: Service Level-Ziele]{ebelitilv3}
+	
+	Beim SLA Monitoring geht es darum die Einhaltung der vereinbarten Service Level-Ziele zu überwachen und sinnvoller Weise in Form von Reportings für die Kunden und die Kollegen vom Service Level Management (die Stelle die lt. \acrshort{itil} für die Verhandlung und Vereinbarung des \acrshort{sla} zuständig ist) aufzubereiten und zur Verfügung zu stellen.
+	%TODO Fußnote noch an den Text nach oben ziehen.
 	Einhaltung vereinbarter Servicelevel \footcite[40]{iso20000sla}
 	\subsection{Fazit}
 	%TODO ITIL Begrifflichkeit vs. technische Begrifflichkeit, also proaktiv, reaktiv, SLA vs. Basis, erweitertes, spezialisiertes Monitoring
@@ -240,7 +246,8 @@
 	Außerdem muss festgelegt werden ob und wer 24/7 (also 24h am Tag, sieben Tage die Woche) über aufgetretene Fehler informiert werden muss/soll.
 	\subsection{Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?}
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
-	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
+	Bei der Recherche nach Monitoringtools für Linux Systeme stößt man auf verschiedenste Lösungen, da wären zum einen die Lösungen die lokal auf jedem Server zu installieren sind, der Performance Monitor \textit{top} und seine Derivate (atop, iotop, htop, ntop) oder das Systat-Paket\footcite{sysstat} mit seinen Komponenten (\acrlong{bspw} SAR\footcite{sarkrenn}, iostat). Allerdings haben alle diese Programme das Problem, dass ich mich auf dem Server anmelden muss um Informationen zu bekommen, einzig bei SAR hätte ich die Möglichkeit, die per Cronjob generierten Dateien per Skript einzusammeln und auf einem zentralen Server mit einem Tool wie KSar\footcite{ksar} grafisch auszuwerten.
+	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq\ und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
 	
 	Icinga
 	Shinken
@@ -268,6 +275,8 @@
 	\end{figure}
 	\subsubsection{Historie}
 	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
+	
+	Die Programmierarbeiten am Vorgänger von Nagios begannen im Jahr 1998, als Galstad beschloß in das Geschäft mit Monitoringsystemen einzusteigen. Die verbesserte Applikation lief unter Linux und wurde im Jahr 1999 unter dem Namen NetSaint als OpenSource veröffentlicht. Ethan Galstad nahm an das vielleicht ein Dutzend Menschen an der Anwendung interessiert sein könnten (wie soft in der IT Geschichte eine Fehleinschätzung).
 	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint \grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
 	\footcite{nagioshistory} \footcite{nagiosnamefaq}
 	
@@ -279,6 +288,8 @@
 	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
+	Der Kern der Nagios Umgebung und die Plugins stehen unter der GPLv2
+	%TODO weiter ausformulieren
 	Erläuterung GPLv2 \footcite{gplv2de}\footcite{gplv2en}
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
