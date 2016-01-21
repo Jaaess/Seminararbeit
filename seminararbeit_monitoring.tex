@@ -209,7 +209,27 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 		\textbf{Nur mit individueller Hard- und Software realisierbar (Beispielsweise Überwachungsmodule in den Schaltschränken und Sensorik in den Rechnerräumen )}
 	\end{itemize}
 	\subsection{Wie kann überwacht werden?}
+	Im wesentlichen können an dieser Stelle zwei Arten der Überwachung unterschieden werden:
+	\begin{itemize}
+		\item Aktive Überwachung
+		\begin{itemize}
+		\item In regelmäßigen Abständen werden Programme ausgeführt, die eine Überprüfung durchführen
+		\item Die Rückgabewerte werden ausgewertet
+		\item Besteht ein Fehler über längere Zeit (bzw. über einen definierten Zeitraum hinaus) wird ein Zuständiger informiert
+		\end{itemize}
+		\item Passive Überwachung
+		\begin{itemize}
+			\item Ein Dienst, Server, Agent, o.ä. meldet einen Fehler
+			\item Die Eingabe wird ausgewertet
+			\item Je nach Ereignis und Konfiguration wird ein Zuständiger informiert
+		\end{itemize}
+	\end{itemize}
 	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	Diese Frage ist in den meisten (größeren) Unternehmen und Behörden gar nicht so einfach zu beantworten, da die Aufgabengebiete unterteilt sind und es unter Umständen schwierig ist die passende Person zu informieren, da die (technische) Abbildung von Zuständigkeiten an vielen Stellen kompliziert bis nicht möglich ist. 
+	
+	Weiter stellt sich das Problem das nicht bei jedem Ausfall die gleichen Personen zu benachrichtigen sind:
+	So kann es sich beim Ausfall eines Servers um vielfältige Probleme handeln, \acrlong{bspw} ein Betriebssystem- oder ein Netzwerkproblem.
+	Außerdem muss festgelegt werden ob und wer 24/7 (also 24h am Tag, sieben Tage die Woche) über aufgetretene Fehler informiert werden muss/soll.
 	\subsection{Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?}
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
 	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
@@ -322,7 +342,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	%\printnomenclature
 	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
 	\begingroup
-	\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
+	%\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
 	\printbibliography 
 	\addchaptertocentry{}{Literatur}
 	%\addcontentsline{toc}{chapter}{Literatur}
