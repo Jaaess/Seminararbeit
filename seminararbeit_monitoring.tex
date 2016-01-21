@@ -166,10 +166,12 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	Dieser Definition ist auch aus Informatikersicht nicht mehr allzu viel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt.
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
-	Unter \glqq proaktiv\grqq\ versteht man 
-	Unter \glqq proaktivem Monitoring\grqq\ versteht man bei ITIL: \glqq Das proaktive Monitoring in seiner Überwachung achtet auf bestimmte Verhaltensmuster (Patterns), um künftige Ausfälle vorauszusehen. \grqq\ 
-	Notwendig möglichst viele Informationen zu haben um Muster erkennen zu können.
+	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
 	\subsection{reaktives Monitoring}
+	\glqq Reaktives Monitoring ist eine Form der Überwachung, bei der als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen eingeleitet werden. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incidents, wenn ein Fehler auftritt\grqq
+	\footcite[S. 511]{ebelitilv3}
+	
+	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt. 
 	\subsection{Verfügbarkeitsmonitoring}
 	Historie
 	\subsection{SLA Monitoring}
@@ -178,24 +180,60 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	%TODO ITIL Begrifflichkeit vs. technische Begrifflichkeit, also proaktiv, reaktiv, SLA vs. Basis, erweitertes, spezialisiertes Monitoring
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
-	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind.
+
+	Nachdem wir im vorherigen Kapitel einige grundlegende Begriffe bereits geklärt haben, ist es nun an der Zeit uns Gedanken darüber zu machen, wie ein Monitoring aussehen könnte und was es alles leisten sollte. 
+	%TODO Layout und Überschriftsposition so in Ordnung?
+	\section{Grundlegende Überlegungen}
+	Die wesentlichen Fragen\footcite[nach][]{veltnagios1} vor Beginn einer Implementierung einer Monitoring Lösung sollten sein:
+	\begin{itemize}
+		\item Was soll überwacht werden?
+		\item Wie kann überwacht werden?
+		\item Wer soll im Fehlerfall benachrichtigt werden?
+		\item Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?
+		\item Welche Software ist für meine Zwecke am besten geeignet?
+	\end{itemize}
+	\subsection{Was soll überwacht werden?}
+	Hier kann man die Themenbereiche grob in drei Stufen der Überwachung einteilen, die drei Stufen gruppieren die Anforderungen entsprechend dem Aufwand
+	\begin{itemize}
+		\item Grundlegende Überwachung
+		
+		Stufe mit dem wenigsten Aufwand, hier wird im wesentlichen kontrolliert ob alle Server und Serverdienste erreichbar sind und ob die Netzwerkinfrastruktur in Ordnung ist.\\
+		\textbf{Mit TCP/IP realisierbar}
+		\item Erweiterte Überwachung
+		
+		Beispielsweise Auslastung von Routern \& Switchports oder Auslastung von Servern, freier Platz auf Festplatten, Datenbanken\\
+		\textbf{Mit Hilfe von speziellen Protokollen, z.B. \acrshort{snmp} oder applikationsbezogenen Werkzeugen realisierbar}
+		\item Spezialisierte Überwachung
+		
+		Temperaturüberwachung der \acrshort{dv}-Räume, Qualität der Stromversorgung, aktuelle Netzlast der einzelnen Serverräume\\
+		\textbf{Nur mit individueller Hard- und Software realisierbar (Beispielsweise Überwachungsmodule in den Schaltschränken und Sensorik in den Rechnerräumen )}
+	\end{itemize}
+	\subsection{Wie kann überwacht werden?}
+	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	\subsection{Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?}
+	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
+	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
+	
+	Icinga
+	Shinken
+	OMD: Check\_MK
 	
 	
 	\section{Performance \& SLA Monitoring}
 	%TODO: Warum Check_MK, warum nicht OMD, Vielfalt der Systeme OMD, Check_MK, OMD Lab Edition, bei ursprünglicher OMD auf der Seite nichts passiert, hinter den Kulissen aber schon, warum empfiehlt es sich trotzdem über eine Subskription nachzudenken (Förderung OS Gedanken, Professionieller Support und Schulung, mehr Features die erst später irgendwann in der freien Version ankommen)
 	\subsection{Nagios}
 	%TODO: Nagios als Kern, mit wenigen zusätzlichen Funktionen, die Funktionsumfänge die wir in der großen Version sehen werden mit externen Programmen realisiert.
-	\begin{figure}
+	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
     \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: \textcite{nagiosaufbau}}
 	\end{figure}
-	\begin{figure}
+	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
 		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
 	\end{figure}
-	\begin{figure}
+	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
     \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
@@ -292,8 +330,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
 	\printglossary[title=Glossar]
 	%\printglossaries	
-	\listoffigures % Abbildungsverzeichnis
-	\addchaptertocentry{}{Abbildungsverzeichnis}
-	\listoftables % Verzeichnis der Tabellen
-	\addchaptertocentry{}{Tabellenverzeichnis}
+	%\listoffigures % Abbildungsverzeichnis
+	%\addchaptertocentry{}{Abbildungsverzeichnis}
+	%\listoftables % Verzeichnis der Tabellen
+	%\addchaptertocentry{}{Tabellenverzeichnis}
 \end{document}
