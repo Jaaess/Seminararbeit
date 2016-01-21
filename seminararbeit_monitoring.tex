@@ -69,7 +69,8 @@
 \makeglossaries
 %\usepackage{imakeidx}
 %Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
-%\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 % Bibliothek & Zitierstil
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
@@ -97,7 +98,10 @@
 %\makenomenclature
 % Ende Abkürzungsverzeichnis
 
+%\usepackage{showframe}% zum Anzeigen des Seitenlayouts
 
+%% Abstände um Chapter
+%\RedeclareSectionCommand[beforeskip=-1\baselineskip,afterskip=.5\baselineskip]{chapter}
 
 
 
@@ -112,25 +116,29 @@
 	\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
 
 	\maketitle
-	\setcounter{tocdepth}{3}
+	
 	\tableofcontents
 	% Gibt das Latex Logo aus...Stelle? 
 	%\LaTeXe{}
-%Ab hier 1.5facher Zeilenabstand 
+	%Ab hier 1.5facher Zeilenabstand 
 	\onehalfspacing
 	\chapter{Einleitung}
-Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). 
+	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). 
 
-In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
+	In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
 	%TODO kritische Betriebszustände definieren?
-	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über seine Systeme zu haben, dies macht es zum einen möglich schnell auf kritische Betriebszustände zu reagieren und diese zu beheben. Zum anderen um gegenüber der Führungsebene Material für eventuelle Rechtfertigungen zu haben am besten grafisch aufbereitet und selbsterklärend.
-	
-		Überwachung der Serverauslastung
+	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über die Systeme zu haben. 
+	\begin{itemize}
+		\item Wie sind meine Server ausgelastet?
+		\item Ist die Hardware in Ordnung?
+		\item War der gestrige Ansturm auf die Homepage zu verkraften?
 		
-		Proaktive Erkennung von (Hardware)Defekten
-		
-		\gls{sla} Überwachung
+	\end{itemize}
+	  All diese Fragen können über ein richtig eingesetztes und konfiguriertes Monitoringsystem schnell und sicher beantwortet werden, darüber hinaus ermöglicht uns dies schnell auf kritische Betriebszustände (\acrlong{bspw} Netzteil im Server oder Festplatte im RAID ausgefallen) zu reagieren und diese zu beheben. 
+	  
+	  Ein ebenfalls positiver Nebeneffekt ist, dass ein gutes Monitoring uns in die Lage versetzt schnell (grafisch) aufbereitetes Material zur Verfügung stellen zu können, mit dem man sich gegenüber der Führungsebene, Controlling für etwaige Ausfälle, Anschaffungen rechtfertigen kann.
+	  
 	\section{Warum Linux?}
 	Systemüberwachung ist natürlich für alle Komponenten im Rechenzentrum wichtig, begonnen bei der Basisversorgung (Strom, Kühlung) über die grundlegende Infrastruktur (Netzwerkinfrastruktur, evtl. Storageinfrastruktur) bis zu den einzelnen Systemen (natürlich quer über die Betriebssystemgrenzen hinweg). Mit den später in dieser Arbeit vorgestellten Lösungen können viele dieser Felder abgedeckt werden, eine genaue Beschreibung des wie würde allerdings den (sowohl den zeitlichen als auch den mengenmäßigen) Rahmen der Arbeit sprengen.
 	
@@ -259,6 +267,7 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
     \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
 	\end{figure}
 	\subsubsection{Historie}
+	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
 	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint \grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
 	\footcite{nagioshistory} \footcite{nagiosnamefaq}
 	
@@ -334,6 +343,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\section{Service Level Agreement Monitoring}
 	%TODO Beschreibung anhand der Verfügbarkeit einer Webseite
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
+	An dieser Stelle widmen wir uns der Überwachung einer MySQL Datenbank. 
+	Wegen der aufkommenden Wichtigkeit von In-Memory Datenbanktechnologien sollte hier auch noch eine In-Memory Datenbank überwacht werden, um die Mächtigkeit des Monitoringwerkzeugs zu zeigen.
 	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
 	\section{Logfile Monitoring}
