@@ -285,7 +285,15 @@
 	Erläuterung GPLv2 \footcite{gplv2de}\footcite{gplv2en}
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
+	%TODO Notwendig immer mindestens Nagios Core & Plugins 
+	%TODO komplexere Konfiguration
+	%TODO Checken und erweitern
+	Der Funktionsumfang von Nagios ist relativ beschränkt. Nagios an sich kann beispielsweise nicht mal die Performancedaten grafisch aufbereiten, hierfür greift
+	%TODO Modularisierung vielleicht noch stärker rausarbeiten
+	Nagios auf Addons wie \textit{Nagios2RRD(N2RRD)}\footcite{n2rrdprojecthome} zurück
 	
+	
+	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei.
 	\subsection{Check\_MK - nur ein besser konfigurierbares Nagios?}
 	\begin{figure}[!h]
 		\centering
