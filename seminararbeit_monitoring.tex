@@ -133,16 +133,16 @@
 		\item Wie sind meine Server ausgelastet?
 		\item Ist die Hardware in Ordnung?
 		\item War der gestrige Ansturm auf die Homepage zu verkraften?
-		
+		\item Zeigen meine Server ungewöhnliches Verhalten? 
 	\end{itemize}
 	  All diese Fragen können über ein richtig eingesetztes und konfiguriertes Monitoringsystem schnell und sicher beantwortet werden, darüber hinaus ermöglicht uns dies schnell auf kritische Betriebszustände (\acrlong{bspw} Netzteil im Server oder Festplatte im RAID ausgefallen) zu reagieren und diese zu beheben. 
 	  
-	  Ein ebenfalls positiver Nebeneffekt ist, dass ein gutes Monitoring uns in die Lage versetzt schnell (grafisch) aufbereitetes Material zur Verfügung stellen zu können, mit dem man sich gegenüber der Führungsebene, Controlling für etwaige Ausfälle, Anschaffungen rechtfertigen kann.
+	  Ein ebenfalls positiver Nebeneffekt ist, dass ein gutes Monitoring uns in die Lage versetzt schnell (grafisch) aufbereitetes Material zur Verfügung stellen zu können, mit dem man sich gegenüber der Führungsebene, Controlling für etwaige Ausfälle, Aufrüstungen, Neuanschaffungen rechtfertigen kann.
 	  
 	\section{Warum Linux?}
 	Systemüberwachung ist natürlich für alle Komponenten im Rechenzentrum wichtig, begonnen bei der Basisversorgung (Strom, Kühlung) über die grundlegende Infrastruktur (Netzwerkinfrastruktur, evtl. Storageinfrastruktur) bis zu den einzelnen Systemen (natürlich quer über die Betriebssystemgrenzen hinweg). Mit den später in dieser Arbeit vorgestellten Lösungen können viele dieser Felder abgedeckt werden, eine genaue Beschreibung des wie würde allerdings den (sowohl den zeitlichen als auch den mengenmäßigen) Rahmen der Arbeit sprengen.
 	
-	Deshalb werden wir uns in der Folge auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand und geistige Eigenleistung (Anleitungen und Code für vieles gibt es bereits im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
+	Deshalb werden wir uns nach den allgemeinen Definitionen und Einführungen in den Themenkomplex \glqq Monitoring \grqq\ auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Dies ist ein relativ dankbares Gebiet für diese Ausführungen da man relativ gut die Mächtigkeit und Schlagkraft eines richtig konfigurierten Monitoringsystems zeigen kann. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand und geistige Eigenleistung (Anleitungen und Code für vieles gibt es bereits im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
 	%TODO Verbreitung von Linux im Serverbereich Grafik und Quelle
 		
 	
@@ -159,15 +159,15 @@
 	Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Verschiedene Logserver (Syslog-ng, rsyslog, systemd).
 	
 	Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \acrfull{itil} tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
-	\subsection{ITIL die Quelle allen Übels?}
-	Definition ITIL - ITIL \& Monitoring?
-	\acrfull{itil}
-	%TODO Definition SLA
-	Unter \acrfull{sla} versteht man bei ITIL 
-	%TODO Definition Servicelevel
+	%\subsection{ITIL die Quelle allen Übels?}
+	%Definition ITIL - ITIL \& Monitoring?
+	%\acrfull{itil}
+	
+	\section{Definitionen rund um das Thema (Server-/System-)Monitoring}
 	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
-	\section{Definition (Server-/System-)Monitoring}
-	\subsection{Allgemein}
+	\subsection{ITIL}
+	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist ein 
+	\subsection{Monitoring - Allgemein}
 	%TODO Definition Monitoring
 	Laut dem Duden handelt sich beim Monitoring um
 	\begin{center}
