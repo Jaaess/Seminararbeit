@@ -258,21 +258,13 @@
 	%TODO: Warum Check_MK, warum nicht OMD, Vielfalt der Systeme OMD, Check_MK, OMD Lab Edition, bei ursprünglicher OMD auf der Seite nichts passiert, hinter den Kulissen aber schon, warum empfiehlt es sich trotzdem über eine Subskription nachzudenken (Förderung OS Gedanken, Professionieller Support und Schulung, mehr Features die erst später irgendwann in der freien Version ankommen)
 	\subsection{Nagios}
 	%TODO: Nagios als Kern, mit wenigen zusätzlichen Funktionen, die Funktionsumfänge die wir in der großen Version sehen werden mit externen Programmen realisiert.
+	%TODO: Funktionsweise von Nagios kurz erläutern, aktive & passive Checks, auf Bild 3.1 Bezug nehmen, sollte für eine kurze Erläuterung absolut ausreichend sein.
 	\begin{figure}[!h]
 	\centering
 	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
     \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: \textcite{nagiosaufbau}}
 	\end{figure}
-	\begin{figure}[!h]
-		\centering
-		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
-		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
-	\end{figure}
-	\begin{figure}[!h]
-	\centering
-	\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
-    \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
-	\end{figure}
+	\clearpage
 	\subsubsection{Historie}
 	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
 	
@@ -294,7 +286,21 @@
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
 	
+	\subsection{Check\_MK - nur ein besser konfigurierbares Nagios?}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
+		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
+	\end{figure}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
+		\caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
+	\end{figure}
+	\clearpage
+	
 	\section{Logfile Monitoring}
+	%TODO Erläuterung welche Tools, es geben würde, warum gerade ELK? Heißester Shit aufm Markt
 	\subsection{Syslog-ng und Rsyslog}
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
@@ -305,6 +311,13 @@
 	\subsubsection{Elasticsearch}
 	\subsubsection{Logstash}
 	\subsubsection{Kibana}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/elk-stack.eps}
+		\caption[Aufbau eines Elasticsearch - Logstash - Kibana Stacks]{Aufbau eines Elasticsearch - Logstash - Kibana Stacks (Quelle: \textcite{elkstackpic})}
+	\end{figure}
+	\clearpage
+	%TODO Netways Präsentation für Integration in Nagios
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Versuchsaufbau}
 	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
