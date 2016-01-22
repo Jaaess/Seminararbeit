@@ -7,10 +7,16 @@
 \usepackage{amssymb}
 %http://www.namsu.de/Extra/pakete/Setspace.html
 \usepackage{setspace}
+%Fußnoten werden das ganze Dokument über durchgezählt
+%Quelle: http://golatex.de/nummerierung-der-fussnoten-durchgehend-im-gesamten-dokument-t2042.html
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
 \usepackage{makeidx}
 \makeindex
 \usepackage{graphicx}
 %Für Quellcodeschnippsel
+%Für Bash Code Highlighting
+\usepackage{minted}
 %Anleitung: https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 \usepackage{listings}
 \usepackage{color}
@@ -41,13 +47,13 @@
   showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
   showstringspaces=false,          % underline spaces within strings only
   showtabs=false,                  % show tabs within strings adding particular underscores
-  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
   stringstyle=\color{mymauve},     % string literal style
   tabsize=2,	                   % sets default tabsize to 2 spaces
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 %Überflüssig, dank Dokumentenklasse scrreprt
-%\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
 \usepackage{hyperref} %Klickbare Einträge im Glossar
@@ -63,14 +69,15 @@
 \makeglossaries
 %\usepackage{imakeidx}
 %Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
-%\setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
 % Bibliothek & Zitierstil
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
 \usepackage[babel,german=guillemets]{csquotes}
 %\bibliography{seminararbeit_monitoring.bib} %U.u. deprecated
 % Anleitung zu BibLaTEX: http://biblatex.dominik-wassenhoven.de/download/DTK-2_2008-biblatex-Teil1.pdf
 \addbibresource{seminararbeit_monitoring.bib}
-%URLs im Literaturverzeichnis in eine neue Zeile schreiben
+%So werden URLs im Literaturverzeichnis in eine neue Zeile geschrieben
 %Quelle: http://www.golatex.de/biblatex-literaturverzeichnis-zeilenumbruch-vor-url-t8406.html
 \DeclareFieldFormat{url}{\newline URL: \url{#1} }
 \setuptoc{toc}{bibliography=totoc}
@@ -86,79 +93,193 @@
 % Punkte zw. Abkürzung und Erklärung
 %\setlength{\nomlabelwidth}{.20\hsize}
 %\renewcommand{\nomlabel}[1]{#1 \dotfill}
-% Zeilenabstnde verkleinern
+% Zeilenabstände verkleinern
 %\setlength{\nomitemsep}{-\parsep}
 %\makenomenclature
 % Ende Abkürzungsverzeichnis
-\author{Markus Österle}
-\title{Monitoring in Rechenzentren am Beispiel von Linux Systemen}
-\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
+
+%\usepackage{showframe}% zum Anzeigen des Seitenlayouts
+
+%% Abstände um Chapter
+%\RedeclareSectionCommand[beforeskip=-1\baselineskip,afterskip=.5\baselineskip]{chapter}
+
+
+
 \begin{document}
+	%TODO: Titelseite an die Erfordernisse anpassen
+	%http://golatex.de/wiki/Widmung
+	\subject{Seminararbeit im Studiengang \glqq Verwaltungsinformatik\grqq}
+	\author{Markus Österle}
+	\title{Servermonitoring in Rechenzentren}
+	\subtitle{am Beispiel von Linux Systemen}
+	\publishers{Betreut von Dipl. Inf. Stefan Müller}
+	\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
 
 	\maketitle
-	\setcounter{tocdepth}{3}
+	
 	\tableofcontents
 	% Gibt das Latex Logo aus...Stelle? 
 	%\LaTeXe{}
-%Ab hier 1.5facher Zeilenabstand 
+	%Ab hier 1.5facher Zeilenabstand 
 	\onehalfspacing
 	\chapter{Einleitung}
-Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). \\
+	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). 
 
-In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
+	In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
+	%TODO kritische Betriebszustände definieren?
+	Aus der Systemadministratorensicht macht es eigentlich von Grunde auf Sinn soviele Informationen wie nur möglich über die Systeme zu haben. 
+	\begin{itemize}
+		\item Wie sind meine Server ausgelastet?
+		\item Ist die Hardware in Ordnung?
+		\item War der gestrige Ansturm auf die Homepage zu verkraften?
+		\item Zeigen meine Server ungewöhnliches Verhalten? 
+	\end{itemize}
+	  All diese Fragen können über ein richtig eingesetztes und konfiguriertes Monitoringsystem schnell und sicher beantwortet werden, darüber hinaus ermöglicht uns dies schnell auf kritische Betriebszustände (\acrlong{bspw} Netzteil im Server oder Festplatte im RAID ausgefallen) zu reagieren und diese zu beheben. 
+	  
+	  Ein ebenfalls positiver Nebeneffekt ist, dass ein gutes Monitoring uns in die Lage versetzt schnell (grafisch) aufbereitetes Material zur Verfügung stellen zu können, mit dem man sich gegenüber der Führungsebene, Controlling für etwaige Ausfälle, Aufrüstungen, Neuanschaffungen rechtfertigen kann.
+	  
+	\section{Warum Linux?}
+	Systemüberwachung ist natürlich für alle Komponenten im Rechenzentrum wichtig, begonnen bei der Basisversorgung (Strom, Kühlung) über die grundlegende Infrastruktur (Netzwerkinfrastruktur, evtl. Storageinfrastruktur) bis zu den einzelnen Systemen (natürlich quer über die Betriebssystemgrenzen hinweg). Mit den später in dieser Arbeit vorgestellten Lösungen können viele dieser Felder abgedeckt werden, eine genaue Beschreibung des wie würde allerdings den (sowohl den zeitlichen als auch den mengenmäßigen) Rahmen der Arbeit sprengen.
 	
-		Überwachung der Serverauslastung
+	Deshalb werden wir uns nach den allgemeinen Definitionen und Einführungen in den Themenkomplex \glqq Monitoring \grqq\ auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Dies ist ein relativ dankbares Gebiet für diese Ausführungen da man relativ gut die Mächtigkeit und Schlagkraft eines richtig konfigurierten Monitoringsystems zeigen kann. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand und geistige Eigenleistung (Anleitungen und Code für vieles gibt es bereits im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
+	%TODO Verbreitung von Linux im Serverbereich Grafik und Quelle
 		
-		Proaktive Erkennung von (Hardware)Defekten
-		
-		\gls{sla} Überwachung
-		\subsection{Warum Linux?}
-		Wie in der Einleitung schon beschrieben ist die Systemüberwachung von Linux Systemen eine der am einfachsten umzusetzenden, die Ergebnisse dieser Arbeit könnten von jedem Studenten der Informatik umgesetzt und bspw. für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, etc. genutzt werden. Darüberhinaus fallen bei Linux für das Betriebssystem keine Lizenzkosten.
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
-	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definiton von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
+	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definition von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
+	%TODO Ausformulieren und deutsche Sätze draus machen
+	Zu Beginn der IT Zeit, als die 
 	große Maschinen die alle Software gebündelt hatten und einfacher zu überwachen waren
-	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusärtlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
-	Top und seine Derivate, SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen. Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \gls{itil}\ (\glsdesc{itil}) tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
-	\subsection{ITIL die Quelle allen Übels?}
-	Definition ITIL - ITIL \& Monitoring?
-	Definition SLA
-	Definition Servicelevel
+	Zersplitterung der Software auf viele kleinere Maschinen, dadurch erhöhter Überwachungsaufwand, zusätzlich auch gestiegene Anforderungen an Verfügbarkeit und damit auch an eben dieses Monitoring.
+	Es 
+	Top und seine Derivate, iostat \& SAR Daten (Sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen.
+	Cacti und RRDTool
+	Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Verschiedene Logserver (Syslog-ng, rsyslog, systemd).
+	
+	Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \acrfull{itil} tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
+	%\subsection{ITIL die Quelle allen Übels?}
+	%Definition ITIL - ITIL \& Monitoring?
+	%\acrfull{itil}
+	
+	\section{Definitionen rund um das Thema (Server-/System-)Monitoring}
 	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
-	\section{Definition (Server-/System-)Monitoring}
-	\subsection{Allgemein}
-	Definition Monitoring
+	\subsection{ITIL}
+	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist ein 
+	\subsection{Monitoring - Allgemein}
+	%TODO Definition Monitoring
+	Laut dem Duden handelt sich beim Monitoring um
+	\begin{center}
+		\glqq[Dauer]beobachtung (eines bestehenden Systems)\grqq\footcite[S. 701; Stichwort Monitoring]{duden}
+	\end{center}
+	Dieser Definition ist auch aus Informatikersicht nicht mehr allzu viel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt. Unter diese Definition fällt sowohl die temporäre Beobachtung, wie sie \acrlong{bspw} mit \textit{top} realisiert werden kann als auch eine dauerhafte Beobachtung bei der gesammelte (Performance-)Daten von einzelnen Rechner per Skript, Agent oder ähnlichem an ein zentrales System übertragen werden, wo sie gespeichert und ausgewertet werden.
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
-	Unter \glqq proaktiv\grqq\ versteht man 
-	Unter \glqq proaktivem Monitoring\grqq\ versteht man bei ITIL: \glqq Das proaktive Monitoring in seiner Überwachung achtet auf bestimmte Verhaltensmuster (Patterns), um künftige Ausfälle vorauszusehen. \grqq\ 
-	Notwendig möglichst viele Informationen zu haben um Muster erkennen zu können.
+	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
 	\subsection{reaktives Monitoring}
+	\glqq Reaktives Monitoring ist eine Form der Überwachung, bei der als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen eingeleitet werden. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incidents, wenn ein Fehler auftritt\grqq
+	\footcite[S. 511]{ebelitilv3}
+	
+	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt. 
 	\subsection{Verfügbarkeitsmonitoring}
 	Historie
 	\subsection{SLA Monitoring}
+	Unter einem \acrfull{sla} versteht man in ITIL eine \glqq Vereinbarung zwischen einem \acrshort{it} Service Provider und einem Kunden, der einen zu erbringenden Service und dessen Service Level inklusive Service Level-Zielen, Verantwortlichkeiten von \acrshort{it} Service Provider und Kunde genau definiert. Ein \acrshort{sla} kann mehrere IT Services oder Kunden abdecken.\grqq \footcite[S. 732; Stichwort: Service Level Agreement]{ebelitilv3} Die im \acrshort{sla} vereinbarten Service Level-Ziele sollten SMART sein und auf KPIs basieren, d.h. mess- und überprüfbar sein.\footcite[S. 733; Stichwort: Service Level-Ziele]{ebelitilv3}
+	
+	Beim SLA Monitoring geht es darum die Einhaltung der vereinbarten Service Level-Ziele zu überwachen und sinnvoller Weise in Form von Reportings für die Kunden und die Kollegen vom Service Level Management (die Stelle die lt. \acrshort{itil} für die Verhandlung und Vereinbarung des \acrshort{sla} zuständig ist) aufzubereiten und zur Verfügung zu stellen.
+	%TODO Fußnote noch an den Text nach oben ziehen.
 	Einhaltung vereinbarter Servicelevel \footcite[40]{iso20000sla}
 	\subsection{Fazit}
+	%TODO ITIL Begrifflichkeit vs. technische Begrifflichkeit, also proaktiv, reaktiv, SLA vs. Basis, erweitertes, spezialisiertes Monitoring
 	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
-	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleich t auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. \\
+
+	Nachdem wir im vorherigen Kapitel einige grundlegende Begriffe bereits geklärt haben, ist es nun an der Zeit uns Gedanken darüber zu machen, wie ein Monitoring aussehen könnte und was es alles leisten sollte. 
+	%TODO Layout und Überschriftsposition so in Ordnung?
+	\section{Grundlegende Überlegungen}
+	Die wesentlichen Fragen\footcite[nach][]{veltnagios1} vor Beginn einer Implementierung einer Monitoring Lösung sollten sein:
+	\begin{itemize}
+		\item Was soll überwacht werden?
+		\item Wie kann überwacht werden?
+		\item Wer soll im Fehlerfall benachrichtigt werden?
+		\item Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?
+		\item Welche Software ist für meine Zwecke am besten geeignet?
+	\end{itemize}
+	\subsection{Was soll überwacht werden?}
+	Hier kann man die Themenbereiche grob in drei Stufen der Überwachung einteilen, die drei Stufen gruppieren die Anforderungen entsprechend dem Aufwand
+	\begin{itemize}
+		\item Grundlegende Überwachung
+		
+		Stufe mit dem wenigsten Aufwand, hier wird im wesentlichen kontrolliert ob alle Server und Serverdienste erreichbar sind und ob die Netzwerkinfrastruktur in Ordnung ist.\\
+		\textbf{Mit TCP/IP realisierbar}
+		\item Erweiterte Überwachung
+		
+		Beispielsweise Auslastung von Routern \& Switchports oder Auslastung von Servern, freier Platz auf Festplatten, Datenbanken\\
+		\textbf{Mit Hilfe von speziellen Protokollen, z.B. \acrshort{snmp} oder applikationsbezogenen Werkzeugen realisierbar}
+		\item Spezialisierte Überwachung
+		
+		Temperaturüberwachung der \acrshort{dv}-Räume, Qualität der Stromversorgung, aktuelle Netzlast der einzelnen Serverräume\\
+		\textbf{Nur mit individueller Hard- und Software realisierbar (Beispielsweise Überwachungsmodule in den Schaltschränken und Sensorik in den Rechnerräumen )}
+	\end{itemize}
+	\subsection{Wie kann überwacht werden?}
+	Im wesentlichen können an dieser Stelle zwei Arten der Überwachung unterschieden werden:
+	\begin{itemize}
+		\item Aktive Überwachung
+		\begin{itemize}
+		\item In regelmäßigen Abständen werden Programme ausgeführt, die eine Überprüfung durchführen
+		\item Die Rückgabewerte werden ausgewertet
+		\item Besteht ein Fehler über längere Zeit (bzw. über einen definierten Zeitraum hinaus) wird ein Zuständiger informiert
+		\end{itemize}
+		\item Passive Überwachung
+		\begin{itemize}
+			\item Ein Dienst, Server, Agent, o.ä. meldet einen Fehler
+			\item Die Eingabe wird ausgewertet
+			\item Je nach Ereignis und Konfiguration wird ein Zuständiger informiert
+		\end{itemize}
+	\end{itemize}
+	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	Diese Frage ist in den meisten (größeren) Unternehmen und Behörden gar nicht so einfach zu beantworten, da die Aufgabengebiete unterteilt sind und es unter Umständen schwierig ist die passende Person zu informieren, da die (technische) Abbildung von Zuständigkeiten an vielen Stellen kompliziert bis nicht möglich ist. 
 	
-	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym.
+	Weiter stellt sich das Problem das nicht bei jedem Ausfall die gleichen Personen zu benachrichtigen sind:
+	So kann es sich beim Ausfall eines Servers um vielfältige Probleme handeln, \acrlong{bspw} ein Betriebssystem- oder ein Netzwerkproblem.
+	Außerdem muss festgelegt werden ob und wer 24/7 (also 24h am Tag, sieben Tage die Woche) über aufgetretene Fehler informiert werden muss/soll.
+	\subsection{Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?}
+	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
+	Bei der Recherche nach Monitoringtools für Linux Systeme stößt man auf verschiedenste Lösungen, da wären zum einen die Lösungen die lokal auf jedem Server zu installieren sind, der Performance Monitor \textit{top} und seine Derivate (atop, iotop, htop, ntop) oder das Systat-Paket\footcite{sysstat} mit seinen Komponenten (\acrlong{bspw} SAR\footcite{sarkrenn}, iostat). Allerdings haben alle diese Programme das Problem, dass ich mich auf dem Server anmelden muss um Informationen zu bekommen, einzig bei SAR hätte ich die Möglichkeit, die per Cronjob generierten Dateien per Skript einzusammeln und auf einem zentralen Server mit einem Tool wie KSar\footcite{ksar} grafisch auszuwerten.
+	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq\ und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
+	
+	Icinga
+	Shinken
+	OMD: Check\_MK
+	
+	
 	\section{Performance \& SLA Monitoring}
+	%TODO: Warum Check_MK, warum nicht OMD, Vielfalt der Systeme OMD, Check_MK, OMD Lab Edition, bei ursprünglicher OMD auf der Seite nichts passiert, hinter den Kulissen aber schon, warum empfiehlt es sich trotzdem über eine Subskription nachzudenken (Förderung OS Gedanken, Professionieller Support und Schulung, mehr Features die erst später irgendwann in der freien Version ankommen)
 	\subsection{Nagios}
-	\begin{figure}
+	%TODO: Nagios als Kern, mit wenigen zusätzlichen Funktionen, die Funktionsumfänge die wir in der großen Version sehen werden mit externen Programmen realisiert.
+	\begin{figure}[!h]
 	\centering
-	\includegraphics[scale=.5]{pics/NagiosMonitoring.eps}
-    \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: „Monitoring“ von Diglinks in der Wikipedia auf Englisch - Übertragen aus en.wikipedia nach Commons durch Esquilo.. Lizenziert unter Gemeinfrei über Wikimedia Commons - https://commons.wikimedia.org/wiki/File:Monitoring.png\#/media/File:Monitoring.png)}
+	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
+    \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: \textcite{nagiosaufbau}}
 	\end{figure}
-	\begin{figure}
+	\begin{figure}[!h]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
+		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
+	\end{figure}
+	\begin{figure}[!h]
 	\centering
-	\includegraphics[]{pics/OMD_Schema.eps}
+	\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
     \caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
 	\end{figure}
 	\subsubsection{Historie}
+	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
+	
+	Die Programmierarbeiten am Vorgänger von Nagios begannen im Jahr 1998, als Galstad beschloß in das Geschäft mit Monitoringsystemen einzusteigen. Die verbesserte Applikation lief unter Linux und wurde im Jahr 1999 unter dem Namen NetSaint als OpenSource veröffentlicht. Ethan Galstad nahm an das vielleicht ein Dutzend Menschen an der Anwendung interessiert sein könnten (wie soft in der IT Geschichte eine Fehleinschätzung).
+	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint \grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
+	\footcite{nagioshistory} \footcite{nagiosnamefaq}
+	
 	Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
 	Icinga, Shinken
 	check\_mk als Bundle Lösung die verschiedene Backends bereithält, inkl. mittlerweilen eigenem Backend (Microkernel)
@@ -167,9 +288,12 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
-	Erläuterung GPLv2
+	Der Kern der Nagios Umgebung und die Plugins stehen unter der GPLv2
+	%TODO weiter ausformulieren
+	Erläuterung GPLv2 \footcite{gplv2de}\footcite{gplv2en}
 	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
+	
 	\section{Logfile Monitoring}
 	\subsection{Syslog-ng und Rsyslog}
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
@@ -177,28 +301,50 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\footcite{systemd2015}
 	%\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
-	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}. 
+	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}.
+	\subsubsection{Elasticsearch}
+	\subsubsection{Logstash}
+	\subsubsection{Kibana}
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Versuchsaufbau}
+	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
 	\subsection{verwendete Software}
 	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
 	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
 	\begin{center}
 	\begin{tabular}{|c|c|c|}
 	\hline 
-	eingesetzte Software & Version & Client oder Server \\ 
+	Eingesetzte Software & Version & Client oder Server \\ 
 	\hline 
+	VirtualBox & 5.0.10 & Virtualisierungslösung\\
+	\hline
 	Opensuse & 13.2 & Server\\ 
 	\hline 
 	Opensuse & Leap 42.1 & Client\\
 	\hline
 	Apache & 2.4 & Server\\
 	\hline
+	\acrshort{omd} & 2.11.20160108-labs-edition & Server\\
+	\hline
 	\end{tabular} 
 	\caption[Eingesetzte Softwareversionen]{Für den praktischen Teil der Arbeit eingesetzte Softwareversionen mit ihrem Einsatzort}
 	\end{center}
 	\end{table}
+	\subsection{Installation}
+	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing 4.1 Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing 4.1, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit.
+	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]
+	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
+	zypper in omd
+	
+	wget https://mathias-kettner.de/support/1.2.6p15/check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
+	zypper in check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
+	
+	dpkg -i check-mk-raw-1.2.6p15-sles12-34.x86_64.deb
+	apt-get -f install
+	omd setup
+	\end{lstlisting}
 	\subsection{Konfiguration}
+	
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
 	\begin{lstlisting}[language=bash]
@@ -206,14 +352,19 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\end{lstlisting} \footcite{checkmkCheckBySSH2015}
 	\subsection{Überwachung einer Datenbank}
 	\section{Service Level Agreement Monitoring}
+	%TODO Beschreibung anhand der Verfügbarkeit einer Webseite
 	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
+	An dieser Stelle widmen wir uns der Überwachung einer MySQL Datenbank. 
+	Wegen der aufkommenden Wichtigkeit von In-Memory Datenbanktechnologien sollte hier auch noch eine In-Memory Datenbank überwacht werden, um die Mächtigkeit des Monitoringwerkzeugs zu zeigen.
 	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
 	\subsection{Überwachung der Verfügbarkeit einer Webseite}
+	\section{Logfile Monitoring}
+	
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
 	%\printnomenclature
 	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
 	\begingroup
-	\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
+	%\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
 	\printbibliography 
 	\addchaptertocentry{}{Literatur}
 	%\addcontentsline{toc}{chapter}{Literatur}
@@ -221,8 +372,8 @@ In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings
 	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
 	\printglossary[title=Glossar]
 	%\printglossaries	
-	\listoffigures % Abbildungsverzeichnis
-	\addchaptertocentry{}{Abbildungsverzeichnis}
-	\listoftables % Verzeichnis der Tabellen
-	\addchaptertocentry{}{Tabellenverzeichnis}
+	%\listoffigures % Abbildungsverzeichnis
+	%\addchaptertocentry{}{Abbildungsverzeichnis}
+	%\listoftables % Verzeichnis der Tabellen
+	%\addchaptertocentry{}{Tabellenverzeichnis}
 \end{document}

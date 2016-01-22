@@ -1,0 +1,48 @@
+[file]
+seminararbeit_monitoring_praesentation.pdf
+[duration]
+10
+[notes]
+### 1
+### 2
+### 4
+ITIL beschriebt was, nicht wie
+### 5
+Bspw. bestimmte Logeinträge vor einem Ausfall von Platten, SAN Infrastruktur
+Wachstum von Festplatten um rechtzeitig Gegenmaßnahmen treffen zu können
+### 6
+Beispielsweise automatische Erstellung eines Incidents bei Ausfall eines Netzteils am Server, Switch
+
+Oder Benachrichtigung der Administratoren bei einem Systemausfall
+### 7
+Grundsatz: 
+Niemals ein SLA vereinbaren, dass man nicht messen kann
+Niemals ein SLA vereinbaren, dessen Leistungserbringung nicht im eigenen Verantwortungsbereich liegt
+### 9
+Grundlegende Überwachung: Alle Serverdienste erreichbar, Server erreichbar, Netzwerk soweit ok
+Spezialisierte Überwachung: Hierfür wird individuell Hard- und Software nötig
+### 10
+proprietär: bedeutet in Eigentum befindlich, im Bezug auf Software wird der Begriff immer verwendet wenn Programme unter einer nicht "freien" Lizenz stehen, selbst dann wenn ihr Quellcode offen gelegt ist.
+proprietäre Lösung: bspw. CA Monitoring
+Cacti: im Endeffekt ein Performancemonitor, der Performancedaten die vorher mittels Skript oder per SNMP eingesammelt wurden mittels Tobias Oetikers RRDtool visualisiert (RRD Round Robin Database -> Ringpuffer)
+Seit 1996 zuerst als Ping Tool, seit 1999 als NetSaint als Überwachungstool
+Seit 2002 N.A.G.I.O.S wegen Urheberrechten amm Namen NetSaint
+Nagios rekursives Acronym: Nagios Ain’t Gonna Insist On Sainthood
+Ethan Galsted kein einfacher Mensch
+- Icinga -> Nagios Fork wegen schleppender Weiterentwicklung und fehlendem Gehör für die Community
+- Shinken -> Fork der Nagios nach Python portiert
+- Naemon -> nach Ausschluß des Chefentwicklers aus dem Entwicklungsteam entwicklet dieser einen Fork
+### 11
+Kann nahezu alle Systeme überwachen, inkl. Android Devices
+Erweiterungen und Checks können in nahezu jeder beliebigen Programmier- und Skriptsprache geschrieben werden, die Rückgabewerte müssen sich nur an bestimmte Regeln halten
+### 12
+Aktiv: in regelmäßigen definierten Abständen werden Programme ("checks") aufgerufen, die ein Überprüfung durchführen, Rückgabewerte werden ausgewertet, besteht ein Fehler über eine bestimmte Zeit wechselt der Status und es wird eine Benachrichtigung verschickt
+
+Passiv: Ein Dienst meldet einen Fehler, die Meldung wird ausgewertet, die zuständige Person wird informiert.
+### 16
+Log Monitoring zwar auch mit Check_MK/Nagios möglich, aber nicht so performant
+Bessere Lösung:
+ELK Stack:
+Elasticsearch: Indizieren und Mustersuche, bei bestimmten matches Weiterleitung an Check_MK zur weiteren Veranlassung, Java basiert auf Lucene Core
+Logstash: Logsammler & Index, Übergibt die Logs auch wieder an Nagios/Check_MK, Input - Filter - Output, implementiert in JRuby
+Kibana: visuell aufbereiten
