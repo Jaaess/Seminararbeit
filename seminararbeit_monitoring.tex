@@ -174,14 +174,19 @@
 		\glqq[Dauer]beobachtung (eines bestehenden Systems)\grqq\footcite[S. 701; Stichwort Monitoring]{duden}
 	\end{center}
 	Dieser Definition ist auch aus Informatikersicht nicht mehr allzu viel hinzuzufügen, außer dass es sich natürlich in unserem Fall um die Beobachtung eines \acrshort{it}-Systems handelt. Unter diese Definition fällt sowohl die temporäre Beobachtung, wie sie \acrlong{bspw} mit \textit{top} realisiert werden kann als auch eine dauerhafte Beobachtung bei der gesammelte (Performance-)Daten von einzelnen Rechner per Skript, Agent oder ähnlichem an ein zentrales System übertragen werden, wo sie gespeichert und ausgewertet werden.
-	\subsection{proaktives Monitoring}
-	%http://www.thefreedictionary.com/proactive
-	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
+	
 	\subsection{reaktives Monitoring}
 	\glqq Reaktives Monitoring ist eine Form der Überwachung, bei der als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen eingeleitet werden. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incidents, wenn ein Fehler auftritt\grqq
 	\footcite[S. 511]{ebelitilv3}
 	
-	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt. 
+	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt.
+	 
+	\subsection{proaktives Monitoring}
+	%http://www.thefreedictionary.com/proactive
+	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
+	
+	Nach meiner Auffassung stellt ein richtiges proaktives Monitoring die Königsdisziplin innerhalb des Monitorings dar. Zwar hat sich die (Überwachungs-)Software in den letzten Jahren stark verbessert und die Vielzahl der verfügbaren Agenten (siehe spätere Kapitel) und die dadurch gestiegene Vielzahl an verfügbaren Informationen erleichtert einiges. Aber es Bedarf immer noch einer kundigen Hand, die die jeweiligen Filter definiert, damit das System beim überschreiten kritischer Werte Alarm schlägt. \footcite{Borkmann2009}
+	%TODO Mustererkennung vor Ausfall, Borkmann einbauen
 	\subsection{Verfügbarkeitsmonitoring}
 	Historie
 	\subsection{SLA Monitoring}
@@ -192,7 +197,7 @@
 	Einhaltung vereinbarter Servicelevel \footcite[40]{iso20000sla}
 	\subsection{Fazit}
 	%TODO ITIL Begrifflichkeit vs. technische Begrifflichkeit, also proaktiv, reaktiv, SLA vs. Basis, erweitertes, spezialisiertes Monitoring
-	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \gls{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
+	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \acrshort{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
 	\chapter{Monitoring Systeme für Linux Server}
 
 	Nachdem wir im vorherigen Kapitel einige grundlegende Begriffe bereits geklärt haben, ist es nun an der Zeit uns Gedanken darüber zu machen, wie ein Monitoring aussehen könnte und was es alles leisten sollte. 
@@ -294,6 +299,7 @@
 	
 	
 	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei.
+	%TODO BIs Nagios 3 konnte Nagios bspw. nur einzeilige Rückgaben verarbeiten, seit Nagios 3 geht auch Multiline
 	\subsection{Check\_MK - nur ein besser konfigurierbares Nagios?}
 	\begin{figure}[!h]
 		\centering
