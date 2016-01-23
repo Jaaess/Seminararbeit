@@ -123,7 +123,7 @@
 	%Ab hier 1.5facher Zeilenabstand 
 	\onehalfspacing
 	\chapter{Einleitung}
-	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \gls{psu}, \acrshort{ram} Bausteine). 
+	Das Thema des Servermonitorings hat sich im professionellen \acrshort{rz} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Komplexität der Systeme steigen auch die Anforderungen an die Überwachung der selbigen, reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu Überwachen ob Rechner verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \acrlong{psu}s (Netzteile), \acrshort{ram} Bausteine). 
 
 	In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings unter Begrenzung auf das Teilgebiet Linux-Systeme betrachtet. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat.
 	\section{Warum Monitoring im Rechenzentrum?}
@@ -275,7 +275,7 @@
 	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
 	
 	Die Programmierarbeiten am Vorgänger von Nagios begannen im Jahr 1998, als Galstad beschloß in das Geschäft mit Monitoringsystemen einzusteigen. Die verbesserte Applikation lief unter Linux und wurde im Jahr 1999 unter dem Namen NetSaint als OpenSource veröffentlicht. Ethan Galstad nahm an das vielleicht ein Dutzend Menschen an der Anwendung interessiert sein könnten (wie soft in der IT Geschichte eine Fehleinschätzung).
-	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint \grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
+	Der Name Nagios ist wie viele Namen im Linux Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint\grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde. 
 	\footcite{nagioshistory} \footcite{nagiosnamefaq}
 	
 	Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
@@ -289,7 +289,6 @@
 	Der Kern der Nagios Umgebung und die Plugins stehen unter der GPLv2
 	%TODO weiter ausformulieren
 	Erläuterung GPLv2 \footcite{gplv2de}\footcite{gplv2en}
-	\gls{GPLv2}
 	\subsubsection{Funktionsumfang}
 	%TODO Notwendig immer mindestens Nagios Core & Plugins 
 	%TODO komplexere Konfiguration
@@ -414,10 +413,10 @@
 	%\addcontentsline{toc}{chapter}{Literatur}
 	\endgroup
 	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
-	\printglossary[title=Glossar]
+	%\printglossary[title=Glossar]
 	%\printglossaries	
-	%\listoffigures % Abbildungsverzeichnis
-	%\addchaptertocentry{}{Abbildungsverzeichnis}
+	\listoffigures % Abbildungsverzeichnis
+	\addchaptertocentry{}{Abbildungsverzeichnis}
 	%\listoftables % Verzeichnis der Tabellen
 	%\addchaptertocentry{}{Tabellenverzeichnis}
 \end{document}
