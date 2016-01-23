@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,parskip]{scrreprt}
+\documentclass[12pt,a4paper,parskip,listof=totoc,bibliography=totoc]{scrreprt}
 \usepackage[english,german,ngerman]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -410,17 +410,18 @@
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
 	%\printnomenclature
 	% Literaturverzeichnis ausgeben und als Eintrag gleichwertig mit einem Kapitel ins Inhaltsverzeichnis eintragen
-	\begingroup
+	%\begingroup
 	%\nocite{*} %Alle Einträge des Literaturverzeichnisses auch ohne Zitierung ausgeben
-	\printbibliography 
-	\addchaptertocentry{}{Literatur}
 	%\addcontentsline{toc}{chapter}{Literatur}
-	\endgroup
+	\printbibliography 
+	%\addchaptertocentry{}{Literatur}
+	%\addcontentsline{toc}{chapter}{Literatur}
+	%\endgroup
 	\printglossary[title=Abkürzungsverzeichnis, type=\acronymtype] % prints just the list of acronyms	
 	%\printglossary[title=Glossar]
 	%\printglossaries	
 	\listoffigures % Abbildungsverzeichnis
-	\addchaptertocentry{}{Abbildungsverzeichnis}
+	%\addchaptertocentry{}{Abbildungsverzeichnis}
 	%\listoftables % Verzeichnis der Tabellen
 	%\addchaptertocentry{}{Tabellenverzeichnis}
 \end{document}
