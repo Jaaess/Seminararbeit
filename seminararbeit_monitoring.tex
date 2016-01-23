@@ -268,6 +268,7 @@
 	\centering
 	\includegraphics[width=1\textwidth]{pics/NagiosMonitoring.eps}
     \caption[Grober Aufbau von Nagios]{Aufbau einer Nagios Appliance (Quelle: \textcite{nagiosaufbau}}
+    \label{fig:nagiosaufbau}
 	\end{figure}
 	\clearpage
 	\subsubsection{Historie}
@@ -300,16 +301,31 @@
 	
 	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei.
 	%TODO BIs Nagios 3 konnte Nagios bspw. nur einzeilige Rückgaben verarbeiten, seit Nagios 3 geht auch Multiline
+	
+	NRPE
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{pics/nrpe}
+	\caption[Funktionsweise NRPE]{Die Funktionsweise von \acrlong{nrpe} (Quelle: \cite{nagioscoreaddons})}
+	\label{fig:nrpe}
+	\end{figure}
+
+	
+	%TODO BI nur mit Addon
+	Nagios BPI\footcite{nagiosbpi}
+	
 	\subsection{Check\_MK - nur ein besser konfigurierbares Nagios?}
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
 		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
+		\label{fig:checkmk}
 	\end{figure}
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
 		\caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
+		\label{fig:checkmkaufbau}
 	\end{figure}
 	\clearpage
 	
@@ -329,6 +345,7 @@
 		\centering
 		\includegraphics[width=1\textwidth]{pics/elk-stack.eps}
 		\caption[Aufbau eines Elasticsearch - Logstash - Kibana Stacks]{Aufbau eines Elasticsearch - Logstash - Kibana Stacks (Quelle: \textcite{elkstackpic})}
+		\label{fig:elk}
 	\end{figure}
 	\clearpage
 	%TODO Netways Präsentation für Integration in Nagios
