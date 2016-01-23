@@ -153,23 +153,27 @@
 	%TODO Ausformulieren und deutsche Sätze draus machen
 	Zu Beginn der IT Zeit, als Server noch Mainframes und sehr teuer waren und wenige spezialisierte Anwendungen auf ihnen betrieben wurden, war die Überwachung dieser Systeme für die Administratoren ein kleiner Aufwand. Die Administratoren waren über ihre Terminals meistens sowieso direkt mit dem Mainframe verbunden und sahen (in der bedienten Betriebszeit) etwaige Fehlermeldungen sofort auf ihren Konsolen. Dies hat sich im Wandel der Zeit drastisch verändert, die großen Mainframes von einst werden durch eine Vielzahl von kleineren Servern ersetzt um die gestiegenen Anforderungen erfüllen zu können. Wo früher auf einem Rechner (mit der entsprechenden Hot-/Cold-Standby-Lösung wenn die Firma/Behörde) die Datenbanken für die komplette Firma liefen, werden diese heute durch eine Vielzahl an Datenbanksystemen (die unter Umständen auch noch Hochverfügbar ausgelegt sind) ersetzt. Dies und die Tatsache, dass ohne diese IT Systeme in vielen Bereichen nicht mehr funktioniert führt natürlich auch zu ganz anderen Anforderungen an Verfügbarkeit und damit auch an die Erkennung von Fehlern und Ausfällen. 
 	
-	Während es früher ausreichend war, mit einer selbst gestrickten (Skript-)Lösung per Ping zu überwachen ob alle Server erreichbar sind und bei einem Fehler der Admin sich selbst in den Serverraum gehen musste um den Rechner und seine Fehlermeldung in Augenschein zu nehmen muss es heute etwas detaillierter sein. Zumindest die Anwendungen die für den Betrieb kritisch sind müssen überwacht werden um Fehler und Ausfälle schnell erkennen und beheben zu können, unter Umständen möchte man auch einfach bei Ausfall einer Anwendung eine automatische Aktion auslösen (z.B. einen automatischen Neustart des Webservers). Auch die Fehlermeldung soll nach Möglichkeit bereits im Monitoring erkennbar sein.
+	Während es früher ausreichend war, mit einer selbst gestrickten (Skript-)Lösung per \textit{Ping} zu überwachen ob alle Server erreichbar sind und bei einem Fehler der Admin sich selbst in den Serverraum gehen musste um den Rechner und seine Fehlermeldung in Augenschein zu nehmen muss es heute etwas detaillierter sein. Zumindest die Anwendungen die für den Betrieb kritisch sind müssen überwacht werden um Fehler und Ausfälle schnell erkennen und beheben zu können, unter Umständen möchte man auch einfach bei Ausfall einer Anwendung eine automatische Aktion auslösen (z.B. einen automatischen Neustart des Webservers). Auch die Fehlermeldung soll nach Möglichkeit bereits im Monitoring erkennbar sein.
 	
-	Das Monitoring von Performanceparametern war in der Geschichte der *nix Betriebssysteme noch nie ein großes Thema. Tools wie Top haben ihren Ursprung in den 80er Jahren\footcite{top}.
-	
-	Top und seine Derivate, iostat \& SAR Daten (sysstat) die aber erst vom Server geholt und grafisch (KSar) aufbereitet werden müssen.
+	Das (lokale) Monitoring von Performanceparametern war in der Geschichte der *nix Betriebssysteme schon immer möglich, der Komfort und die Zahl der Tools hat sich über die Jahre gesteigert. Tools wie \textit{top} haben ihren Ursprung in den 80er Jahren\footcite{top} (lauffähig unter Unix), also sogar vor der Entwicklung von Linux (ab 1991). Das Sysstat Paket mit Tools wie \textit{iostat} für das Monitoring der Festplattenaktivität und \textit{SAR} für fortlaufendes Schreiben von Performance Daten per Cronjob gibt es seit 06.03.1999\footcite{sysstatchangelog}.
+	%TODO Wo wollen wir hier hin?
 	Cacti und RRDTool
 	Systemlogs die in ihrer Vielzahl unüberblickbar sind und um Sie überhaupt verarbeiten zu können auf jeden Fall gefiltert und aufbereitet werden müssen. Verschiedene Logserver (Syslog-ng, rsyslog, systemd).
 	
-	Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \acrfull{itil} tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring und Reportingsystemen bei.
+	Auch eine zunehmende Standardisierung der IT Prozesse wie beispielsweise \acrfull{itil} und die damit verbundenen Pflichten zur Messung bestimmter Größen tragen ihren Teil zur Notwendigkeit von immer umfangreicheren Monitoring- und Reportingsystemen bei. Auf \acrshort{itil} gehen wir im folgenden Kapitel noch einmal ausführlicher ein.
 	%\subsection{ITIL die Quelle allen Übels?}
 	%Definition ITIL - ITIL \& Monitoring?
 	%\acrfull{itil}
 	
 	\section{Definitionen rund um das Thema (Server-/System-)Monitoring}
-	Was verbirgt sich nun hinter magischen Begriffen wie \gls{itil} und Monitoring, in der folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
+	Was verbirgt sich nun hinter magischen Begriffen wie \acrshort{itil} und Monitoring, in der Folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
 	\subsection{ITIL}
-	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist ein 
+	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist eine über Jahrzehnte gewachsene Sammlung von Best Practices zum Thema IT Service Management\footcite{ebelitilv3}. \glqq\acrfull{itsm} nutzt Methoden, die nötig sind, um die bestmögliche Unterstützung von Geschäftsprozessen durch die IT-Organisation zu erreichen. \acrshort{itil} ist der diesbezüglich genannte De-facto-Standard.\grqq\footcite[S. 27]{ebelitilv3} 
+	Services was ist das? Unter Service versteht man bei \acrshort{itil} die Gesamtheit der physischen und logischen (IT- und nicht IT-) Komponenten, die benötigt werden, um die Unterstützung ausgewählter Geschäftsprozesse sicherzustellen.\footcite{sommeritservicemgmt}
+	Alles dreht sich darum Qualität des IT Services zu verbessern.
+	
+	
+	Für eine vernünftige Einführung von \acrshort{itil} im Unternehmen ist ein funktionierendes Monitoring- und Reportingsystem unbedingt notwendig.
 	\subsection{Monitoring - Allgemein}
 	%TODO Definition Monitoring
 	Laut dem Duden handelt sich beim Monitoring um
