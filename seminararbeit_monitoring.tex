@@ -267,11 +267,15 @@
 	Wenn man zu dem Thema \glqq zentrales Monitoringsystem für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller (z.B. \acrlong{ca} Unified Monitoring oder Microsoft SCOM) immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Und wahrscheinlich der gewichtigste Vorteil gegenüber allen Mitbewerbern, eine Nagios Installation kostet erstmal nichts, ic hbrauche lediglich einen Server auf dem ich die Software installieren kann und einen Administrator der gewillt ist sich in die Konfiguration einzuarbeiten. 
 	
 	Die eigentlich schon sehr gut und ausgereifte Architektur von Nagios auf der einen Seite und die immer wieder auftretenden Querelen bei der Entwicklung von Nagios, haben zu einer Vielzahl an Forks (als Fork bezeichnet man in der Softwareentwicklung eine Aufspaltung eines Projekts in zwei unterschiedliche voneinander unabhängige Projekte, die voneinander unabhängig weiterentwickelt werden) geführt. 
-	Einige dieser Forks sind
+	Einige dieser Forks sind:
 	\begin{itemize}
-		\item Icinga
-		\item Shinken
-		\item Naemon
+		\item \textbf{Icinga} 
+		
+		Entstanden 2009 aus Frust über die schleppende Weiterentwicklung von Nagios als Fork\footcite{icingaabspaltung}, Version 2 wurde von Grund auf neu entwickelt (\glqq from scratch\grqq), die Software soll aber so lange wie möglich kompatibel zu Nagios bleiben.\footcite{icingafaq}
+		\item \textbf{Shinken}
+		
+		vollständige Portierung von Nagios in die Programmiersprache Python, Umstellung von Original Nagios auf Shinken sind ohne großen Aufwand möglich, da sowohl die Plugins, als auch die Konfigurationsdateien weiterhin funktionieren \footcite{shinkenabout}
+		\item \textbf{Naemon}
 	\end{itemize} gesorgt. Für die weitere Arbeit, gehen wir davon aus, dass die Auswahl in die Richtung Nagios gefallen ist, im nächsten Kapitel werden wir uns damit beschäftigen welche Möglichkeiten wir haben.
 	
 	
@@ -350,6 +354,7 @@
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
+	%TODO Auch Nagios könnte Logfile Monitoring
 	%\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
 	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}.Um die Funktionsweise und die Integration in unser Monitoring besser erklären zu können, werden die einzelnen Tools mit ihren Möglichkeiten in den folgenden Unterkapiteln kurz vorgestellt und im Anschluß daran ihr Zusammenspiel untereinander und mit dem Monitoring erläutert.
