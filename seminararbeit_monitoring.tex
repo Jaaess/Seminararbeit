@@ -168,7 +168,7 @@
 	\section{Definitionen rund um das Thema (Server-/System-)Monitoring}
 	Was verbirgt sich nun hinter magischen Begriffen wie \acrshort{itil} und Monitoring, in der Folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
 	\subsection{ITIL}
-	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist eine über Jahrzehnte gewachsene Sammlung von Best Practices zum Thema IT Service Management\footcite{ebelitilv3}. \glqq\acrfull{itsm} nutzt Methoden, die nötig sind, um die bestmögliche Unterstützung von Geschäftsprozessen durch die IT-Organisation zu erreichen. \acrshort{itil} ist der diesbezüglich genannte De-facto-Standard.\grqq\footcite[S. 27]{ebelitilv3} 
+	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist eine über Jahrzehnte gewachsene Sammlung von Best Practices zum Thema IT Service Management\footcite{ebelitilv3}. \glqq\acrfull{itsm} nutzt Methoden, die nötig sind, um die bestmögliche Unterstützung von Geschäftsprozessen durch die IT-Organisation zu erreichen. \acrshort{itil} ist der diesbezüglich genannte De-facto-Standard\grqq\footcite[S. 27]{ebelitilv3}, was aber nicht gleichzusetzen ist mit einem offiziellen Standard. 
 	Services was ist das? Unter Service versteht man bei \acrshort{itil} die Gesamtheit der physischen und logischen (IT- und nicht IT-) Komponenten, die benötigt werden, um die Unterstützung ausgewählter Geschäftsprozesse sicherzustellen.\footcite{sommeritservicemgmt}
 	Alles dreht sich darum Qualität des IT Services zu verbessern.
 	
@@ -188,16 +188,18 @@
 	\glqq Reaktives Monitoring ist eine Form der Überwachung, bei der als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen eingeleitet werden. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incidents, wenn ein Fehler auftritt\grqq
 	\footcite[S. 511]{ebelitilv3}
 	
-	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt.
+	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Fehlertickets in einem Ticketsystem und die Weiterleitung des selbigen an die zuständige Stelle, wenn eine Störung auftritt. Die Auslösung eines Batchjobs ist in Nagios zwar möglich, aber normalerweise wird man für die Zwecke der Arbeits-/Auftragsverwaltung (auch Job Steuerung genannt) speziellere Systeme verwenden. Was allerdings möglich ist, ist \acrlong{bspw} bei Systemen bei denen kein Datenverlust (zumindest wenn man abgebrochene Sitzungen der Benutzer außen vor lässt) droht einen automatischen Neustart durchzuführen sobald diese Abstürzen oder ungewöhnliches Verhalten zeigen.
 	 
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
 	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
 	
-	Nach meiner Auffassung stellt ein richtiges proaktives Monitoring die Königsdisziplin innerhalb des Monitorings dar. Zwar hat sich die (Überwachungs-)Software in den letzten Jahren stark verbessert und die Vielzahl der verfügbaren Agenten (siehe spätere Kapitel) und die dadurch gestiegene Vielzahl an verfügbaren Informationen erleichtert einiges. Aber es Bedarf immer noch einer kundigen Hand, die die jeweiligen Filter definiert, damit das System beim überschreiten kritischer Werte Alarm schlägt. \footcite{Borkmann2009}
+	Nach meiner Auffassung stellt ein richtiges proaktives Monitoring die Königsdisziplin innerhalb des Monitorings dar. Zwar hat sich die (Überwachungs-)Software und die Vielzahl der verfügbaren Agenten (siehe spätere Kapitel) in den letzten Jahren stark verbessert und die dadurch gestiegene Vielzahl an verfügbaren Informationen erleichtert einiges. Aber es Bedarf immer noch einer kundigen Hand, die die jeweiligen Filter definiert, damit das System beim überschreiten kritischer Werte Alarm schlägt. \footcite{Borkmann2009}
+	
+	Um ein vernünftiges proaktives Monitoring realisieren zu können brauche ich für die Analyse immer die größtmögliche Anzahl an Informationen, eine breitere Datenbasis erleichtert die Einschätzung des Fehlers. Deshalb halte ich es in diesem Fall für richtig und wichtig, nicht nur Performancedaten und Daten über den Status der einzelnen Anwendungen zu sammeln und auszuwerten, sondern auch die System- und Anwendungslogs nach kritischen Mustern zu durchsuchen und ggf. Alarm zu schlagen.
 	%TODO Mustererkennung vor Ausfall, Borkmann einbauen
 	\subsection{Verfügbarkeitsmonitoring}
-	Historie
+	Verfügbarkeitsmonitoring bezeichnet die Überwachung der Verfügbarkeit, einer Anwendung oder eines Servers, d.h. die Beantwortung der Frage \glqq Wie lange war der Server/die Anwendung für den Kunden erreichbar\grqq\. Das Monitoring der Verfügbarkeit kann ein Teil des SLA-Monitorings sein, wenn im SLA eine spezifische Verfügbarkeit vereinbart wurde, darauf gehen wir im nächsten Abschnitt noch näher ein, wenn wir uns mit dem Thema SLA-Monitoring noch näher beschäftigen.
 	\subsection{SLA Monitoring}
 	Unter einem \acrfull{sla} versteht man in ITIL eine \glqq Vereinbarung zwischen einem \acrshort{it} Service Provider und einem Kunden, der einen zu erbringenden Service und dessen Service Level inklusive Service Level-Zielen, Verantwortlichkeiten von \acrshort{it} Service Provider und Kunde genau definiert. Ein \acrshort{sla} kann mehrere IT Services oder Kunden abdecken.\grqq \footcite[S. 732; Stichwort: Service Level Agreement]{ebelitilv3} Die im \acrshort{sla} vereinbarten Service Level-Ziele sollten SMART sein und auf KPIs basieren, d.h. mess- und überprüfbar sein.\footcite[S. 733; Stichwort: Service Level-Ziele]{ebelitilv3}
 	
