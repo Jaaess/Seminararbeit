@@ -299,21 +299,27 @@
 	\end{figure}
 	\clearpage
 	\subsubsection{Historie}
-	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per ping testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (ping) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
+	Die Wurzeln von Nagios gehen zurück ins Jahr 1996 als Ethan Galstad ein MSDOS Programm schreibt, dass die Erreichbarkeit von Novell Netware Servern per \textit{ping} testet. Er verwendete hierbei schon das Konzept, dass er externe Tools (\textit{ping}) nutzt um die Überprüfungen (\glqq Checks\grqq) durchzuführen, dies ist bis heute das Basisarchitekturkonzept von Nagios.
 	
-	Die Programmierarbeiten am Vorgänger von Nagios begannen im Jahr 1998, als Galstad beschloß in das Geschäft mit Monitoringsystemen einzusteigen. Die verbesserte Applikation lief unter Linux und wurde im Jahr 1999 unter dem Namen NetSaint als OpenSource veröffentlicht. Ethan Galstad nahm an das vielleicht ein Dutzend Menschen an der Anwendung interessiert sein könnten (wie so oft in der IT Geschichte eine Fehleinschätzung). Im gleichen Atemzug wurden die Plugins, die bis dahin ein Teil von Nagios waren in ein seperates Projekt ausgegliedert.
-	Der Name Nagios ist wie viele Namen im Linux/Unix Umfeld ein rekursives Akronym. Das sich herleitet aus dem initialen Namen des Projekts \glqq Netsaint\grqq\ der aus rechtlichen Gründen im Jahr 2002 in Nagios geändert wurde.\footcite{nagiosnamefaq}
-	In 2007 wird die Nagios Enterprises, \acrshort{llc} (\acrlong{llc}) Ethan founds  to provide consulting and development services around Nagios.
+	Die Programmierarbeiten am Vorgänger von Nagios begannen im Jahr 1998, als Galstad beschloß in das Geschäft mit Monitoringsystemen einzusteigen. Die verbesserte Applikation lief unter Linux und wurde im Jahr 1999 unter dem Namen NetSaint als OpenSource veröffentlicht. Ethan Galstad nahm an das vielleicht ein Dutzend Menschen an der Anwendung interessiert sein könnten (wie so oft in der IT Geschichte eine Fehleinschätzung). Im gleichen Atemzug wurden die Plugins (Skripte die Ergebnisse generieren und an Nagios zur Auswertung übergeben, siehe spätere Erläuterungen), die bis dahin ein Teil von NetSaint waren in ein separates Projekt (NetSaint Plugins) ausgegliedert.
+	
+	Im Jahr 2002 musste der Name des Projekts aus markenrechtlichen Gründen geändert werden. Der neue Name \glqq Nagios\grqq\ ist wie viele Namen im Linux/Unix Umfeld ein rekursives Akronym. Ausgeschrieben bedeutet es \glqq Nagios Ain’t Gonna Insist On Sainthood\grqq, es leitet sich aus dem ehemaligen Namen des Projekts her. Im gleichen Atemzug wurde auch die Entwicklung der Plugins in ein neues Projekt mit dem Namen \glqq Nagios Plugins\grqq verlagert.\footcite{nagiosnamefaq}
+	
+	In 2007 wird die Nagios Enterprises \acrshort{llc} (\acrlong{llc}) durch Ethan Galstad gegründet, diese bietet Consulting und Entwicklungen rund um Nagios an.
+	
+	Seit 2009 gibt es Nagios auch als kommerzielle Variante, genannt Nagios XI. Das bisherige Nagios wird in Nagios Core umbenannt.
 	\footcite{nagioshistory}
+	
 	Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
 	Icinga, Shinken
+	OMD
 	check\_mk als Bundle Lösung die verschiedene Backends bereithält, inkl. mittlerweilen eigenem Backend (Microkernel)
 	Fertige Lösung im Bundle mit mehr Tools
 	OMD -> checkmk Änderung im Subskriptionsmodell
 	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
 	
 	\subsubsection{Lizenzmodell}
-	Der Kern der Nagios Umgebung und die Plugins stehen unter der GPLv2, sie dürfen also frei verwendet, verändert und weitergegeben werden.\footcite{gplv2en} Nagios an sich kann ohne Lizenzgebühren verwendet werden, für manche Addons, Plugins oder fertig gebaute Appliances (fertig aufgebaute Monitoringumgebung meist als Image für eine Virtualisierungsumgebung oder als komplett fertiger Server) können aber durchaus Kosten anfallen.
+	Der Kern der Nagios Umgebung (Nagios Core) und die Plugins stehen unter der GPLv2, sie dürfen also frei verwendet, verändert und weitergegeben werden.\footcite{gplv2en} Nagios Core an sich kann ohne Lizenzgebühren verwendet werden, für manche Addons, Plugins oder fertig gebaute Appliances (fertig aufgebaute Monitoringumgebung meist als Image für eine Virtualisierungsumgebung oder als komplett fertiger Server) können aber durchaus Kosten anfallen.
 	\subsubsection{Funktionsumfang}
 	%TODO Notwendig immer mindestens Nagios Core & Plugins 
 	%TODO komplexere Konfiguration
