@@ -53,7 +53,8 @@
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 %Überflüssig, dank Dokumentenklasse scrreprt
-\usepackage[left=4.00cm, right=2.00cm, top=4.00cm, bottom=2.00cm]{geometry}
+%head statt top bringt exakt 4cm Abstand am Kopf
+\usepackage[left=4.00cm, right=2.00cm, head=4.00cm, bottom=2.00cm]{geometry}
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
 \usepackage{hyperref} %Klickbare Einträge im Glossar
@@ -103,7 +104,14 @@
 %% Abstände um Chapter
 %\RedeclareSectionCommand[beforeskip=-1\baselineskip,afterskip=.5\baselineskip]{chapter}
 
-
+%\pagestyle{headings}
+%Schriftgrößen noch ein wenig anpassen...
+\setkomafont{chapter}{\fontsize{16bp}{18.8bp}\selectfont}
+\setkomafont{section}{\fontsize{14bp}{18.8bp}\selectfont}
+%\addtokomafont{disposition}{\hspace*{1.5cm}}
+\renewcommand{\chapterheadstartvskip}{\vspace*{-1\topskip}}
+\renewcommand{\chapterheadendvskip}{\vspace*{0.2\topskip}}
+\renewcommand*{\chapterheadstartvskip}{\vspace*{-\topskip}}
 
 \begin{document}
 	%TODO: Titelseite an die Erfordernisse anpassen
@@ -381,22 +389,27 @@
 	\subsection{Versuchsaufbau}
 	Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem Hoster in einem Rechenzentrum steht. Mit den beiden virtuellen Maschinen werden Server in einem Rechenzentrum simuliert, diese stehen in einem nach außen abgeschotteten Netz, die Datenübertragung bedarf deshalb keiner besonderer Sicherheitsvorkehrungen, der entfernte Server ist nur übers Internet erreichbar (potentiell unsicher!) und die Übertragung der Daten bedarf deshalb einer Verschlüsselung.
 	\subsection{Was soll überwacht werden?}
+	Wir wollen Performancedaten \& Verfügbarkeit der Systeme überwachen, realisieren als grundlegende und erweiterte Überwachung.
 	\subsection{Wie kann überwacht werden?}
+	Im wesentlichen werden wir uns bei der Überwachung auf die Daten aus dem Check\_MK Agenten verlassen, dieser betreibt aktive Überwachung.
+	Die Log Dateien werden beim Auftreten bestimmter Patterns in die Überwachung übertragen (passive Überwachung). 
 	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	
 	\subsection{Welche \acrlong{sla}s existieren bereits?}
 	Für 
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
 	\section{Grundlegende Beschreibung der verwendeten Systeme}
 	\subsection{verwendete Software}
-	Als Betriebssy
-	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
+	Als Betriebssystem auf dem Überwachungsrechner kommt Debian 8. zum Einsatz, dies hat den Grund, das Check\_MK in Verbindung mit SuSE beim Aufbau einige Probleme mit fehlenden Paketen hatte, diese Pakete selbst mittels SuSE's \acrfull{obs} zu bauen wäre möglich gewesen.
+	%TODO warum nicht passiert?
+	 Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube) mit ihren eigenen Applicationservern. An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban\footcite{fail2ban} installiert, bei Fail2Ban handelt es sich um eine Sicherheitssoftware, die das Systemlog (\path{/var/log/messages}) auf bestimmte Muster durchsuchen, wenn sich der gleiche User (identifiziert durch die IP) mehrmals hintereinander mit einer bestimmten Fehlermeldung im Syslog auftreten, dann wird die IP über die Firewall gesperrt. \\
 	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
 	\begin{center}
 	\begin{tabular}{|c|c|c|}
 	\hline 
 	Eingesetzte Software & Version & Client oder Server \\ 
 	\hline 
-	VirtualBox & 5.0.10 & Virtualisierungslösung\\
+	VirtualBox & 5.0.14 & Virtualisierungslösung\\
 	\hline
 	Opensuse & 13.2 & Server\\ 
 	\hline 
@@ -412,13 +425,8 @@
 	\end{table}
 	\subsection{Installation}
 	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing 4.1 Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing 4.1, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit.
-	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]
-	zypper ar -f https://labs.consol.de/repo/testing/sles12/consol-labs.repo
-	zypper in omd
-	
-	wget https://mathias-kettner.de/support/1.2.6p15/check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
-	zypper in check-mk-raw-1.2.6p15-sles12-34.x86_64.rpm
-	
+	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]	
+
 	dpkg -i check-mk-raw-1.2.6p15-sles12-34.x86_64.deb
 	apt-get -f install
 	omd setup
@@ -427,6 +435,10 @@
 	
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
+	Installation des Agenten
+	Kopieren der zusätzlichen Checks
+	
+	Schlüsseltausch
 	\begin{lstlisting}[language=bash]
 	root@linux# ssh -i check_mk.key targethost
 	\end{lstlisting} \footcite{checkmkCheckBySSH2015}
