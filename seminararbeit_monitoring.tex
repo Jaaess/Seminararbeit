@@ -168,10 +168,12 @@
 	\section{Definitionen rund um das Thema (Server-/System-)Monitoring}
 	Was verbirgt sich nun hinter magischen Begriffen wie \acrshort{itil} und Monitoring, in der Folge werde ich versuchen die gebräuchlichsten Definitionen darzulegen und zu beschreiben wie die einzelnen Spielarten des Monitorings mittels Tools im praktischen Teil der Arbeit umgesetzt werden.
 	\subsection{ITIL}
-	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist eine über Jahrzehnte gewachsene Sammlung von Best Practices zum Thema IT Service Management\footcite{ebelitilv3}. \glqq\acrfull{itsm} nutzt Methoden, die nötig sind, um die bestmögliche Unterstützung von Geschäftsprozessen durch die IT-Organisation zu erreichen. \acrshort{itil} ist der diesbezüglich genannte De-facto-Standard.\grqq\footcite[S. 27]{ebelitilv3} 
+	Die Begrifflichkeit \acrshort{itil} wird uns in der Folge noch öfter über den Weg laufen. Ausgeschrieben heißt \acrshort{itil}: \acrlong{itil} und ist eine über Jahrzehnte gewachsene Sammlung von Best Practices zum Thema IT Service Management\footcite{ebelitilv3}. \glqq\acrfull{itsm} nutzt Methoden, die nötig sind, um die bestmögliche Unterstützung von Geschäftsprozessen durch die IT-Organisation zu erreichen. \acrshort{itil} ist der diesbezüglich genannte De-facto-Standard\grqq\footcite[S. 27]{ebelitilv3}, was aber nicht gleichzusetzen ist mit einem offiziellen Standard. 
 	Services was ist das? Unter Service versteht man bei \acrshort{itil} die Gesamtheit der physischen und logischen (IT- und nicht IT-) Komponenten, die benötigt werden, um die Unterstützung ausgewählter Geschäftsprozesse sicherzustellen.\footcite{sommeritservicemgmt}
 	Alles dreht sich darum Qualität des IT Services zu verbessern.
 	
+	%https://de.wikipedia.org/wiki/ITIL_V3_Service_Operation
+	ITIL Service Operation? 
 	
 	Für eine vernünftige Einführung von \acrshort{itil} im Unternehmen ist ein funktionierendes Monitoring- und Reportingsystem unbedingt notwendig.
 	\subsection{Monitoring - Allgemein}
@@ -186,16 +188,18 @@
 	\glqq Reaktives Monitoring ist eine Form der Überwachung, bei der als Reaktion auf ein bestimmtes Event entsprechende Maßnahmen eingeleitet werden. Beispielsweise die Auslösung eines Batchjobs, sobald ein vorheriger Batchjob abgeschlossen wurde, oder die Erfassung eines Incidents, wenn ein Fehler auftritt\grqq
 	\footcite[S. 511]{ebelitilv3}
 	
-	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Tickets in einem Ticketsystem wenn eine Störung auftritt.
+	Die Begrifflichkeit des Incidents kommt aus der \acrshort{itil}-Welt und bezeichnet die Eröffnung eines Fehlertickets in einem Ticketsystem und die Weiterleitung des selbigen an die zuständige Stelle, wenn eine Störung auftritt. Die Auslösung eines Batchjobs ist in Nagios zwar möglich, aber normalerweise wird man für die Zwecke der Arbeits-/Auftragsverwaltung (auch Job Steuerung genannt) speziellere Systeme verwenden. Was allerdings möglich ist, ist \acrlong{bspw} bei Systemen bei denen kein Datenverlust (zumindest wenn man abgebrochene Sitzungen der Benutzer außen vor lässt) droht einen automatischen Neustart durchzuführen sobald diese Abstürzen oder ungewöhnliches Verhalten zeigen, mit einer solchen Vorgehensweise könnten u.U. Benachrichtigungen von teuren Rufbereitschaftskräften abgesehen werden.
 	 
 	\subsection{proaktives Monitoring}
 	%http://www.thefreedictionary.com/proactive
 	\glqq Proaktives Monitoring ist eine Form der Überwachung, bei der versucht wird, Event-Muster zu ermitteln, um mögliche zukünftige Ausfälle zu prognostizieren.\grqq \footcite[S. 511]{ebelitilv3}
 	
-	Nach meiner Auffassung stellt ein richtiges proaktives Monitoring die Königsdisziplin innerhalb des Monitorings dar. Zwar hat sich die (Überwachungs-)Software in den letzten Jahren stark verbessert und die Vielzahl der verfügbaren Agenten (siehe spätere Kapitel) und die dadurch gestiegene Vielzahl an verfügbaren Informationen erleichtert einiges. Aber es Bedarf immer noch einer kundigen Hand, die die jeweiligen Filter definiert, damit das System beim überschreiten kritischer Werte Alarm schlägt. \footcite{Borkmann2009}
+	Nach meiner Auffassung stellt ein richtiges proaktives Monitoring die Königsdisziplin innerhalb des Monitorings dar. Zwar hat sich die (Überwachungs-)Software und die Vielzahl der verfügbaren Agenten (siehe spätere Kapitel) in den letzten Jahren stark verbessert und die dadurch gestiegene Vielzahl an verfügbaren Informationen erleichtert einiges. Aber es Bedarf immer noch einer kundigen Hand, die die jeweiligen Filter definiert, damit das System beim überschreiten kritischer Werte Alarm schlägt. \footcite{Borkmann2009}
+	
+	Um ein vernünftiges proaktives Monitoring realisieren zu können brauche ich für die Analyse immer die größtmögliche Anzahl an Informationen, eine breitere Datenbasis erleichtert die Einschätzung des Fehlers. Deshalb halte ich es in diesem Fall für richtig und wichtig, nicht nur Performancedaten und Daten über den Status der einzelnen Anwendungen zu sammeln und auszuwerten, sondern auch die System- und Anwendungslogs nach kritischen Mustern zu durchsuchen und ggf. Alarm zu schlagen.
 	%TODO Mustererkennung vor Ausfall, Borkmann einbauen
 	\subsection{Verfügbarkeitsmonitoring}
-	Historie
+	Verfügbarkeitsmonitoring bezeichnet die Überwachung der Verfügbarkeit, einer Anwendung oder eines Servers, d.h. die Beantwortung der Frage \glqq Wie lange war der Server/die Anwendung für den Kunden erreichbar\grqq\. Das Monitoring der Verfügbarkeit kann ein Teil des SLA-Monitorings sein, wenn im SLA eine spezifische Verfügbarkeit vereinbart wurde, darauf gehen wir im nächsten Abschnitt noch näher ein, wenn wir uns mit dem Thema SLA-Monitoring noch näher beschäftigen.
 	\subsection{SLA Monitoring}
 	Unter einem \acrfull{sla} versteht man in ITIL eine \glqq Vereinbarung zwischen einem \acrshort{it} Service Provider und einem Kunden, der einen zu erbringenden Service und dessen Service Level inklusive Service Level-Zielen, Verantwortlichkeiten von \acrshort{it} Service Provider und Kunde genau definiert. Ein \acrshort{sla} kann mehrere IT Services oder Kunden abdecken.\grqq \footcite[S. 732; Stichwort: Service Level Agreement]{ebelitilv3} Die im \acrshort{sla} vereinbarten Service Level-Ziele sollten SMART sein und auf KPIs basieren, d.h. mess- und überprüfbar sein.\footcite[S. 733; Stichwort: Service Level-Ziele]{ebelitilv3}
 	
@@ -204,11 +208,10 @@
 	Einhaltung vereinbarter Servicelevel \footcite[40]{iso20000sla}
 	\subsection{Fazit}
 	%TODO ITIL Begrifflichkeit vs. technische Begrifflichkeit, also proaktiv, reaktiv, SLA vs. Basis, erweitertes, spezialisiertes Monitoring
-	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \acrshort{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können.
+	Um alle in den vergangenen Unterkapiteln beschriebenen Anforderungen zu erfüllen ist es notwendig mehrere Überwachungstechnologien zu verbinden, um ein optimales Monitoring zu erhalten. So ist es zur proaktiven Erkennung von Fehlern zum einen unerlässlich die Einträge in Logfiles auswerten zu können, um Fehler zu bemerken lange bevor Sie beginnen sich auf den Produktivbetrieb auszuwirken (bspw. Schreibfehler auf ein per \acrlong{fc} (\acrshort{fc}) angebundenes \acrshort{san}-System oder einfach I/O Fehler auf eine der Systemfestplatten) und zum anderen auch die Performance der Systeme im Auge zu behalten um sicher zu stellen, dass die Dimensionierung der Systeme richtig ist und nicht plötzliche Engpässe auftreten können. Dies ist vor allem durch die grafische Aufbereitung und historische Speicherung der Daten möglich. 
 	\chapter{Monitoring Systeme für Linux Server}
 
 	Nachdem wir im vorherigen Kapitel einige grundlegende Begriffe bereits geklärt haben, ist es nun an der Zeit uns Gedanken darüber zu machen, wie ein Monitoring aussehen könnte und was es alles leisten sollte. 
-	%TODO Layout und Überschriftsposition so in Ordnung?
 	\section{Grundlegende Überlegungen}
 	Die wesentlichen Fragen\footcite[nach][]{veltnagios1} vor Beginn einer Implementierung einer Monitoring Lösung sollten sein:
 	\begin{itemize}
@@ -257,13 +260,23 @@
 	So kann es sich beim Ausfall eines Servers um vielfältige Probleme handeln, \acrlong{bspw} ein Betriebssystem- oder ein Netzwerkproblem.
 	Außerdem muss festgelegt werden ob und wer 24/7 (also 24h am Tag, sieben Tage die Woche) über aufgetretene Fehler informiert werden muss/soll.
 	\subsection{Welche Service Level Agreements existieren bereits, welche sollen in naher Zukunft abgeschlossen werden?}
+	Diese Information ist besonders wichtig um festlegen zu können welche Kennzahlen ich auf jedem Fall aus meinem Monitoring bekommen will um den Anforderungen gerecht zu werden.
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
-	Bei der Recherche nach Monitoringtools für Linux Systeme stößt man auf verschiedenste Lösungen, da wären zum einen die Lösungen die lokal auf jedem Server zu installieren sind, der Performance Monitor \textit{top} und seine Derivate (atop, iotop, htop, ntop) oder das Systat-Paket\footcite{sysstat} mit seinen Komponenten (\acrlong{bspw} SAR\footcite{sarkrenn}, iostat). Allerdings haben alle diese Programme das Problem, dass ich mich auf dem Server anmelden muss um Informationen zu bekommen, einzig bei SAR hätte ich die Möglichkeit, die per Cronjob generierten Dateien per Skript einzusammeln und auf einem zentralen Server mit einem Tool wie KSar\footcite{ksar} grafisch auszuwerten.
-	Wenn man zu dem Thema \glqq Monitoringsysteme für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Dieser \glqq Ruhm\grqq\ und einige gewichtige Nachteile haben in den vergangenen Jahren für einige Entwicklung und Innovationen auf dem \glqq Markt für Monitoringlösungen\grqq gesorgt. Neben Nagios buhlen noch einige Forks der Software und diverse besser verpackte Nagios Systeme um die Gunst der Entscheider.
+	Bei der Recherche nach Monitoringtools für Linux Systeme stößt man auf verschiedenste Lösungen, da wären zum einen die Lösungen die lokal auf jedem Server zu installieren sind, der Performance Monitor \textit{top} und seine Derivate (atop, iotop, htop, ntop) oder das Systat-Paket\footcite{sysstat} mit seinen Komponenten (\acrlong{bspw} SAR\footcite{sarkrenn}, iostat). Allerdings haben alle diese Programme das Problem, dass ich mich auf dem Server anmelden muss um Informationen zu bekommen, einzig bei SAR hätte ich die Möglichkeit, die per Cronjob generierten Dateien per Skript einzusammeln und auf einem zentralen Server mit einem Tool wie KSar\footcite{ksar} grafisch auszuwerten oder KSar die Daten selbst einsammeln zu lassen indem ich mich auf dem Server anmelde wenn ich Performance Daten brauche. Dies ist allerdings nicht wirklich befriedigend da es bei diesen Lösungen um ein reines Monitoring von Performancedaten geht und nicht um ein Monitoring der Verfügbarkeit bestimmter Dienste oder die Benachrichtigung/Alarmierung im Fehlerfall. Um eine solche Funktionalität zu erhalten brauchen wir ein zentrales System. 
+	%TODO Quelle für die per Cronjob generierten Dateien?
+	Wenn man zu dem Thema \glqq zentrales Monitoringsystem für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller (z.B. \acrlong{ca} Unified Monitoring oder Microsoft SCOM) immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Und wahrscheinlich der gewichtigste Vorteil gegenüber allen Mitbewerbern, eine Nagios Installation kostet erstmal nichts, ic hbrauche lediglich einen Server auf dem ich die Software installieren kann und einen Administrator der gewillt ist sich in die Konfiguration einzuarbeiten. 
 	
-	Icinga
-	Shinken
-	OMD: Check\_MK
+	Die eigentlich schon sehr gut und ausgereifte Architektur von Nagios auf der einen Seite und die immer wieder auftretenden Querelen bei der Entwicklung von Nagios, haben zu einer Vielzahl an Forks (als Fork bezeichnet man in der Softwareentwicklung eine Aufspaltung eines Projekts in zwei unterschiedliche voneinander unabhängige Projekte, die voneinander unabhängig weiterentwickelt werden) geführt. 
+	Einige dieser Forks sind:
+	\begin{itemize}
+		\item \textbf{Icinga} 
+		
+		Entstanden 2009 aus Frust über die schleppende Weiterentwicklung von Nagios als Fork\footcite{icingaabspaltung}, Version 2 wurde von Grund auf neu entwickelt (\glqq from scratch\grqq), die Software soll aber so lange wie möglich kompatibel zu Nagios bleiben.\footcite{icingafaq}
+		\item \textbf{Shinken}
+		
+		vollständige Portierung von Nagios in die Programmiersprache Python, Umstellung von Original Nagios auf Shinken sind ohne großen Aufwand möglich, da sowohl die Plugins, als auch die Konfigurationsdateien weiterhin funktionieren \footcite{shinkenabout}
+		\item \textbf{Naemon}
+	\end{itemize} gesorgt. Für die weitere Arbeit, gehen wir davon aus, dass die Auswahl in die Richtung Nagios gefallen ist, im nächsten Kapitel werden wir uns damit beschäftigen welche Möglichkeiten wir haben und welchen Funktionsumfang uns Nagios bietet.
 	
 	
 	\section{Performance \& SLA Monitoring}
@@ -341,6 +354,7 @@
 	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
+	%TODO Auch Nagios könnte Logfile Monitoring
 	%\subsection{Splunk Monitoring}
 	\subsection{Elasticsearch - Logstash - Kibana}
 	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}.Um die Funktionsweise und die Integration in unser Monitoring besser erklären zu können, werden die einzelnen Tools mit ihren Möglichkeiten in den folgenden Unterkapiteln kurz vorgestellt und im Anschluß daran ihr Zusammenspiel untereinander und mit dem Monitoring erläutert.
@@ -360,9 +374,21 @@
 	\clearpage
 	%TODO Netways Präsentation für Integration in Nagios
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
-	\section{Versuchsaufbau}
-	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
+	\section{Grundlegende Überlegungen}
+	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. 
+	
+	Es wird auf Basis eines kleinen Versuchsaufbaus, der komplette Prozess (wie in Kapitel 3 beschrieben )bis zu einem fertigen Monitoring durchlaufen.
+	\subsection{Versuchsaufbau}
+	Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem Hoster in einem Rechenzentrum steht. Mit den beiden virtuellen Maschinen werden Server in einem Rechenzentrum simuliert, diese stehen in einem nach außen abgeschotteten Netz, die Datenübertragung bedarf deshalb keiner besonderer Sicherheitsvorkehrungen, der entfernte Server ist nur übers Internet erreichbar (potentiell unsicher!) und die Übertragung der Daten bedarf deshalb einer Verschlüsselung.
+	\subsection{Was soll überwacht werden?}
+	\subsection{Wie kann überwacht werden?}
+	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	\subsection{Welche \acrlong{sla}s existieren bereits?}
+	Für 
+	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
+	\section{Grundlegende Beschreibung der verwendeten Systeme}
 	\subsection{verwendete Software}
+	Als Betriebssy
 	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
 	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
 	\begin{center}
