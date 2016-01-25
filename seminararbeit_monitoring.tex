@@ -276,7 +276,7 @@
 		
 		vollständige Portierung von Nagios in die Programmiersprache Python, Umstellung von Original Nagios auf Shinken sind ohne großen Aufwand möglich, da sowohl die Plugins, als auch die Konfigurationsdateien weiterhin funktionieren \footcite{shinkenabout}
 		\item \textbf{Naemon}
-	\end{itemize} gesorgt. Für die weitere Arbeit, gehen wir davon aus, dass die Auswahl in die Richtung Nagios gefallen ist, im nächsten Kapitel werden wir uns damit beschäftigen welche Möglichkeiten wir haben.
+	\end{itemize} gesorgt. Für die weitere Arbeit, gehen wir davon aus, dass die Auswahl in die Richtung Nagios gefallen ist, im nächsten Kapitel werden wir uns damit beschäftigen welche Möglichkeiten wir haben und welchen Funktionsumfang uns Nagios bietet.
 	
 	
 	\section{Performance \& SLA Monitoring}
@@ -374,9 +374,21 @@
 	\clearpage
 	%TODO Netways Präsentation für Integration in Nagios
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
-	\section{Versuchsaufbau}
-	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem großen Hoster in einem Rechenzentrum steht.
+	\section{Grundlegende Überlegungen}
+	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. 
+	
+	Es wird auf Basis eines kleinen Versuchsaufbaus, der komplette Prozess (wie in Kapitel 3 beschrieben )bis zu einem fertigen Monitoring durchlaufen.
+	\subsection{Versuchsaufbau}
+	Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem Hoster in einem Rechenzentrum steht. Mit den beiden virtuellen Maschinen werden Server in einem Rechenzentrum simuliert, diese stehen in einem nach außen abgeschotteten Netz, die Datenübertragung bedarf deshalb keiner besonderer Sicherheitsvorkehrungen, der entfernte Server ist nur übers Internet erreichbar (potentiell unsicher!) und die Übertragung der Daten bedarf deshalb einer Verschlüsselung.
+	\subsection{Was soll überwacht werden?}
+	\subsection{Wie kann überwacht werden?}
+	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
+	\subsection{Welche \acrlong{sla}s existieren bereits?}
+	Für 
+	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
+	\section{Grundlegende Beschreibung der verwendeten Systeme}
 	\subsection{verwendete Software}
+	Als Betriebssy
 	Opensuse Leap 42.1 als Betriebssystem für den Überwachungsrechner auf dem sowohl die Check\_MK Instanz läuft, als auch der ELK Stack. Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube). An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban installiert und so konfiguriert, dass Hosts die 3 fehlerhafte Versuche sich per SSH einzuloggen unternehmen automatisch für eine bestimmte Zeit auf eine Sperrliste in der Firewall gesetzt werden. \\
 	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
 	\begin{center}
