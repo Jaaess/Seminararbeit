@@ -308,33 +308,28 @@
 	In 2007 wird die Nagios Enterprises \acrshort{llc} (\acrlong{llc}) durch Ethan Galstad gegründet, diese bietet Consulting und technische Unterstützung rund um Nagios an.
 	
 	Seit 2009 gibt es Nagios auch als kommerzielle Variante, genannt Nagios XI. Das bisherige Nagios wird in Nagios Core umbenannt.
-	\footcite{nagioshistory}. 2009 wurden auch die Forks (Abspaltungen) Icinga und Shinken aus der Taufe gehoben, beide eine Folge daraus, dass sich die Community im (noch dazu sehr schleppend verlaufenden) Nagios Entwicklungsprozess nicht ausreichend wiederfand.
+	\footcite{nagioshistory}. 
+	
+	2009 wurden auch die Forks (Abspaltungen) Icinga und Shinken aus der Taufe gehoben, beide eine Folge daraus, dass sich die Community im (noch dazu sehr schleppend verlaufenden) Nagios (Core) Entwicklungsprozess nicht ausreichend wiederfand.
 	
 	Im Jahr erscheint Nagios Core 4
 	
-	In den folgenden Jahren machte die Nagios Enterprise und ihr Gründer Galstad durch ihre rigide Trademarkpolitik von sich reden, so änderten beispielsweise die von der Community getragenen Seiten \url{nagios-portal.de} und \url{nagios-plugins.org} auf Druck von Nagios Enterprises ihre Namen in \url{monitoring-portal.de}\footcite{nagiosportal} und \url{monitoring-plugins.de}
-	
-	%Nagios -> Kritik Weiterentwicklung Ethan Galstedt...siehe Lehrgangsunterlagen QSkills
-	%Icinga, Shinken
-	OMD
-	check\_mk als Bundle Lösung die verschiedene Backends bereithält, inkl. mittlerweilen eigenem Backend (Microkernel)
-	Fertige Lösung im Bundle mit mehr Tools
-	OMD -> checkmk Änderung im Subskriptionsmodell
-	check\_mk Versionen Freie Version, Subskriptionen: Innovation, Stable, etc.
+	In den folgenden Jahren machte die Nagios Enterprise und ihr Gründer Galstad durch ihren rigide Umgang mit den Rechten am Namen Nagios von sich reden, so änderten beispielsweise die von der Community getragene Seite \url{nagios-portal.de} und  auf Druck von Nagios Enterprises ihre Namen in \url{monitoring-portal.de}\footcite{nagiosportal}  Im Fall der Nagios Plugins (\url{nagios-plugins.org}) die bis dato von der Community entwickelt wurden, ging der Umbenennung in Monitoring Plugins (\url{monitoring-plugins.de})  ein Streit um die Nennung von Nagios Forks auf der Seite des Projekts voraus, der darin gipfelte das die Firma Nagios Enterprises die Domain ohne Rücksprache mit der Community auf eigene Server umleitete, was dann die Namensänderung zur Folge hatte.\footcite{nagiosplugin}.
 	
 	\subsubsection{Lizenzmodell}
-	Der Kern der Nagios Umgebung (Nagios Core) und die Plugins stehen unter der GPLv2, sie dürfen also frei verwendet, verändert und weitergegeben werden.\footcite{gplv2en} Nagios Core an sich kann ohne Lizenzgebühren verwendet werden, für manche Addons, Plugins oder fertig gebaute Appliances (fertig aufgebaute Monitoringumgebung meist als Image für eine Virtualisierungsumgebung oder als komplett fertiger Server) können aber durchaus Kosten anfallen.
+	Der Kern der Nagios Umgebung (Nagios Core) und die Plugins stehen unter der GPLv2, sie dürfen also frei verwendet, verändert und weitergegeben werden.\footcite{gplv2en} Nagios Core an sich kann ohne Lizenzgebühren verwendet werden, für die Enterprise Variante, für manche Addons, Plugins oder fertig gebaute Appliances (fertig aufgebaute Monitoringumgebung meist als Image für eine Virtualisierungsumgebung oder als komplett fertiger Server) können aber durchaus Kosten anfallen.
 	\subsubsection{Funktionsumfang}
 	%TODO Notwendig immer mindestens Nagios Core & Plugins 
 	%TODO komplexere Konfiguration
 	%TODO Checken und erweitern
-	Der Funktionsumfang von Nagios ist relativ beschränkt. Nagios an sich kann beispielsweise nicht mal die Performancedaten grafisch aufbereiten, hierfür greift
 	%TODO Modularisierung vielleicht noch stärker rausarbeiten
-	Nagios auf Addons wie \textit{Nagios2RRD(N2RRD)}\footcite{n2rrdprojecthome} zurück
+	Um mit Nagios Core ein funktionsfähiges Monitoring erstellen zu können, sind immer mindestens zwei Komponenten nötig, zum einen Nagios Core selbst, zum anderen die Nagios Plugins, die die eigentliche Überwachung erledigen. Möchte man \acrlong{bspw} eine grafische Auswertung bestimmter Daten, so muss man auf Addons wie \textit{Nagios2RRD(N2RRD)}\footcite{n2rrdprojecthome} zurückgreifen. Dies gilt für viele Zusatzaufgaben, sei es grafische Aufbereitung oder das bequemere Monitoring von Verfügbarkeitszeiten, es empfiehlt sich auf jeden Fall einen Blick auf die verfügbaren Module zu werfen, die Auswahl ist reichhaltig.	
 	
+	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei. Einige dieser Voraussetzungen sind \acrlong{bspw}, dass ein definierter Statuscode zurückgegeben wird und die Ausgabe auf STDOUT erfolgen muss. Mittlerweilen sind mehrzeilige Rückgaben erlaubt. dies war aber sehr lange Zeit nicht der Fall. Bis zur Version 3 konnte Nagios nur einzeilige Rückgaben verarbeiten.
 	
-	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei.
-	%TODO BIs Nagios 3 konnte Nagios bspw. nur einzeilige Rückgaben verarbeiten, seit Nagios 3 geht auch Multiline
+	Wie sieht ein typischer Rückgabewert von einem Nagios Plugin nun aus? 
+	
+	%TODO wie wird geprüft, unsicher deshalb NRPE für Remote
 	
 	NRPE (siehe \ref{fig:nrpe})
 	\begin{figure}[h!]
@@ -347,8 +342,11 @@
 	
 	%TODO BI nur mit Addon
 	Nagios BPI\footcite{nagiosbpi}
+	Als Fazit aus der (kurzen) Betrachtung der Funktionsweise von Nagios lässt sich schließen, dass der größter Vorteil von Nagios, auch der größte Nachteil ist, durch die modulare Erweiterbarkeit und die extreme Vielfalt braucht es auch erstmal einiger Einarbeitung um ein wirklich funktionierendes Monitoring konfiguriert zu bekommen.
 	
-	\subsection{Check\_MK - nur ein besser konfigurierbares Nagios?}
+	\subsection{Die \acrlong{omd} - nur ein besser konfigurierbares Nagios?}
+	Um den Nachteil der komplexen Konfiguration von Nagios zu umgehen haben sich im Jahr 2010 einige Nagios Entwickler zusammengetan und mit \acrfull{omd}, eine vorkonfigurierte Nagios-Installation mit einigen Addons ins Leben gerufen. Die Entwickler von OMD sind in der Nagios-Szene allesamt keine unbekannten und entwickeln seit Jahren an Projekten wie der Visualisierung Nagvis (Lars Michelsen), der Agentensoftware Check\_mk (Mathias Kettner), dem Performance-Analysetool Pnp4nagios (Jörg Linge) oder dem Webinterface Thruk (Sven Nierlein) bekannt.\footcite{omdlinuxmag} In der Folge entwickelte sich um die \acrshort{omd} eine sehr aktive Community. Die eigentliche \acrlong{omd} macht auf den ersten Blick nicht den Eindruck einer stark weiterentwickelten Version, aber die Entwicklungsversionen sprechen eine andere Sprache, darüber hinaus vertreiben einige der Autoren \glqq ihre\grqq Software als angepasstes \acrshort{omd}, beispielsweise Mathias Kettner und Sven Nierlein\footnote{https://labs.consol.de/de/}. Wir werden uns in der Folge mit der Check_MK-Variante der \acrshort{omd} beschäftigen.
+	
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
