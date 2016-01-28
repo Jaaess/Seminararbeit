@@ -38,7 +38,7 @@
   frame=single,	                   % adds a frame around the code
   keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
   keywordstyle=\color{blue},       % keyword style
-  language=Octave,                 % the language of the code
+  language=bash,                 % the language of the code
   otherkeywords={*,...},           % if you want to add more keywords to the set
   numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
   numbersep=5pt,                   % how far the line-numbers are from the code
@@ -69,7 +69,7 @@
 \makeglossaries
 %\usepackage{imakeidx}
 %Tiefe der Nummerierung ändern, Subsubsection ist Ebene 3
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{4}
 % Bibliothek & Zitierstil
 \usepackage[style=authortitle-icomp,backend=biber]{biblatex}
@@ -271,7 +271,7 @@
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
 	Bei der Recherche nach Monitoringtools für Linux Systeme stößt man auf verschiedenste Lösungen, da wären zum einen die Lösungen die lokal auf jedem Server zu installieren sind, der Performance Monitor \textit{top} und seine Derivate (atop, iotop, htop, ntop) oder das Systat-Paket\footcite{sysstat} mit seinen Komponenten (\acrlong{bspw} SAR\footcite{sarkrenn}, iostat). Allerdings haben alle diese Programme das Problem, dass ich mich auf dem Server anmelden muss um Informationen zu bekommen, einzig bei SAR hätte ich die Möglichkeit, die per Cronjob generierten Dateien per Skript einzusammeln und auf einem zentralen Server mit einem Tool wie KSar\footcite{ksar} grafisch auszuwerten oder KSar die Daten selbst einsammeln zu lassen indem ich mich auf dem Server anmelde wenn ich Performance Daten brauche. Dies ist allerdings nicht wirklich befriedigend da es bei diesen Lösungen um ein reines Monitoring von Performancedaten geht und nicht um ein Monitoring der Verfügbarkeit bestimmter Dienste oder die Benachrichtigung/Alarmierung im Fehlerfall. Um eine solche Funktionalität zu erhalten brauchen wir ein zentrales System. 
 	%TODO Quelle für die per Cronjob generierten Dateien?
-	Wenn man zu dem Thema \glqq zentrales Monitoringsystem für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller (z.B. \acrlong{ca} Unified Monitoring oder Microsoft SCOM) immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Und wahrscheinlich der gewichtigste Vorteil gegenüber allen Mitbewerbern, eine Nagios Installation kostet erstmal nichts, ic hbrauche lediglich einen Server auf dem ich die Software installieren kann und einen Administrator der gewillt ist sich in die Konfiguration einzuarbeiten. 
+	Wenn man zu dem Thema \glqq zentrales Monitoringsystem für Linux\grqq\ im Internet recherchiert wird man neben den diversen teuren Softwarelösungen diverser Hersteller (z.B. \acrlong{ca} Unified Monitoring oder Microsoft SCOM) immer wieder über einen Namen stolpern: Nagios. Das Tool hat sich fürs Monitoring von Linux Systemen zu einer Art Industrie Standard entwickelt. Das mag zum einen an seiner freien Verfügbarkeit liegen, zum anderen aber vielleicht auch daran, dass im Linux Umfeld viele Administratoren die Quelloffenheit und die leichte Erweiterbarkeit mittels eigener Tools, Plugins, Agenten von Nagios schätzen. Darüber hinaus findet man ein weites Angebot an Support und Serviceleistungen, sowohl im Internet, als auch von Consultingfirmen, die meist auch an der Entwicklung der Systeme beteiligt sind. Und wahrscheinlich der gewichtigste Vorteil gegenüber allen Mitbewerbern, eine Nagios Installation kostet erstmal nichts, ich brauche lediglich einen Server auf dem ich die Software installieren kann und einen Administrator der gewillt ist sich in die Konfiguration einzuarbeiten. 
 	
 	Die eigentlich schon sehr gut und ausgereifte Architektur von Nagios auf der einen Seite und die immer wieder auftretenden Querelen bei der Entwicklung von Nagios, haben zu einer Vielzahl an Forks (als Fork bezeichnet man in der Softwareentwicklung eine Aufspaltung eines Projekts in zwei unterschiedliche voneinander unabhängige Projekte, die voneinander unabhängig weiterentwickelt werden) geführt. 
 	Einige dieser Forks sind:
@@ -319,52 +319,130 @@
 	\subsubsection{Lizenzmodell}
 	Der Kern der Nagios Umgebung (Nagios Core) und die Plugins stehen unter der GPLv2, sie dürfen also frei verwendet, verändert und weitergegeben werden.\footcite{gplv2en} Nagios Core an sich kann ohne Lizenzgebühren verwendet werden, für die Enterprise Variante, für manche Addons, Plugins oder fertig gebaute Appliances (fertig aufgebaute Monitoringumgebung meist als Image für eine Virtualisierungsumgebung oder als komplett fertiger Server) können aber durchaus Kosten anfallen.
 	\subsubsection{Funktionsumfang}
-	%TODO Notwendig immer mindestens Nagios Core & Plugins 
-	%TODO komplexere Konfiguration
-	%TODO Checken und erweitern
-	%TODO Modularisierung vielleicht noch stärker rausarbeiten
-	Um mit Nagios Core ein funktionsfähiges Monitoring erstellen zu können, sind immer mindestens zwei Komponenten nötig, zum einen Nagios Core selbst, zum anderen die Nagios Plugins, die die eigentliche Überwachung erledigen. Möchte man \acrlong{bspw} eine grafische Auswertung bestimmter Daten, so muss man auf Addons wie \textit{Nagios2RRD(N2RRD)}\footcite{n2rrdprojecthome} zurückgreifen. Dies gilt für viele Zusatzaufgaben, sei es grafische Aufbereitung oder das bequemere Monitoring von Verfügbarkeitszeiten, es empfiehlt sich auf jeden Fall einen Blick auf die verfügbaren Module zu werfen, die Auswahl ist reichhaltig.	
+	Um mit Nagios Core ein funktionsfähiges Monitoring erstellen zu können, sind immer mindestens zwei Komponenten nötig, zum einen Nagios Core, zum anderen die Nagios Plugins, die für die aktive Überwachung notwendigen Skripte.
+	Nagios Core selbst besteht aus den folgenden Komponenten\footcite{veltnagios1}:
+	\begin{itemize}
+		\item Nagios Framework
+		\item Verwaltung, Scheduling
+		\item Ausführung von Checks (Plugins)
+		\item Benachrichtigungen
+		\item Entgegennahme von Ereignissen
+		\item Web-Frontend zur Übersicht und Administration
+	\end{itemize}
+	Möchte man weitere Funktionalitäten hinzufügen, \acrlong{bspw} eine grafische Auswertung bestimmter Daten, so muss man auf Addons wie \textit{Nagios2RRD(N2RRD)}\footcite{n2rrdprojecthome} zurückgreifen. Das gleiche gilt für Business Process Intelligence (BPI) um Geschäftsprozesse in der Überwachung abzubilden und deren Status zu überwachen.\footcite{nagiosbpi}. Viele weitere Aufgaben können auch per Addon \glqq nachgerüstet \grqq werden, es empfiehlt sich auf jeden Fall einen Blick auf die verfügbaren Module zu werfen, die Auswahl ist reichhaltig. Der Funktionsumfang kann natürlich auch von jedem Benutzer durch selbstgeschrieben Addons erweitert werden, hier sind den Möglichkeiten keine Grenzen gesetzt.
 	
-	Der Funktionsumfang kann von jedem Benutzer erweitert werden, \acrlong{bspw} durch selbstgeschriebene Plugins. Um das Verhalten und die Rückgabewerte zu Standardisieren gibt es die sogenannten \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines}. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei. Einige dieser Voraussetzungen sind \acrlong{bspw}, dass ein definierter Statuscode zurückgegeben wird und die Ausgabe auf STDOUT erfolgen muss. Mittlerweilen sind mehrzeilige Rückgaben erlaubt. dies war aber sehr lange Zeit nicht der Fall. Bis zur Version 3 konnte Nagios nur einzeilige Rückgaben verarbeiten.
 	
-	Wie sieht ein typischer Rückgabewert von einem Nagios Plugin nun aus? 
+	\subsubsection{Konfiguration}
+	Die Konfiguration von Nagios basiert im wesentlichen auf einer objektorientierten Struktur. Ein Nagios Objekt beschreibt immer eine bestimmte Einheit, selbst (Check-)Kommandos werden als Objekte definiert. Nagios beherrscht unter anderem die Vererbung von Eigenschaften. Es gibt im wesentlichen folgenden Objekttypen:
+	\begin{itemize}	
+		\item Host \\
+		Beschreibt den zu überwachenden Netzwerkknoten, wesentliche Parameter sind hier IP-Adresse und Name
+		\item Hostgroup \\
+		Mehrere Hosts lassen sich in einer (logischen) Gruppe zusammenfassen, dies erleichtert später die Konfiguration, da statt einzelner Hosts auch Hostgroups in die Konfiguration geschrieben werden können, auch sorgt eine gruppierte Darstellung für eine bessere Übersichtlichkeit.
+		\item Service \\
+		Definiert einen Dienst auf einem Host der (aktiv) überwacht oder für den Ereignisse gemeldet werden sollen. Ein Service kann nie unabhängig von einem Host existieren (Host-Service-Paar).
+		\item Servicegroup \\
+		Wie die Hostgroup dient die Servicegroup dazu, mehrer Services zusammenzufassen. Dies kann später beim Reporting nützlich sein und führt auch wie bei en Hostgroups zu einer gruppierten Darstellung auf der Nagios Oberfläche.
+		\item Contact
+		Definiert eine Person, zum einen um Sie über bestimmte Ereignisse informieren zu können, zum anderen um eine Art Zugriffskontrolle auf der Nagios Oberfläche zu etablieren (hier werden Hosts \& Services für die der jeweilige Contact nicht zuständig ist ausgeblendet beziehungsweise nicht angezeigt). Auch für Kontakte besteht wieder die Möglichkeit Gruppen (contactgroups) anzulegen.
+		\item Timeperiod
+		In diesem Objekt können Zeitfenster definiert werden, die dann im Fehlerfall für eine feine Steuerung der Benachrichtigungen dienen können. (Wer wird wann benachrichtigt?)
+		\item Command
+		Externe Programme werden in Nagios immer als Kommando-Objekte aufgerufen, dies ist der Fall bei allen Plugins, aber auch bei Programmen die Benachrichtigungen (E-Mail, SMS) versenden. 
+	\end{itemize}
+	Es existieren natürlich noch mehr Objekttypen, die hier genannten sind aber die grundlegenden, auf deren Basis man ein funktionierendes Monitoringsystem aufbauen kann.
+	\footcite[Kapitel 2.2]{barthnagios}
 	
-	%TODO wie wird geprüft, unsicher deshalb NRPE für Remote
+	\subsubsection{Überwachung}
+	Die Überwachung mit Nagios wird durch die sogenannten Nagios Plugins realisiert, standardmäßig sind sehr viele Einsatzfälle von Nagios mit den Standardplugins abgedeckt. Natürlich kann wie bei den Addons auch jeder Nutzer seine eigenen Plugins entwickeln. Dabei ist lediglich zu beachten, das sich die Entwicklung der Plugins, bezüglich Verhalten und Rückgabewerten an die Standards der \glqq Nagios Plugin Development Guidelines\grqq\footcite{nagiospluginguidelines} hält. Diese zielen weniger darauf ab dem Entwickler eine bestimmte Programmiersprache vorzugeben, als mehr darauf ihm mitzugeben welches Verhalten und welche Rückgaben Nagios von einem Plugin erwartet, die Wahl der Programmiersprache bleibt weitestgehend frei. Einige dieser Voraussetzungen sind \acrlong{bspw}, dass ein definierter Statuscode zurückgegeben wird und die Ausgabe auf STDOUT erfolgen muss. Mittlerweilen sind mehrzeilige Rückgaben erlaubt. dies war aber sehr lange Zeit nicht der Fall. Bis zur Version 3 konnte Nagios nur einzeilige Rückgaben verarbeiten.
 	
-	NRPE (siehe \ref{fig:nrpe})
-	\begin{figure}[h!]
-	\centering
-	\includegraphics[width=1\linewidth]{pics/nrpe}
-	\caption[Funktionsweise NRPE]{Die Funktionsweise von \acrlong{nrpe} (Quelle: \cite{nagioscoreaddons})}
-	\label{fig:nrpe}
-	\end{figure}
-
+	Wie sieht ein typischer Rückgabewert von einem Nagios Plugin nun aus? \medskip
 	
-	%TODO BI nur mit Addon
-	Nagios BPI\footcite{nagiosbpi}
-	Als Fazit aus der (kurzen) Betrachtung der Funktionsweise von Nagios lässt sich schließen, dass der größter Vorteil von Nagios, auch der größte Nachteil ist, durch die modulare Erweiterbarkeit und die extreme Vielfalt braucht es auch erstmal einiger Einarbeitung um ein wirklich funktionierendes Monitoring konfiguriert zu bekommen.
+	\begin{lstlisting}[language=bash, caption=Rückgabe eines ICMP Checks, showlines=false, breaklines=true,numberblanklines=false, label=lst:icmpcheck]
+		OMD[testsite]:~/lib/nagios/plugins$ ./check_icmp localhost
+		
+		OK - localhost: rta 0,036ms, lost 0%|rta=0,036ms;200,000;500,000;0; pl=0%;40;80;; rtmax=0,086ms;;;; rtmin=0,022ms;;;; 
+		
+		OMD[testsite]:~/lib/nagios/plugins$ echo $?
+		0	\end{lstlisting}
+	Deutlich zu sehen ist hier, dass zuerst ein Status zurückgegeben wird (hier: OK). Es gibt hier insgesamt 4 unterschiedliche Status\footcite[Plugin Return Codes]{nagiospluginguidelines} die hier zurückgegeben werden können:
+	\begin{itemize}
+		\item OK (Return Code: 0)\\
+		wird auf der Oberfläche durch die Farbe grün repräsentiert
+		\item Warning (Return Code: 1)\\
+		wird auf der Oberfläche durch die Farbe gelb repräsentiert
+		\item Critical (Return Code: 2)\\
+		wird auf der Oberfläche durch die Farbe rot repräsentiert
+		\item Unknown (Return Code: 3)\\
+		wird auf der Oberfläche durch die Farbe grau repräsentiert
+	\end{itemize}
+	Die Status werden in der Überwachung auch farblich aufgegriffen, d.h. nach ihrer Schwere mit den entsprechenden Farben markiert und entsprechend die konfigurierten Benachrichtigungen verschickt, Aktionen ausgeführt. Zu jedem Status gehört natürlich der entsprechende Return Code, siehe oben in der Aufzählung.
+	
+	Als zweiter Wert wird der überwachte Host angegeben. Danach folgen weitere Werte (hier die Werte die von \textit{ping} üblicherweise zurückgegeben werden) die später grafisch aufbereitet werden können.
+	
+	Nun haben wir die Basis eines jeden Nagios Systems kennengelernt und können uns nun damit beschäftigen wie Nagios eigentlich überwacht, d.h. wie die Werte in das System kommen und wie die Überwachung ausgelöst wird.
+	
+	Einfache Basis-Checks wie der oben in \ref{lst:icmpcheck} ausgeführt \textit{check\_icmp} brauchen keinen Zugriff auf den entfernten Server, ihnen reicht es ja völlig aus, wenn der Server per \acrfull{icmp} Paket erreichbar ist. Aber was nun wenn wir Daten direkt vom Server haben wollen, wie zum Beispiel die CPU Auslastung? Hier brauchen wir einen Weg, wie wir die Daten vom zu überwachenden Rechner auf den Überwachungsrechner bekommen. Hierfür gibt es mehrere Möglichkeiten:
+	
+	\begin{itemize}
+		\item \acrfull{snmp}\\
+		\acrshort{snmp} ist ein Protokoll, das dazu entwickelt wurde Netzwerkgeräte zu überwachen und zu verwalten. Letzterer Teil ist für uns ohne Belang, wir wollen die Netzwerkgeräte ja im wesentlichen nur überwachen, nicht verwalten. Für Server ist dieser Mechanismus um Werte anzurufen nicht empfehlenswert, da diese über Plugins effizienter abgefragt werden können. Gleichwohl wäre aber eine Überwachung von Servern möglich, es muss nur auf den abzufragenden Rechner ein SNMP-Service(/Daemon) installiert und eingerichtet sein. Bei Netzwerkgeräten (Router, Switche, etc.) ist dies allerdings oftmals die einzige Möglichkeit an Werte zu kommen, hier muss und kann es dann natürlich auch zum Einsatz kommen. Die Nagios Plugins bieten standardmäßig das Plugin \textit{check\_snmp} an um Überwachung per SNMP zu ermöglichen.
+		\footcite[Kapitel 11]{barthnagios}
+		\item Skriptaufruf per SSH (\textit{check\_by\_ssh}): \\
+		Der Nagios Rechner (bzw. das Nagios Plugin \textit{check\_by\_ssh}) triggert die Ausführung des Skripts auf dem entfernten Rechner per ssh und nimmt das Ergebnis entgegen. Vorteil dieses Verfahrens ist auf jeden Fall das die Datenübertragung verschlüsselt stattfindet. Nachteilig ist, dass jeder Check eine eigene SSH Verbindung benötigt, dies verursacht zum einen Netzlast, zum anderen auch Auslastung auf beiden Rechnern (Überwachungsrechner und überwachtem Rechner), für einzelne Checks auf einem Rechner ist dieses Verfahren sicherlich in Ordnung, für viele Rechner und viele zu überwachende Parameter ist das Verfahren nicht geeignet.
+		\item \acrfull{nrpe}: \\
+		\acrshort{nrpe} besteht aus zwei Teilen, einem Daemon für den zu überwachenden Rechner und einem Plugin für den Nagios Server, das die Ergebnisse abholt (siehe auch Abbildung \ref{fig:nrpe}). Der Daemon führt ausgelöst durch das Plugin (\textit{check\_nrpe} auf dem Überwachungsrechner) die auf dem zu überwachendem Rechner konfigurierten Plugins aus (in der Abbildung beispielhaft, Checks für die Festplattenauslastung und für die Load Werte) und meldet die Rückgabewerte an Nagios. Hierdurch wird die Last auf Netz und Rechner gegenüber \textit{check\_by\_ssh} um einiges verringert, eine verschlüsselte Übertragung ist natürlich ebenfalls möglich.
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=1\linewidth]{pics/nrpe}
+			\caption[Funktionsweise NRPE]{Die Funktionsweise von \acrlong{nrpe} (Quelle: \cite{nagioscoreaddons})}
+			\label{fig:nrpe}
+		\end{figure}
+	\end{itemize}
+	
+	Die abgefragten Werte werden von der Oberfläche nun grafisch aufbereitet und entsprechende Aktionen ausgeführt. 
+	
+	Woher weiß das Plugin welchen Status es zurückgeben muss? Dies wird über Schwellwerte beim Aufruf bestimmt, es gibt einen Schwellwert für Critical (\textit{-c}) und einen für Warning (\textit{-w}). Einen Check Aufruf mit Warning und Critical Schwellwerten sieht man in Listing \ref{lst:checkdisk}, wobei die Werte hier absichtlich so gewählt wurden, dass ein anderes Ergebnis als DISK OK zurückkommt, realistische Einstellungen wären, 20\% für Warning und 10\% für Critical.
+	
+	\begin{lstlisting}[language=bash, caption=Rückgabe von \textit{check\_disk} mit Parametern, showlines=false, breaklines=true,numberblanklines=false, label=lst:checkdisk]
+	df -h | grep /dev/sda1
+	/dev/sda1       8,2G    3,9G  3,9G   51% /
+	
+	./check_disk -w 50% -c 20% -p /dev/sda1
+	
+	DISK WARNING - free space: / 3906 MB (49% inode=68%);| /=3967MB;4159;6655;0;8319 \end{lstlisting}
+%TODO Notification?
+	
+	
+	Als Fazit aus der (kurzen) Betrachtung der Funktionsweise von Nagios lässt sich schließen, das Nagios ein mächtiges Tool zur Netzwerküberwachung ist, aber sein der größter Vorteil, auch der größte Nachteil ist, durch die modulare Erweiterbarkeit und die extreme Vielfalt braucht es auch erstmal einiger Einarbeitung um ein wirklich funktionierendes Monitoring konfiguriert zu bekommen. Das alle benötigten Daten von den Systemen bekommt und diese aufbereitet.
 	
 	\subsection{Die \acrlong{omd} - nur ein besser konfigurierbares Nagios?}
-	Um den Nachteil der komplexen Konfiguration von Nagios zu umgehen haben sich im Jahr 2010 einige Nagios Entwickler zusammengetan und mit \acrfull{omd}, eine vorkonfigurierte Nagios-Installation mit einigen Addons ins Leben gerufen. Die Entwickler von OMD sind in der Nagios-Szene allesamt keine unbekannten und entwickeln seit Jahren an Projekten wie der Visualisierung Nagvis (Lars Michelsen), der Agentensoftware Check\_mk (Mathias Kettner), dem Performance-Analysetool Pnp4nagios (Jörg Linge) oder dem Webinterface Thruk (Sven Nierlein) bekannt.\footcite{omdhistory} In der Folge entwickelte sich um die \acrshort{omd} eine sehr aktive Community. Die eigentliche \acrlong{omd} macht auf den ersten Blick nicht den Eindruck einer stark weiterentwickelten Version, es ist seit  aber die Entwicklungsversionen sprechen eine andere Sprache, darüber hinaus vertreiben einige der Autoren \glqq ihre\grqq Software als angepasstes \acrshort{omd}, beispielsweise Mathias Kettner mit Check\_MK und Sven Nierlein mit der OMD Labs Edition\footnote{https://labs.consol.de/de/}. Wir werden uns in der Folge mit der Check\_MK-Variante der \acrshort{omd} beschäftigen, diese hat als Besonderheit und wesentliche Arbeitserleichterung den speziellen Check Mechanismus von Mathias Kettner im Angebot, doch dazu später mehr. Erstmal werden wir uns kurz mit dem Aufbau des Systems beschäftigen, das Schaubild \ref{fig:checkmk} gibt einen groben Überblick über die wesentlichen Komponenten des Systems, deutlich zu sehen, anders als Nagios im letzten Kapitel ist man mit diesem System ohne große Umschweife bereit, auch Visualisierungen von Performancedaten zu erstellen. Das benötigte Addon \textit{PNP4Nagios} ist bereits installiert und konfiguriert, sobald (visualierbare) Daten vorliegen werden diese auch visualisiert. 
-	\begin{figure}[!h]
+	\subsubsection{Historie}
+	Um den Nachteil der komplexen Konfiguration von Nagios zu umgehen haben sich im Jahr 2010 einige Nagios Entwickler zusammengetan und mit \acrfull{omd}, eine vorkonfigurierte Nagios-Installation mit einigen Addons ins Leben gerufen. Die Entwickler von OMD sind in der Nagios-Szene allesamt keine unbekannten und entwickeln seit Jahren an Projekten wie der Visualisierung Nagvis (Lars Michelsen), der Agentensoftware Check\_mk (Mathias Kettner), dem Performance-Analysetool Pnp4nagios (Jörg Linge) oder dem Webinterface Thruk (Sven Nierlein) bekannt beziehungsweise schreiben zwei der Standardwerke zum Thema \glqq Nagios\grqq (Wolfgang Barth, Gerhard Laußer) \footcite{omdhistory}. In der Folge entwickelte sich um die \acrshort{omd} eine sehr aktive Community. Die eigentliche \acrlong{omd} macht auf den ersten Blick nicht den Eindruck einer stark weiterentwickelten Version, es ist seit  aber die Entwicklungsversionen sprechen eine andere Sprache, darüber hinaus vertreiben einige der Autoren \glqq ihre\grqq Software als angepasstes \acrshort{omd}, beispielsweise Mathias Kettner mit Check\_MK und Sven Nierlein mit der OMD Labs Edition\footnote{https://labs.consol.de/de/}.
+	\subsubsection{Lizenzmodell}
+	Die OMD und ihre Derivate (Check\_MK Raw Edition und OMD Labs Edition) stehen wie Nagios unter der GPLv2\footcite{checkmkcre}. Von Mathias Kettner gibt es eine kostenpflichtige Enterprise Edition, die dann einige Features mehr hat und einen professionellen Support bietet.
+	\subsubsection{Funktionsumfang}
+	Wir werden uns in der Folge mit der Check\_MK-Variante der \acrshort{omd} beschäftigen, diese hat als Besonderheit und wesentliche Arbeitserleichterung den speziellen Check Mechanismus von Mathias Kettner im Angebot, doch dazu später mehr. Erstmal werden wir uns kurz mit dem Aufbau des Systems beschäftigen, das Schaubild \ref{fig:checkmk} gibt einen groben Überblick über die wesentlichen Komponenten des Systems, deutlich zu sehen, anders als Nagios im letzten Kapitel ist man mit diesem System ohne große Umschweife bereit, auch Visualisierungen von Performancedaten zu erstellen. Die benötigten Addons \textit{NagVis} \& \textit{PNP4Nagios} sind bereits installiert und konfiguriert, sobald (visualierbare) Daten vorliegen werden diese auch visualisiert. Die OMD genannte Komponente übernimmt das Management der Software (Stichwort: automatisches Update), die Verwaltung der Sites (es ist möglich auf einem Rechner mehrere Sites genannte, komplett voneinander getrennte Monitoringsysteme zu betreiben, sogar mit unterschiedlichen Versionen von OMD\footcite{omdhomepage}) und OMD könnte auch ein geclustertes Monitoring verwalten (also ein Monitoring verteilt auf mehrere Server).
+	\begin{figure}
 		\centering
 		\includegraphics[width=1\textwidth]{pics/checkMKAufbau.eps}
 		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
 		\label{fig:checkmk}
 	\end{figure}
-	Die größte Besonderheit, ist aber das Check\_MK, wie in Abbildung \ref{fig:checkmkaufbau}
-	\begin{figure}[!h]
+	Die größte Besonderheit, ist aber das Check\_MK, wie in Abbildung \ref{fig:checkmkaufbau} zu sehen, erweitert es die Überwachung von Servern um eine zusätzliche Komponente. Diese löst die Nagios Plugins als Standard für die Überwachung ab und integriert ein eigenes Tool mit dem Namen Check\_MK, das aber noch sehr viel mehr kann, als nur zu überwachen, es bringt auch eine neue Weboberfläche mit, mittels derer die komplette Konfiguration erledigt werden kann, es ist also für einen Start und die Erstellung eines einfachen Monitorings nicht mehr notwendig sich ausführlich mit dem System auseinanderzusetzen. Doch zurück zur Überwachung, anstelle von NRPE tritt bei Check\_MK der sogenannte \acrlong{cmk} Agent, dieser ist für viele Plattformen bereits paketiert erhältlich und muss nur installiert und gestartet werden. Danach kann der Host über die Weboberfläche eingerichtet werden (Name und IP reichen aus), \acrlong{cmk} übernimmt danach die weitere Einrichtung des Monitorings automatisch, es inventarisiert die auf dem Host vorhandenen Services und beginnt mit dem Monitoring, nur bei wenigen Services ist ein manuelles Konfigurieren notwendig (beispielsweise Datenbanken oder Applicationserver). Das macht es einfacher eine grundlegende Überwachung mit Bereichen aus der \glqq erweiterten Überwachung\grqq\ einzurichten und danach sich langsam vorzutasten (z.B. in den Bereich der Datenbanküberwachung).
+	\begin{figure}
 		\centering
 		\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
 		\caption[Aufbau von Check\_MK]{Aufbau von Check\_MK (Quelle: \cite{checkmk})}
 		\label{fig:checkmkaufbau}
 	\end{figure}
 	\clearpage
-	
+	\section{Fazit}
+	Für den Bereich des Performance und SLA Monitorings bietet Nagios auf jeden Fall, die optimale Ausgangsposition. Wenn man sich nicht ausführlich mit der Einrichtung und Konfiguration beschäftigen will, bietet sich eine Lösung wie OMD (respektive Check\_MK an). Diese bietet out-of-the-box einen großen Funktionsumfang, für den man sich mit Nagios schon einige Zeit intensiv beschäftigen müsste.
 	\section{Logfile Monitoring}
 	%TODO Erläuterung welche Tools, es geben würde, warum gerade ELK? Heißester Shit aufm Markt
 	\subsection{Syslog-ng und Rsyslog}
-	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien, weshalb ich hier von dem Schema ein Tool aus der offenen und eines aus der kommerziellen Welt abweichen möchte.
+	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien.
 	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
 	\footcite{systemd2015}
 	%TODO Auch Nagios könnte Logfile Monitoring
@@ -429,13 +507,11 @@
 	\end{center}
 	\end{table}
 	\subsection{Installation}
-	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing 4.1 Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing 4.1, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit.
-	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}]	
-
+	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing \ref{lst:installomd} Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing \ref{lst:installomd}, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit. \medskip
+	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}, label=lst:installomd]	
 	dpkg -i check-mk-raw-1.2.6p15-sles12-34.x86_64.deb
 	apt-get -f install
-	omd setup
-	\end{lstlisting}
+	omd setup \end{lstlisting}
 	\subsection{Konfiguration}
 	
 	\section{Performancemonitoring}
