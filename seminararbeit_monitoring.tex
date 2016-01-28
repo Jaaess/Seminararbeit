@@ -117,7 +117,7 @@
 	%http://golatex.de/wiki/Widmung
 	\subject{Seminararbeit im Studiengang \glqq Verwaltungsinformatik\grqq}
 	\author{Markus Österle}
-	\title{Servermonitoring in Rechenzentren}
+	\title{Servermonitoring im Rechenzentrum}
 	\subtitle{am Beispiel von Linux Systemen}
 	\publishers{Betreut von Dipl. Inf. Stefan Müller}
 	\date{} % setzt ein leeres Datum und löscht quasi das per default verwendete \today von der Titelseite
@@ -132,7 +132,7 @@
 	\chapter{Einleitung}
 	Das Thema des Servermonitorings hat sich im professionellen \acrshort{it} Umfeld in den letzten Jahren zu einem großen Thema entwickelt. Durch die steigende Abhängigkeit nahezu aller Bereiche unseres Lebens von \acrshort{it}-Systemen steigen auch die Anforderungen an die Verfügbarkeit und die Performance und somit auch an die Überwachung der selbigen. Reichte es in den 90er Jahren noch aus von einem zentralen Rechner (gemeint ist hier ein normaler Personal Computer) per Ping zu überwachen ob die Server verfügbar sind, so wird heute ein sehr viel feineres Monitoring erwartet. Nicht nur die Erreichbarkeit der Rechner soll überwacht und statistisch aufbereitet werden, sondern auch die Auslastung und die Gesundheit einzelner Bauteile (bspw. \acrlong{psu}s (Netzteile), \acrshort{ram} Bausteine; \acrshort{cpu}, Festplatten), soll lückenlos überwacht werden. Um eine schnelle Reaktion auf eventuell auftretende Fehler zu ermöglichen. 
 
-	In der vorliegenden Arbeit wird das Thema und die Historie des Servermonitorings in Rechenzentren betrachtet. Zur Begrenzung des Themengebiets wird dezidiert ausführlicher auf das Teilgebiet der Überwachung von *nix-Systemen eingegangen. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von *nix-Servern gemacht hat und zum anderen ermöglicht diese Eingrenzung eine tiefergehende Beschäftigung mit wenigstens einem Themengebiet.
+	In der vorliegenden Arbeit wird das Thema \glqq Servermonitoring im Rechenzentrum\grqq\ betrachtet. Zur Begrenzung des Themengebiets wird dezidiert ausführlicher auf das Teilgebiet der Überwachung von Linux-Systemen eingegangen. Dies hat zum einen den Grund, dass der Autor viele Jahre Erfahrung mit Linux und Unix Betriebssystemen vorweisen kann und schon einige Erfahrung mit der Überwachung von Linux-Servern gemacht hat und zum anderen ermöglicht diese Eingrenzung eine tiefergehende Beschäftigung mit wenigstens einem Themengebiet.
 	\section{Warum Monitoring im Rechenzentrum?}
 	%TODO kritische Betriebszustände definieren?
 	Aus der Sicht eines Systemadministrators (in Folge nur noch Admin genannt) macht es eigentlich von Grunde auf Sinn so viele Informationen wie nur möglich über seine Systeme zu haben:
@@ -150,15 +150,13 @@
 	\section{Warum Linux?}
 	Systemüberwachung ist natürlich für alle Komponenten im Rechenzentrum wichtig, begonnen bei der Basisversorgung (Strom, Kühlung) über die grundlegende Infrastruktur (Netzwerkinfrastruktur, evtl. Storageinfrastruktur) bis zu den einzelnen Systemen (natürlich quer über die Betriebssystemgrenzen hinweg). Mit den später in dieser Arbeit vorgestellten Lösungen könnten viele dieser Felder abgedeckt werden, eine genaue Beschreibung des wie würde allerdings den (sowohl den zeitlichen als auch den mengenmäßigen) Rahmen der Arbeit sprengen, wie bereits in der Einleitung erwähnt. 
 	
-	Deshalb werden wir uns nach den allgemeinen Definitionen und Einführungen in den Themenkomplex \glqq Monitoring\grqq\ auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Dies ist ein relativ dankbares Gebiet für diese Ausführungen da man relativ gut die Mächtigkeit und Schlagkraft eines richtig konfigurierten Monitoringsystems zeigen kann. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand und geistige Eigenleistung (Anleitungen und Code für vieles gibt es bereits im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
-	%TODO Verbreitung von Linux im Serverbereich Grafik und Quelle,wohl knapp unter 50% im Serverbereich
+	Deshalb werden wir uns nach den allgemeinen Definitionen und Einführungen in den Themenkomplex \glqq Monitoring\grqq\ auf das Thema der Serverüberwachung von Linux Systemen spezialisieren. Dies ist ein relativ dankbares Gebiet für diese Ausführungen da man relativ gut die Mächtigkeit und Schlagkraft eines richtig konfigurierten Monitoringsystems zeigen kann. Für Linux spricht auch, dass es zum einen eine relativ große Verbreitung im Serverbereich hat und die Arbeit auch für den privaten Gebrauch nicht irrelevant ist, da der Überwachung mit den vorgestellten Tools keine Grenzen gesetzt sind durch den modularen Aufbau und die Erweiterbarkeit mit selbstgeschriebenen Skripten, Plugins, \acrshort{etc}. sind der Phantasie keine Grenzen gesetzt. Die Systeme können beispielsweise ohne großen Aufwand (Anleitungen und Code für vieles gibt es im Netz) für die Überwachung privater Webservices, privater Netzwerkinfrastrukturen, SmartHomes, Wetterstationen, \acrshort{etc} genutzt werden.
 		
 	
 	\chapter{Vom Ping zum proaktiven Monitoring}
 	In den folgenden Unterkapiteln werde ich mich mit der grundlegenden Definition von Begriffen rund um das Thema Monitoring/Serverüberwachung beschäftigen und einen kleinen Überblick über die Historie geben.
 	\section{Historie}
-	%TODO Ausformulieren und deutsche Sätze draus machen
-	Zu Beginn der IT Zeit, als Server noch Mainframes und sehr teuer waren und wenige spezialisierte Anwendungen auf ihnen betrieben wurden, war die Überwachung dieser Systeme für die Administratoren ein kleiner Aufwand. Die Administratoren waren über ihre Terminals meistens sowieso direkt mit dem Mainframe verbunden und sahen (in der bedienten Betriebszeit) etwaige Fehlermeldungen sofort auf ihren Konsolen. Dies hat sich im Wandel der Zeit drastisch verändert, die großen Mainframes von einst werden durch eine Vielzahl von kleineren Servern ersetzt um die gestiegenen Anforderungen erfüllen zu können. Wo früher auf einem Rechner (mit der entsprechenden Hot-/Cold-Standby-Lösung wenn die Firma/Behörde) die Datenbanken für die komplette Firma liefen, werden diese heute durch eine Vielzahl an Datenbanksystemen (die unter Umständen auch noch Hochverfügbar ausgelegt sind) ersetzt. Dies und die Tatsache, dass ohne diese IT Systeme in vielen Bereichen nicht mehr funktioniert führt natürlich auch zu ganz anderen Anforderungen an Verfügbarkeit und damit auch an die Erkennung von Fehlern und Ausfällen. 
+	Zu Beginn der IT Zeit, als Server noch Mainframes und sehr teuer waren und wenige spezialisierte Anwendungen auf ihnen betrieben wurden, war die Überwachung dieser Systeme für die Administratoren ein kleiner Aufwand. Die Administratoren waren über ihre Terminals meistens sowieso direkt mit dem Mainframe verbunden und sahen (in der bedienten Betriebszeit) etwaige Fehlermeldungen sofort auf ihren Konsolen. Darüber hinaus kam es sehr oft auch darauf an, das die Software lief, wie spielte oftmals eine eher untergeordnete Rolle. Dies hat sich im Wandel der Zeit drastisch verändert, die großen Mainframes von einst werden durch eine Vielzahl von kleineren Servern ersetzt um die gestiegenen Anforderungen erfüllen zu können. Wo früher auf einem Rechner (mit der entsprechenden Hot-/Cold-Standby-Lösung wenn die Firma/Behörde) die Datenbanken für die komplette Firma liefen, werden diese heute durch eine Vielzahl an Datenbanksystemen (die unter Umständen auch noch Hochverfügbar ausgelegt sind) ersetzt. Dies und die Tatsache, dass ohne diese IT Systeme in vielen Bereichen nicht mehr funktioniert führt natürlich auch zu ganz anderen Anforderungen an Verfügbarkeit und damit auch an die Erkennung von Fehlern und Ausfällen. 
 	
 	Während es früher ausreichend war, mit einer selbst gestrickten (Skript-)Lösung per \textit{Ping} zu überwachen ob alle Server erreichbar sind und bei einem Fehler der Admin sich selbst in den Serverraum gehen musste um den Rechner und seine Fehlermeldung in Augenschein zu nehmen muss es heute etwas detaillierter sein. Zumindest die Anwendungen die für den Betrieb kritisch sind müssen überwacht werden um Fehler und Ausfälle schnell erkennen und beheben zu können, unter Umständen möchte man auch einfach bei Ausfall einer Anwendung eine automatische Aktion auslösen (z.B. einen automatischen Neustart des Webservers). Auch die Fehlermeldung soll nach Möglichkeit bereits im Monitoring erkennbar sein.
 	
@@ -429,7 +427,7 @@
 		\caption[Komponenten des Check\_MK Monitoring Systems]{Komponenten des Check\_MK Monitoring Systems (Quelle: \cite{checkmkmonitoringpic})}
 		\label{fig:checkmk}
 	\end{figure}
-	Die größte Besonderheit, ist aber das Check\_MK, wie in Abbildung \ref{fig:checkmkaufbau} zu sehen, erweitert es die Überwachung von Servern um eine zusätzliche Komponente. Diese löst die Nagios Plugins als Standard für die Überwachung ab und integriert ein eigenes Tool mit dem Namen Check\_MK, das aber noch sehr viel mehr kann, als nur zu überwachen, es bringt auch eine neue Weboberfläche mit, mittels derer die komplette Konfiguration erledigt werden kann, es ist also für einen Start und die Erstellung eines einfachen Monitorings nicht mehr notwendig sich ausführlich mit dem System auseinanderzusetzen. Doch zurück zur Überwachung, anstelle von NRPE tritt bei Check\_MK der sogenannte \acrlong{cmk} Agent, dieser ist für viele Plattformen bereits paketiert erhältlich und muss nur installiert und gestartet werden. Danach kann der Host über die Weboberfläche eingerichtet werden (Name und IP reichen aus), \acrlong{cmk} übernimmt danach die weitere Einrichtung des Monitorings automatisch, es inventarisiert die auf dem Host vorhandenen Services und beginnt mit dem Monitoring, nur bei wenigen Services ist ein manuelles Konfigurieren notwendig (beispielsweise Datenbanken oder Applicationserver). Das macht es einfacher eine grundlegende Überwachung mit Bereichen aus der \glqq erweiterten Überwachung\grqq\ einzurichten und danach sich langsam vorzutasten (z.B. in den Bereich der Datenbanküberwachung).
+	Die größte Besonderheit, ist aber das Check\_MK, wie in Abbildung \ref{fig:checkmkaufbau} zu sehen, erweitert es die Überwachung von Servern um eine zusätzliche Komponente. Diese löst die Nagios Plugins als Standard für die Überwachung ab und integriert ein eigenes Tool mit dem Namen Check\_MK, das aber noch sehr viel mehr kann, als nur zu überwachen, es bringt auch eine neue Weboberfläche mit, mittels derer die komplette Konfiguration erledigt werden kann, es ist also für einen Start und die Erstellung eines einfachen Monitorings nicht mehr notwendig sich ausführlich mit dem System auseinanderzusetzen. Doch zurück zur Überwachung, anstelle von NRPE tritt bei Check\_MK der sogenannte \acrlong{cmk} Agent, dieser ist für viele Plattformen bereits paketiert erhältlich und muss nur installiert und gestartet werden. Danach kann der Host über die Weboberfläche eingerichtet werden (Name und IP reichen aus), \acrlong{cmk} übernimmt danach die weitere Einrichtung des Monitorings automatisch, es inventarisiert die auf dem Host vorhandenen Services und beginnt mit dem Monitoring, nur bei wenigen Services ist ein manuelles Konfigurieren notwendig (beispielsweise Datenbanken oder Applicationserver). Das macht es einfacher eine grundlegende Überwachung mit Bereichen aus der \glqq erweiterten Überwachung\grqq\ einzurichten und danach sich langsam vorzutasten (z.B. in den Bereich der Datenbanküberwachung). Einen Nachteil hat der Agent, allerdings er kann die Daten per default nicht verschlüsselt verschicken, dies kann aber mit einem Trick (Aufruf des Agenten per ssh) umgangen werden, dazu kommen wir noch im praktischen Teil in Kapitel 4.
 	\begin{figure}
 		\centering
 		\includegraphics[width=1\textwidth]{pics/OMD_Schema.eps}
@@ -438,24 +436,35 @@
 	\end{figure}
 	\clearpage
 	\section{Fazit}
-	Für den Bereich des Performance und SLA Monitorings bietet Nagios auf jeden Fall, die optimale Ausgangsposition. Wenn man sich nicht ausführlich mit der Einrichtung und Konfiguration beschäftigen will, bietet sich eine Lösung wie OMD (respektive Check\_MK an). Diese bietet out-of-the-box einen großen Funktionsumfang, für den man sich mit Nagios schon einige Zeit intensiv beschäftigen müsste.
+	Für den Bereich des Performance und SLA Monitorings bietet Nagios auf jeden Fall die optimale Ausgangsposition. Wenn man sich nicht ausführlich mit der Einrichtung und Konfiguration beschäftigen will, bietet sich eine Lösung wie OMD (respektive Check\_MK an). Diese bietet out-of-the-box einen großen Funktionsumfang, für den man sich mit Nagios schon einige Zeit intensiv beschäftigen müsste. Wenn man OMD im professionellen Einsatz hat, empfiehlt es sich eventuell einen Blick auf die kostenpflichtige Variante zu werfen und abzuwägen ob Support und zusätzliche Features die Kosten rechtfertigen.
 	\section{Logfile Monitoring}
-	%TODO Erläuterung welche Tools, es geben würde, warum gerade ELK? Heißester Shit aufm Markt
-	\subsection{Syslog-ng und Rsyslog}
-	Der erste Gedanke fällt hierbei auf die in den bisherigen BS Vorlesungen gelernten Technologien.
-	Problematisch in nicht homogenen Umgebungen mit verschiedenen Versionen aktueller Distributionen, weil systemd...ELK Stack ist hier besser weil vielseitiger
-	\footcite{systemd2015}
-	%TODO Auch Nagios könnte Logfile Monitoring
-	%\subsection{Splunk Monitoring}
+	Wie im ersten Teil bereits erwähnt gehört zu einem voll umfänglichen Monitoring System auch eines, dass in der Lage ist die unterschiedlichen Logfiles aus unterschiedlichen Quellen (systemd, syslog-ng, rsyslog) zu bündeln, zentral zu speichern, auszuwerten und beim Auftreten verschiedener Muster Alarm zu schlagen.
+	
+	Nach einer kurzen Marktanalyse ergeben sich unter anderem folgende Tools:
+	\begin{itemize}
+		\item Syslog-NG
+		\item Splunk
+		\item Nagios Log-Server
+		\item \acrlong{elk}
+	\end{itemize}
+	Von der Funktionsweise sind alle Anwendungen vergleichbar, sie können Logfiles aus verschiedenen Quellen annehmen, sie speichern und auswerten. Unterschiede tun sich die preisliche Gestaltung und erweiterte Features wie beispielsweise eine grafisch Oberfläche auf. So sind Splunk und der Nagios Log-Server nur gegen Gebühren erhältlich und fallen deshalb aus der Auswahl. Syslog-NG war der erste Gedanke, weil in der Vorlesung gelernt, erfüllt auch alle Anforderungen, bietet aber keine grafische Oberfläche. Die Wahl fällt auf den \acrshort{elk} Stack der in der Folge näher betrachtet werden, inkl. seiner Integration in ein Monitoring System.
+	%TODO mehr begründen?
+	
 	\subsection{Elasticsearch - Logstash - Kibana}
 	Oftmals auch \acrshort{elk} oder ELK-Stack genannt sind eigentlich die drei voneinander unabhängige Tools \acrlong{elk}.Um die Funktionsweise und die Integration in unser Monitoring besser erklären zu können, werden die einzelnen Tools mit ihren Möglichkeiten in den folgenden Unterkapiteln kurz vorgestellt und im Anschluß daran ihr Zusammenspiel untereinander und mit dem Monitoring erläutert.
 	\subsubsection{Elasticsearch}
-	Elasticsearch ist eine auf Apache Lucene basierende Suchmaschine.\footcite{elasticsearch}
+	Elasticsearch ist eine in Java implementierte, auf Apache Lucene basierende Suchmaschine. Derzeit ist Elasticsearch die am weitesten verbreitete Suchmaschine\footcite{dbenginesranking}. Sie dient im Stack dazu die von Logstash eingesammelten Logfiles zu indexieren. Lizensiert werden kann Elasticsearch wie auch Logstash und Kibana unter der Apache Lizenz\footcite{apachelicence}.\footcite{elasticsearch}
 	\subsubsection{Logstash}
-	Logstash \footcite{logstash}
-	%TODO Shipper, Verschlüsselung (Filebeat)
+	Logstash dient der Verarbeitung und Normalisierung von Logdateien. Im \acrshort{elk}-Stack werden über sogenannte Input-Module die Datenquellen (siehe auch Abbildung \ref{fig:elk}) eingelesen, dies können beispielsweise Datenströme von Syslog sein oder Protokolldateien beispielsweise von selbstgeschriebener Software. Auch bietet Logstash die Möglichkeit mittels des Tools Filebeat auf entfernten Servern Protokolle zu sammeln und gesammelt und verschlüsselt an den Server zu übertragen.\footcite{filebeat} Danach können mittels Filter-Plugins die Daten je nach Konfiguration durch den Benutzer weiterbearbeitet werden, dieser Schritt kann allerdings auch entfallen. Nach erfolgter oder auch nicht erfolgter (wenn die Filter ausgelassen werden) Filterung werden die Ergebnisse an Elasticsearch zum Indizieren weitergegeben werden. \footcite{logstash}
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{pics/logstashcheckmk}
+	\caption{Integration von Logstash in Check\_MK}
+	\label{fig:logstashcheckmk}
+	\end{figure}
+	Um die Daten in unser Nagios/Check\_MK Monitoring zu bekommen, brauchen wir ebenfalls Logstash, dieser liefert wie in Abbildung \ref{fig:logstashcheckmk} zu sehen, die nach bestimmten Mustern gefilterten Daten mit dem entsprechend zu setzenden Status weiter an unser Monitoringsystem wo diese weiterverarbeitet werden. Und der entsprechend Zuständige dann benachrichtigt wird.
 	\subsubsection{Kibana}
-	Kibana kann mit dem Elasticsearch \acrshort{rest} \acrshort{api}s umgehen \footcite{kibana}
+	Kibana kann mit dem Elasticsearch \acrshort{rest} \acrshort{api}s umgehen und ergänzt den Stack um eine Komponente zur grafischen Ausgabe, mit Kibana können die Logdaten in Echtzeit aufbereitet werden.\footcite{kibana}\footcite{elk2015}
 	\begin{figure}[h!]
 		\centering
 		\includegraphics[width=1\textwidth]{pics/elk-stack.eps}
@@ -463,75 +472,108 @@
 		\label{fig:elk}
 	\end{figure}
 	\clearpage
+	
 	%TODO Netways Präsentation für Integration in Nagios
 	\chapter{Praktische Vorstellung der Funktionalität eines Monitoring Systems}
 	\section{Grundlegende Überlegungen}
-	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq beschäftigen. 
+	Um kurz noch einen praktischen Einblick in die verwendete Software zu geben wird sich der folgende Teil mit dem praktischen Aufbau einer kleinen \glqq Spielwiese\grqq\ beschäftigen. 
 	
-	Es wird auf Basis eines kleinen Versuchsaufbaus, der komplette Prozess (wie in Kapitel 3 beschrieben )bis zu einem fertigen Monitoring durchlaufen.
+	Es wird auf Basis eines kleinen Versuchsaufbaus, der komplette Prozess (wie in Kapitel 3 beschrieben) bis zu einem fertigen Monitoring durchlaufen.
 	\subsection{Versuchsaufbau}
 	Im wesentlichen besteht dieser Aufbau aus zwei virtuellen Maschinen die mittels VirtualBox realisiert wurden und einem entfernten Server der bei einem Hoster in einem Rechenzentrum steht. Mit den beiden virtuellen Maschinen werden Server in einem Rechenzentrum simuliert, diese stehen in einem nach außen abgeschotteten Netz, die Datenübertragung bedarf deshalb keiner besonderer Sicherheitsvorkehrungen, der entfernte Server ist nur übers Internet erreichbar (potentiell unsicher!) und die Übertragung der Daten bedarf deshalb einer Verschlüsselung.
 	\subsection{Was soll überwacht werden?}
-	Wir wollen Performancedaten \& Verfügbarkeit der Systeme überwachen, realisieren als grundlegende und erweiterte Überwachung.
+	Wir wollen Performancedaten \& Verfügbarkeit der Systeme überwachen, realisieren also grundlegende und erweiterte Überwachung. Was wir in diesem kurzen Beispiel nicht überwachen sind die Logfiles.
 	\subsection{Wie kann überwacht werden?}
 	Im wesentlichen werden wir uns bei der Überwachung auf die Daten aus dem Check\_MK Agenten verlassen, dieser betreibt aktive Überwachung.
-	Die Log Dateien werden beim Auftreten bestimmter Patterns in die Überwachung übertragen (passive Überwachung). 
+	Die Log Dateien sollten eigentlich beim Auftreten bestimmter Patterns in die Überwachung übertragen werden (passive Überwachung).
 	\subsection{Wer soll im Fehlerfall benachrichtigt werden?}
-	
+	Im Fehlerfall sollte natürlich der Administrator benachrichtigt werden, ggf. unterteilt in verschiedene zuständige Teams.
 	\subsection{Welche \acrlong{sla}s existieren bereits?}
-	Für 
+	Der Einfachheit halber existiert für unsere Teststellung nur ein SLA, nämlich zur Verfügbarkeit unserer Website.
 	\subsection{Welche Software ist für meine Zwecke am besten geeignet?}
+	Wir folgen dem Fazit aus Kapitel 3 und setzen Check\_MK in der RAW Edition ein. Für unsere Zwecke ist die RAW Edition völlig ausreichend.
 	\section{Grundlegende Beschreibung der verwendeten Systeme}
 	\subsection{verwendete Software}
-	Als Betriebssystem auf dem Überwachungsrechner kommt Debian 8. zum Einsatz, dies hat den Grund, das Check\_MK in Verbindung mit SuSE beim Aufbau einige Probleme mit fehlenden Paketen hatte, diese Pakete selbst mittels SuSE's \acrfull{obs} zu bauen wäre möglich gewesen.
-	%TODO warum nicht passiert?
-	 Der entfernte Rechner der per check\_by\_ssh abgefragt wird ist ein virtueller Server bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube) mit ihren eigenen Applicationservern. An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban\footcite{fail2ban} installiert, bei Fail2Ban handelt es sich um eine Sicherheitssoftware, die das Systemlog (\path{/var/log/messages}) auf bestimmte Muster durchsuchen, wenn sich der gleiche User (identifiziert durch die IP) mehrmals hintereinander mit einer bestimmten Fehlermeldung im Syslog auftreten, dann wird die IP über die Firewall gesperrt. \\
-	\begin{table}[h] %Quelle: http://www.weinelt.de/latex/table.html
-	\begin{center}
-	\begin{tabular}{|c|c|c|}
-	\hline 
-	Eingesetzte Software & Version & Client oder Server \\ 
-	\hline 
-	VirtualBox & 5.0.14 & Virtualisierungslösung\\
-	\hline
-	Opensuse & 13.2 & Server\\ 
-	\hline 
-	Opensuse & Leap 42.1 & Client\\
-	\hline
-	Apache & 2.4 & Server\\
-	\hline
-	\acrshort{omd} & 2.11.20160108-labs-edition & Server\\
-	\hline
-	\end{tabular} 
-	\caption[Eingesetzte Softwareversionen]{Für den praktischen Teil der Arbeit eingesetzte Softwareversionen mit ihrem Einsatzort}
-	\end{center}
-	\end{table}
+	Als Betriebssystem auf dem Überwachungsrechner (im weiteren Verlauf \glqq Überwachungsrechner\grqq\ genannt) kommt Debian 8.2 zum Einsatz, dies hat den Grund, das Check\_MK in Verbindung mit SuSE beim Aufbau einige Probleme mit fehlenden Paketen hatte, diese Pakete werden mittlerweilen auf der Seite von Check\_MK zum Download angeboten, zu Beginn der Arbeiten war dies allerdings nicht der Fall.
+	
+	Der entfernte Rechner ist ein virtueller Server (im folgenden \glqq Webserver\grqq\ genannt) bei einem großen Hoster, als Betriebssystem läuft auf diesem Rechner Opensuse 13.2 (64bit) mit der für Webserver üblichen Software (LAMP-Stack = Linux Apache Mysql PHP) und zusätzliche zwei Java Anwendungen (Jenkins \& Sonarqube) mit ihren eigenen Applicationservern. An zusätzlicher überwachter Sicherheitssoftware ist Fail2Ban\footcite{fail2ban} installiert, bei Fail2Ban handelt es sich um eine Sicherheitssoftware, die das Systemlog (\path{/var/log/messages}) auf bestimmte Muster durchsucht, dies dient der Abwehr von Angriffen gegen den Rechner. Am Beispiel von SSH kurz erläutert: Versucht die gleich IP sich mehrmals vergeblich per SSH mit dem Server zu verbinden wird diese nach drei Versuchen für eine bestimmte Zeit gesperrt über eine Firewallregel gesperrt.
+	
+	Als dritter Rechner kommt eine virtuelle Maschine (im folgenden \glqq virtuelle Maschine\grqq) auf dem gleichen Träger zum Einsatz, diese war für die Entwicklung eines Softwareprojekts für ein anderes Studienfach im Einsatz. Neben den allgemeinen Systemparametern wird auf diesem Rechner noch eine MySQL Datenbank überwacht.
 	\subsection{Installation}
-	Um die Software und eventuelle Aktualisierungen permanent verfügbar zu haben, empfiehlt es sich das angebotene Repository \footcite{omdrepo} einzubinden, beim verwendeten OpenSuse funktioniert das wie in Listing \ref{lst:installomd} Zeile 1 gezeigt. Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird mittels des Paketmanagers \textit{zypper} mit dem wir eben schon das Repository eingehängt haben realisiert (Listing \ref{lst:installomd}, Zeile 2). Nach dem Abschluß der Paketinstallationen ist die \acrshort{omd} einsatzbereit. \medskip
-	\begin{lstlisting}[language=bash, caption=Konfiguration eines Repositories und Installation der \acrfull{omd}, label=lst:installomd]	
+	Zuerst muss auf dem Überwachungsrechner die benötigte Software installiert werden. Leider gibt es für Check\_MK\footcite{checkmk} kein Repository weshalb das Paket immer händisch aktualisiert werden muss.
+    Anschließend muss die Software mitsamt ihren Abhängigkeiten installiert werden, dies wird in zwei Schritten realisiert, zuerst wird das Paket mit \textit{dpkg} zur Installation vorgemerkt (Listing \ref{lst:installomd}, Zeile 1), danach wird das Paket mittels des Kommandos \textit{apt-get} mit allen notwendigen Abhängigkeiten installiert (Zeile 2). Nach dem Abschluß der Paketinstallationen muss noch eine Site (also ein Monitoringsystem) angelegt und gestartet werden. Danach ist der Überwachungsrechner einsatzbereit und über die Weboberfläche erreich- und konfigurierbar. \medskip
+	\begin{lstlisting}[language=bash, caption=Installation von Check\_MK, label=lst:installomd]	
 	dpkg -i check-mk-raw-1.2.6p15-sles12-34.x86_64.deb
 	apt-get -f install
-	omd setup \end{lstlisting}
+	omd init testsite 
+	omd start testsite\end{lstlisting}
+	Als nächster Schritt müssen die virtuelle Maschine und der Webserver mit den Überwachungsagenten bestückt werden (siehe Listing \ref{lst:installomdagent}). Hierbei ist zu beachten, dass auf dem Rechner der \textit{xinetd} installiert und aktiviert sein muss, damit der Check\_MK Agent funktioniert. Nach der Installation der Agenten haben wir den Installationsteil abgearbeitet und gehen jetzt über zur Konfiguration.
+	\begin{lstlisting}[language=bash, caption=Installation des Check\_MK Agenten, label=lst:installomdagent]
+	rpm -ihv check-mk-agent-1.2.6p15-1.noarch.rpm\end{lstlisting}
 	\subsection{Konfiguration}
-	
+	Die Konfiguration des Monitorings besteht im wesentlichen daraus, die Server mit dem Monitoring bekannt zu machen und eine Inventarisierung anzustoßen. Dies kann bequem über die Oberfläche passieren (siehe Abbildung \ref{fig:hostreg} und \ref{fig:hostservices}). Nach Abschluss der Inventarisierung, müssen die gewünschten Überwachungswerte noch ausgewählt und aktiviert werden. Danach ist die grundlegende Arbeit getan und der Server wird überwacht (siehe Abbildung \ref{fig:monitoring}).
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/hostReg.eps}
+		\caption[Registrierung eines Hosts]{Registrierung eines Hosts in Check\_MK}
+		\label{fig:hostreg}
+	\end{figure}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/hostReg.eps}
+		\caption[Auf dem Host verfügbare Services]{Auf dem Host nach der Inventarisierung verfügbare Services}
+		\label{fig:hostservices}
+	\end{figure}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=1\textwidth]{pics/hostReg.eps}
+		\caption[Die Überwachungsseite für den neu angelegten Host]{Die Überwachungsseite für den neu angelegten Host}
+		\label{fig:monitoring}
+	\end{figure}
 	\section{Performancemonitoring}
 	\subsection{Überwachung eines entfernten Servers}
-	Installation des Agenten
-	Kopieren der zusätzlichen Checks
-	
-	Schlüsseltausch
-	\begin{lstlisting}[language=bash]
-	root@linux# ssh -i check_mk.key targethost
-	\end{lstlisting} \footcite{checkmkCheckBySSH2015}
-	\subsection{Überwachung einer Datenbank}
+	Der Check\_MK Agent hat ziemliche viele der Dienste die wir überwachen wollen schon per default erkannt und in die Überwachung eingefügt. Die Erreichbarkeit des Servers, die Auslastung der CPU, die Belegung des Arbeitsspeichers und der Festplatten, der Status des NTP Daemons alles bereits eingerichtet und überwacht. Was uns jetzt noch fehlt ist eine Überwachung des Apache Webservers und der MySQL Datenbank und weil der Webserver ja nur über das Internet erreichbar ist, wollen wir das der Check\_MK Agent via SSH abgefragt wird. Hierfür müssen wir zwei Schritte ausführen, zum einen muss ein Schlüsseltausch durchgeführt werden, sodass der Überwachungsrechner sich ohne Passwort am Webserver anmelden kann. Dies kann im wesentlichen durch zwei Schritte erreicht werden. 
+	\begin{enumerate}
+		\item SSH Schlüssel vom Überwachungsrechner in die \path{.ssh/authorized\_keys} des Webservers eintragen.
+		\item Schlüssel auf die Ausführung eines Kommandos begrenzen, aus Sicherheitsgründen. Dies wird erreicht durch
+		\begin{lstlisting}[language=bash, caption=SSH Schlüssel auf ein Kommando begrenzen, label=lst:keybegr]
+		command="sudo /usr/bin/check_mk_agent"\end{lstlisting}
+		vor dem eigentlichen Schlüssel. Zusätzlich ist auf diesem Server noch eingerichtet, dass der check\_mk\_agent über \textit{sudo} als Superuser ausgeführt wird, sodass der SSH Login mit Schlüssel über einen unpriviligierten Benutzer (obwohl der Check\_MK Agent Root Rechte braucht) geschehen kann.\footcite{checkmkCheckBySSH2015}
+	\end{enumerate}
+	\subsection{Überwachung einer Datenbank und des Apache Webservers}
+	Der letzte Schritt zur für unsere Zwecke ausreichenden Überwachung ist die Einrichtung von zwei weiteren Agenten um auch noch die Datenbank und den Apache Webserver überwachen zu können. Hierfür müssen die beiden Agenten \textit{mk\_mysql} und \textit{apache\_status} von der Übersichtsseite des Überwachungsrechners heruntergeladen und auf dem Webserver ins Verzeichnis \path{/usr/lib/check_mk_agent/plugins} kopiert werden. Der Apache Webserver kann danach sofort überwacht werden, es muss nur über die Weboberfläche noch eine erneute Inventarisierung des Servers gestartet werden. Für die Überwachung der MySQL Datenbank ist noch ein Benutzer auf der Datenbank von Nöten. Dieser wird mit dem Befehl
+	\begin{lstlisting}[language=sql, caption=Benutzer fürs Monitoring auf der Datenbank anlegen, label=lst:sqluser]
+	GRANT SELECT, SHOW DATABASES ON *.*
+	TO 'monitoring'@'localhost' identified by 'PASSWORD' ;\end{lstlisting}
+	angelegt. Um dem Agenten diese Information zugänglich zu machen muss noch eine Konfigurationsdatei \path{/etc/check_mk/mysql.cfg} mit dem folgenden Inhalt angelegt werden:
+	\begin{lstlisting}[language=bash, caption=/etc/check\_mk/mysql.cfg, label=lst:configmkmysql]
+	[client]
+	user=monitoring
+	password=PASSWORD\end{lstlisting}
+	Nach einer abschließenden Neuinventarisierung kann jetzt auch die Datenbank überwacht werden (siehe Abbildung \ref{fig:mysqlueberw} ).\footcite{checkmkmysql}
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{pics/mysqlueberw}
+	\caption[Die MySQL Datenbank in der Überwachung]{Die MySQL Datenbank in der Überwachung}
+	\label{fig:mysqlueberw}
+	\end{figure}
 	\section{Service Level Agreement Monitoring}
-	%TODO Beschreibung anhand der Verfügbarkeit einer Webseite
-	\subsection{Überwachung der Verfügbarkeit einer Datenbank}
-	An dieser Stelle widmen wir uns der Überwachung einer MySQL Datenbank. 
-	Wegen der aufkommenden Wichtigkeit von In-Memory Datenbanktechnologien sollte hier auch noch eine In-Memory Datenbank überwacht werden, um die Mächtigkeit des Monitoringwerkzeugs zu zeigen.
-	MySQL DB und Derby als Beispiel für die Überwachung einer in Memory Datenbank.
-	\subsection{Überwachung der Verfügbarkeit einer Webseite}
-	\section{Logfile Monitoring}
+	Wie in unserer anfänglichen Beschreibung festgelegt, beschränken wir uns beim \acrshort{sla} Monitoring auf einen absoluten Basisfall, in der Praxis wird das \acrshort{sla}-Monitoring um einiges komplexer ausfallen. Wir richten über die Oberfläche einen (aktiven) Check ein, der auf eine bestimmte URL einen Check ausführt und den Wert Critical bekommt, sobald die Webseite nicht mehr erreichbar ist. Dieser Check kann über die eingebaute Reporting Funktion von Check\_MK ausgewertet und für einen bestimmten Zeitraum ein Verfügbarkeitsreporting erstellt werden. Beispielhaft in \ref{fig:availability} dargestellt, auf einem echten System würde die Grafik ein wenig anders aussehen und die Verfügbarkeit läge wohl näher an 100\%.
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{pics/http_check}
+	\caption[Überwachung einer Webseite]{Überwachung einer Webseite}
+	\label{fig:http_check}
+	\end{figure}
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[width=1\linewidth]{pics/availability}
+	\caption[Beispielhafte Darstellung der Verfügbarkeit]{Beispielhafte Darstellung der Verfügbarkeit}
+	\label{fig:availability}
+	\end{figure}
+
+
+	
 	
 	% Abkürzungsverzeichnis auf einer neuen Seite ausgeben
 	%\printnomenclature
