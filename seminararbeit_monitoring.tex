@@ -53,7 +53,8 @@
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 %head statt top bringt exakt 4cm Abstand am Kopf
-\usepackage[a4paper,left=4.00cm, right=2.00cm, head=4.00cm,bottom=1.5cm,foot=0.5cm]{geometry}
+\usepackage[a4paper,left=4.00cm, right=2.00cm, head=4.00cm,bottom=2cm,foot=1cm]{geometry}
+%bottom=1.5cm
 %Glossar anschalten und in TOC aufnehmen und erzeugen
 %https://en.wikibooks.org/wiki/LaTeX/Glossary
 \usepackage{hyperref} %Klickbare Einträge im Glossar
@@ -449,16 +450,16 @@
 	Elasticsearch ist eine in Java implementierte, auf Apache Lucene basierende Suchmaschine. Derzeit ist Elasticsearch die am weitesten verbreitete Suchmaschine\footcite{dbenginesranking}. Sie dient im Stack dazu die von Logstash eingesammelten Logfiles zu indizieren und somit eine performante Suche zu ermöglichen. Lizensiert werden kann Elasticsearch wie auch Logstash und Kibana unter der Apache Lizenz\footcite{apachelicence}.\footcite{elasticsearch}
 	\subsubsection{Logstash}
 	Logstash dient der Verarbeitung und Normalisierung von Logdateien. Im \acrshort{elk}-Stack werden über sogenannte Input-Module die Datenquellen (siehe auch Abbildung \ref{fig:elk}) eingelesen, dies können beispielsweise Datenströme von Syslog sein oder Protokolldateien beispielsweise von selbstgeschriebener Software. Auch bietet Logstash die Möglichkeit mittels des Tools Filebeat auf entfernten Servern Protokolle zu sammeln und gesammelt und verschlüsselt an den Server zu übertragen.\footcite{filebeat} Danach können mittels Filter-Plugins die Daten je nach Konfiguration durch den Benutzer weiterbearbeitet werden, dieser Schritt kann allerdings auch entfallen. Nach erfolgter oder auch nicht erfolgter (wenn die Filter ausgelassen werden) Filterung werden die Ergebnisse an Elasticsearch zum Indizieren weitergegeben werden. \footcite{logstash}
-	\begin{figure}[h!]
+	\begin{figure}
 	\centering
 	\includegraphics[width=1\linewidth]{pics/logstashcheckmk}
-	\caption{Integration von Logstash in Check\_MK}
+	\caption{Integration von Logstash in Check\_MK (Quelle: \cite{elkcheckmk})}
 	\label{fig:logstashcheckmk}
 	\end{figure}
 	Um die Daten in unser Nagios/Check\_MK Monitoring zu bekommen, brauchen wir ebenfalls Logstash, dieser liefert wie in Abbildung \ref{fig:logstashcheckmk} zu sehen, die nach bestimmten Mustern gefilterten Daten mit dem entsprechend zu setzenden Status weiter an unser Monitoringsystem wo diese weiterverarbeitet und die notwendigen Aktionen ausgeführt werden (Benachrichtigung Zuständiger, etc.).
 	\subsubsection{Kibana}
 	Kibana kann mit dem Elasticsearch \acrshort{rest} \acrshort{api}s umgehen und ergänzt den Stack um eine Komponente zur grafischen Ausgabe, mit Kibana können die Logdaten in Echtzeit aufbereitet werden. So können neben der Überwachung auch noch andere Statistiken erstellt werden, bspw. Zugriffsstatistiken für Webserver (Welche IP Ranges, aus welchen Ländern kommen meine Zugriffe?, etc.). Für die Integration von \acrshort{elk} in ein Monitoringsystem wäre Kibana eigentlich verzichtbar, aber unter Umständen kann die Möglichkeit einer grafische Auswertung der Logs an manchen Stellen hilfreich sein.\footcite{kibana}\footcite{elk2015}
-	\begin{figure}[h!]
+	\begin{figure}
 		\centering
 		\includegraphics[width=1\textwidth]{pics/elk-stack.eps}
 		\caption[Aufbau eines Elasticsearch - Logstash - Kibana Stacks]{Aufbau eines Elasticsearch - Logstash - Kibana Stacks (Quelle: \textcite{elkstackpic})}
